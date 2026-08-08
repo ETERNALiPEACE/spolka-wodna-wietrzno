@@ -402,6 +402,51 @@
     renderNewsInto("home-news-list", posts, 4);
   }
 
+  function postsFingerprint(posts) {
+    return sortNewsPosts(Array.isArray(posts) ? posts : [])
+      .map((post) => `${post.id}|${post.date}|${post.title}|${post.body}`)
+      .join("\n");
+  }
+
+  function readNewsCache(cacheKey) {
+    try {
+      const raw = localStorage.getItem(cacheKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed?.posts) || !parsed.posts.length) return null;
+      return parsed.posts;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeNewsCache(cacheKey, posts) {
+    try {
+      localStorage.setItem(
+        cacheKey,
+        JSON.stringify({ savedAt: Date.now(), posts: sortNewsPosts(posts) })
+      );
+    } catch {
+      // private mode / pełny storage — ignoruj
+    }
+  }
+
+  async function fetchJsonWithTimeout(url, timeoutMs) {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        signal: controller.signal,
+        cache: "no-cache",
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
   async function loadNewsPosts() {
     const list = document.getElementById("news-list");
     const homeList = document.getElementById("home-news-list");
@@ -409,6 +454,18 @@
 
     const newsConfig = window.NEWS_CONFIG || {};
     const scriptUrl = String(newsConfig.scriptUrl || "").trim();
+    const cacheKey = "spolka-wodna-news-cache-v1";
+    const remoteTimeoutMs = Number(newsConfig.timeoutMs) || 2500;
+
+    let shownFingerprint = "";
+
+    function show(posts) {
+      const next = Array.isArray(posts) ? posts : [];
+      const fingerprint = postsFingerprint(next);
+      if (fingerprint === shownFingerprint) return;
+      shownFingerprint = fingerprint;
+      renderNewsList(next);
+    }
 
     function showNewsError() {
       const html =
@@ -417,51 +474,41 @@
       if (homeList) homeList.innerHTML = html;
     }
 
-    function mergePosts(primary, secondary) {
-      const byId = new Map();
-      for (const post of secondary || []) {
-        if (post?.id) byId.set(String(post.id), post);
-      }
-      // Wpisy z chmury nadpisują lokalne o tym samym id.
-      for (const post of primary || []) {
-        if (post?.id) byId.set(String(post.id), post);
-      }
-      return [...byId.values()];
+    const cached = readNewsCache(cacheKey);
+    if (cached) show(cached);
+
+    // Lokalny plik i chmura równolegle — UI nie czeka na wolne Apps Script.
+    const localPromise = fetchJsonWithTimeout("data/news.json", 4000)
+      .then((data) => (Array.isArray(data?.posts) ? data.posts : []))
+      .catch(() => []);
+
+    const remotePromise = scriptUrl
+      ? fetchJsonWithTimeout(scriptUrl, remoteTimeoutMs)
+          .then((result) =>
+            result?.success && Array.isArray(result.posts) && result.posts.length
+              ? result.posts
+              : null
+          )
+          .catch(() => null)
+      : Promise.resolve(null);
+
+    if (!cached) {
+      const localPosts = await localPromise;
+      if (localPosts.length) show(localPosts);
     }
 
-    let remotePosts = [];
-    let localPosts = [];
-
-    try {
-      if (scriptUrl) {
-        const response = await fetch(scriptUrl, { method: "GET" });
-        const result = await response.json();
-        if (result?.success && Array.isArray(result.posts)) {
-          remotePosts = result.posts;
-        }
-      }
-    } catch {
-      // zostaje lokalny plik
-    }
-
-    try {
-      const response = await fetch(`data/news.json?v=${Date.now()}`);
-      const data = await response.json();
-      localPosts = Array.isArray(data.posts) ? data.posts : [];
-    } catch {
-      if (!remotePosts.length) {
-        showNewsError();
-        return;
-      }
-    }
-
-    const posts = mergePosts(remotePosts, localPosts);
-    if (!posts.length) {
-      renderNewsList([]);
+    const remotePosts = await remotePromise;
+    if (remotePosts?.length) {
+      writeNewsCache(cacheKey, remotePosts);
+      show(remotePosts);
       return;
     }
 
-    renderNewsList(posts);
+    if (!shownFingerprint) {
+      const localPosts = await localPromise;
+      if (localPosts.length) show(localPosts);
+      else showNewsError();
+    }
   }
 
   loadNewsPosts();

@@ -22,8 +22,10 @@ Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukie
 
 ## Aktualności — skąd się biorą
 
-1. Jeśli `NEWS_CONFIG.scriptUrl` zwraca **niepustą** listę postów → te są pokazywane.
-2. W przeciwnym razie (pusta chmura / błąd) → `data/news.json`.
+1. Od razu: ostatni zapis z przeglądarki (`localStorage`) albo szybki `data/news.json`.
+2. W tle: odświeżenie z `NEWS_CONFIG.scriptUrl` (Google Apps Script, zwykle ~1–2 s).
+3. Jeśli chmura zwróci posty → podmiana listy + zapis do cache.
+4. Timeout chmury: domyślnie 2,5 s (`NEWS_CONFIG.timeoutMs`).
 
 ## Uruchomienie
 

@@ -78,6 +78,14 @@
   async function loadPosts() {
     const result = await apiRequest({ action: "list" });
     posts = sortPosts(result.posts || []);
+    try {
+      localStorage.setItem(
+        "spolka-wodna-news-cache-v1",
+        JSON.stringify({ savedAt: Date.now(), posts })
+      );
+    } catch {
+      // ignore
+    }
     return posts;
   }
 
@@ -202,6 +210,14 @@
         post,
       });
       posts = sortPosts(result.posts || []);
+      try {
+        localStorage.setItem(
+          "spolka-wodna-news-cache-v1",
+          JSON.stringify({ savedAt: Date.now(), posts })
+        );
+      } catch {
+        // ignore
+      }
       renderPosts();
       resetForm();
       setStatus(
@@ -236,6 +252,14 @@
     try {
       const result = await apiRequest({ action: "delete", id: deleteId });
       posts = sortPosts(result.posts || []);
+      try {
+        localStorage.setItem(
+          "spolka-wodna-news-cache-v1",
+          JSON.stringify({ savedAt: Date.now(), posts })
+        );
+      } catch {
+        // ignore
+      }
       renderPosts();
       if (fieldId.value === deleteId) resetForm();
       setStatus(editorStatus, "Post został usunięty.", "is-ok");
