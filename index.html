@@ -5,15 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spółka Wodna Wietrzno</title>
   <meta name="description" content="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie. Informacje, aktualności, formularze i kontakt." />
-  <!-- Krytyczne tło od razu — bez niebieskiego błysku belki przed styles.css / fontami -->
+  <!-- Krytyczny layout belki od pierwszego malowania — bez skoku na tło -->
   <style>
-    html, body { margin: 0; background: #f3f8fd; }
+    html, body {
+      margin: 0;
+      background: #f3f8fd;
+    }
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
+    }
+    .wave-layer { display: none; }
     .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
       background: #fff;
       border-bottom: 1px solid rgba(43, 108, 176, 0.18);
+      box-shadow: 0 8px 28px rgba(26, 74, 122, 0.08);
+    }
+    .top-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem 1.5rem;
+      padding: 1.1rem clamp(0.85rem, 2vw, 1.5rem);
+      flex-wrap: nowrap;
+      box-sizing: border-box;
+    }
+    .top-brand {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .top-brand-logo {
+      display: block;
+      width: clamp(160px, 22vw, 220px);
+      height: auto;
+      aspect-ratio: 491 / 200;
+    }
+    .tabs {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+      gap: 0.15rem 0.45rem;
+      margin: 0 0 0 auto;
+      padding: 0;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font: 600 0.9rem system-ui, sans-serif;
+      color: #1a2f45;
+      padding: 0.55rem 0.75rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-alert {
+      color: #fff;
+      background: #c62828;
+      border-radius: 4px;
+      padding: 0.7rem 1rem;
+      margin-left: 0.65rem;
+      flex-shrink: 0;
     }
   </style>
-  <link rel="stylesheet" href="styles.css?v=42" />
+  <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
+  <link rel="stylesheet" href="styles.css?v=43" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -35,7 +104,7 @@
           width="220"
           height="90"
           alt="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie"
-          decoding="async"
+          decoding="sync"
           fetchpriority="high"
         />
       </button>
@@ -469,7 +538,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=42"></script>
-  <script src="script.js?v=42"></script>
+  <script src="config.js?v=43"></script>
+  <script src="script.js?v=43"></script>
 </body>
 </html>
