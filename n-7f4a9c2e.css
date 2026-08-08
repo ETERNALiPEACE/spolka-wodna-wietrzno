@@ -46,6 +46,9 @@
   font-family: var(--font-display);
   font-size: 1.45rem;
   color: var(--deep);
+}
+
+#login-panel h2 {
   text-align: center;
 }
 
