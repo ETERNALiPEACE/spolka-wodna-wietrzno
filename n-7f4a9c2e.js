@@ -20,6 +20,7 @@
   const bodyEditor = document.getElementById("post-body-editor");
   const formatToolbar = document.querySelector(".news-format-toolbar");
 
+  let sessionLogin = "";
   let sessionPassword = "";
   let posts = [];
 
@@ -246,7 +247,11 @@
     const response = await fetch(scriptUrl, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ ...payload, password: sessionPassword }),
+      body: JSON.stringify({
+        ...payload,
+        login: sessionLogin,
+        password: sessionPassword,
+      }),
     });
     const result = await response.json();
     if (!result?.success) {
@@ -327,14 +332,21 @@
 
   loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    const password = String(new FormData(loginForm).get("password") || "");
+    const formData = new FormData(loginForm);
+    const login = String(formData.get("login") || "").trim();
+    const password = String(formData.get("password") || "");
 
     if (!scriptUrl) {
       setStatus(
         loginStatus,
-        "Panel wymaga wdrożonego skryptu News.gs. Hasła nie trzymamy już w GitHubie — ustaw je tylko w Apps Script i wklej scriptUrl do config.js.",
+        "Panel wymaga wdrożonego skryptu News.gs. Ustaw login i hasło w Apps Script oraz scriptUrl w config.js.",
         "is-error"
       );
+      return;
+    }
+
+    if (!login) {
+      setStatus(loginStatus, "Podaj login.", "is-error");
       return;
     }
 
@@ -343,8 +355,9 @@
       return;
     }
 
+    sessionLogin = login;
     sessionPassword = password;
-    setStatus(loginStatus, "Sprawdzanie hasła…");
+    setStatus(loginStatus, "Logowanie…");
 
     try {
       await apiRequest({ action: "login" });
@@ -354,8 +367,9 @@
       await refresh();
       setStatus(loginStatus, "", null);
     } catch (error) {
+      sessionLogin = "";
       sessionPassword = "";
-      setStatus(loginStatus, error.message || "Nieprawidłowe hasło.", "is-error");
+      setStatus(loginStatus, error.message || "Nieprawidłowy login lub hasło.", "is-error");
     }
   });
 
