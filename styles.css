@@ -724,6 +724,30 @@ body {
   border: 1px solid var(--line);
 }
 
+.home-news {
+  margin-top: 2.25rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.home-news-title {
+  margin: 0 0 1rem;
+  font-family: "Literata", serif;
+  font-size: 1.35rem;
+  color: var(--deep);
+}
+
+.home-news-more {
+  margin-top: 1.25rem;
+}
+
+.home-news-more .btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .news-list {
   list-style: none;
   margin: 0;

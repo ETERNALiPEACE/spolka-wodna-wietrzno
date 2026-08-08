@@ -373,41 +373,56 @@
     });
   }
 
-  function renderNewsList(posts) {
-    const list = document.getElementById("news-list");
-    if (!list) return;
-
-    const items = sortNewsPosts(Array.isArray(posts) ? posts : []);
-    if (!items.length) {
-      list.innerHTML = '<li class="news-item news-empty">Brak aktualności do wyświetlenia.</li>';
-      return;
-    }
-
-    list.innerHTML = items
-      .map(
-        (post) => `
+  function newsItemHtml(post) {
+    return `
       <li class="news-item">
         <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
         <h3>${escapeHtml(post.title)}</h3>
         <p>${escapeHtml(post.body)}</p>
-      </li>`
-      )
-      .join("");
+      </li>`;
+  }
+
+  function renderNewsInto(listId, posts, limit) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+
+    const items = sortNewsPosts(Array.isArray(posts) ? posts : []);
+    const visible = typeof limit === "number" ? items.slice(0, limit) : items;
+
+    if (!visible.length) {
+      list.innerHTML = '<li class="news-item news-empty">Brak aktualności do wyświetlenia.</li>';
+      return;
+    }
+
+    list.innerHTML = visible.map(newsItemHtml).join("");
+  }
+
+  function renderNewsList(posts) {
+    renderNewsInto("news-list", posts);
+    renderNewsInto("home-news-list", posts, 4);
   }
 
   async function loadNewsPosts() {
     const list = document.getElementById("news-list");
-    if (!list) return;
+    const homeList = document.getElementById("home-news-list");
+    if (!list && !homeList) return;
 
     const newsConfig = window.NEWS_CONFIG || {};
     const scriptUrl = String(newsConfig.scriptUrl || "").trim();
     const localKey = "spolka-wodna-news-posts";
 
+    function showNewsError() {
+      const html =
+        '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
+      if (list) list.innerHTML = html;
+      if (homeList) homeList.innerHTML = html;
+    }
+
     try {
       if (scriptUrl) {
         const response = await fetch(scriptUrl, { method: "GET" });
         const result = await response.json();
-        if (result?.success && Array.isArray(result.posts)) {
+        if (result?.success && Array.isArray(result.posts) && result.posts.length) {
           renderNewsList(result.posts);
           return;
         }
@@ -434,8 +449,7 @@
       const data = await response.json();
       renderNewsList(data.posts || []);
     } catch {
-      list.innerHTML =
-        '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
+      showNewsError();
     }
   }
 
