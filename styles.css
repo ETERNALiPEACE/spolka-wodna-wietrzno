@@ -1318,15 +1318,28 @@ body {
   appearance: none;
   border: 0;
   background: transparent;
-  margin-top: 0.65rem;
+  margin: 0;
   padding: 0;
   color: var(--lake);
   font-family: var(--font-body);
   font-size: 0.92rem;
-  font-weight: 700;
-  cursor: pointer;
+  font-weight: 600;
   text-decoration: underline;
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+button.site-footer-link.site-footer-heading {
+  display: inline;
+  color: var(--deep);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+button.site-footer-link.site-footer-heading:hover {
+  color: var(--lake);
+  text-decoration: underline;
 }
 
 .site-footer-link:hover {
