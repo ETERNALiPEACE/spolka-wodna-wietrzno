@@ -272,6 +272,15 @@
   }
 
   const colorInput = document.getElementById("news-text-color");
+  const colorSwatch = document.getElementById("news-text-color-swatch");
+
+  function syncColorSwatch(colorValue) {
+    if (!colorSwatch) return;
+    const color = normalizeColor(colorValue) || "#1a4a7a";
+    colorSwatch.style.background = color;
+  }
+
+  syncColorSwatch(colorInput?.value || "#1a4a7a");
 
   formatToolbar?.addEventListener("mousedown", (event) => {
     const target = event.target;
@@ -293,10 +302,12 @@
   });
 
   colorInput?.addEventListener("input", () => {
+    syncColorSwatch(colorInput.value);
     applyTextColor(colorInput.value);
   });
 
   colorInput?.addEventListener("change", () => {
+    syncColorSwatch(colorInput.value);
     applyTextColor(colorInput.value);
   });
 
