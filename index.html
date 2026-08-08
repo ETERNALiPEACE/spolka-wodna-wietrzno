@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=41" />
+  <link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -444,29 +444,6 @@
     </section>
   </main>
 
-  <script>
-    // Od razu po panelach — przywróć zakładkę z #hash / sessionStorage (bez migania home).
-    (function () {
-      try {
-        var hash = (location.hash || "").replace(/^#/, "");
-        var tab = hash || sessionStorage.getItem("spolka-wodna-active-tab") || "";
-        if (!tab) return;
-        var panel = document.getElementById("panel-" + tab);
-        if (!panel) return;
-        document.querySelectorAll(".panel").forEach(function (p) {
-          var on = p === panel;
-          p.classList.toggle("is-active", on);
-          p.hidden = !on;
-        });
-        document.querySelectorAll(".tab[data-tab]").forEach(function (t) {
-          var on = t.getAttribute("data-tab") === tab;
-          t.classList.toggle("is-active", on);
-          t.setAttribute("aria-selected", on ? "true" : "false");
-        });
-      } catch (e) {}
-    })();
-  </script>
-
   <footer class="site-footer">
     <div class="site-footer-inner">
       <div class="site-footer-left">
@@ -482,7 +459,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=41"></script>
-  <script src="script.js?v=41"></script>
+  <script src="config.js?v=40"></script>
+  <script src="script.js?v=40"></script>
 </body>
 </html>

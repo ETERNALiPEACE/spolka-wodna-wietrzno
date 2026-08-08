@@ -10,46 +10,7 @@
     year.textContent = String(new Date().getFullYear());
   }
 
-  const TAB_STORAGE_KEY = "spolka-wodna-active-tab";
-
-  function isValidTab(tabId) {
-    return Boolean(tabId && document.getElementById(`panel-${tabId}`));
-  }
-
-  function rememberTab(tabId) {
-    try {
-      sessionStorage.setItem(TAB_STORAGE_KEY, tabId);
-    } catch {
-      // private mode / zablokowany storage
-    }
-  }
-
-  function rememberedTab() {
-    try {
-      const saved = sessionStorage.getItem(TAB_STORAGE_KEY);
-      return isValidTab(saved) ? saved : null;
-    } catch {
-      return null;
-    }
-  }
-
-  function syncTabUrl(tabId) {
-    const nextHash = `#${tabId}`;
-    if (window.location.hash === nextHash) return;
-
-    if (window.history?.replaceState) {
-      const url = new URL(window.location.href);
-      url.hash = tabId;
-      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
-      return;
-    }
-
-    window.location.hash = tabId;
-  }
-
   function activate(tabId) {
-    if (!isValidTab(tabId)) return;
-
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === tabId;
       tab.classList.toggle("is-active", active);
@@ -61,20 +22,6 @@
       panel.classList.toggle("is-active", active);
       panel.hidden = !active;
     });
-
-    rememberTab(tabId);
-    syncTabUrl(tabId);
-  }
-
-  function tabFromLocation() {
-    const hash = (window.location.hash || "").replace(/^#/, "");
-    if (isValidTab(hash)) return hash;
-
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get("tab");
-    if (isValidTab(tab)) return tab;
-
-    return rememberedTab();
   }
 
   function setStatus(message, type) {
@@ -396,15 +343,13 @@
     });
   }
 
-  const initialTab = tabFromLocation();
-  if (initialTab) {
-    activate(initialTab);
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("tab") === "report") {
+    activate("report");
   }
-
-  window.addEventListener("hashchange", () => {
-    const hashTab = tabFromLocation();
-    if (hashTab) activate(hashTab);
-  });
+  if (params.get("tab") === "news") {
+    activate("news");
+  }
 
   function escapeHtml(value) {
     return String(value)
