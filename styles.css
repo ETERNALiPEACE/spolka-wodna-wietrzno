@@ -786,10 +786,30 @@ body {
   color: var(--deep);
 }
 
-.news-item p {
+.news-item p,
+.news-item-body {
   margin: 0;
   color: var(--muted);
   font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.news-item-body .news-text-lg {
+  font-size: 1.22em;
+  line-height: 1.35;
+}
+
+.news-item-body .news-text-sm {
+  font-size: 0.88em;
+}
+
+.news-item-body strong {
+  color: var(--deep);
+  font-weight: 700;
+}
+
+.news-item-body em {
+  font-style: italic;
 }
 
 .news-pagination {

@@ -18,6 +18,8 @@
   const fieldDate = document.getElementById("post-date");
   const fieldTitle = document.getElementById("post-title");
   const fieldBody = document.getElementById("post-body");
+  const bodyEditor = document.getElementById("post-body-editor");
+  const formatToolbar = document.querySelector(".news-format-toolbar");
 
   let sessionPassword = "";
   let posts = [];
@@ -56,6 +58,185 @@
     if (window.crypto?.randomUUID) return window.crypto.randomUUID();
     return `post-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
+
+  function hasHtmlTags(value) {
+    return /<[a-z][\s\S]*>/i.test(String(value || ""));
+  }
+
+  function sanitizeNewsHtml(html) {
+    const root = document.createElement("div");
+    root.innerHTML = String(html || "");
+
+    const clean = (parent) => {
+      [...parent.childNodes].forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) return;
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          node.remove();
+          return;
+        }
+
+        const tag = node.tagName;
+        if (tag === "BR") {
+          [...node.attributes].forEach((attr) => node.removeAttribute(attr.name));
+          return;
+        }
+
+        if (tag === "STRONG" || tag === "B") {
+          const strong = document.createElement("strong");
+          while (node.firstChild) strong.appendChild(node.firstChild);
+          node.replaceWith(strong);
+          clean(strong);
+          return;
+        }
+
+        if (tag === "EM" || tag === "I") {
+          const em = document.createElement("em");
+          while (node.firstChild) em.appendChild(node.firstChild);
+          node.replaceWith(em);
+          clean(em);
+          return;
+        }
+
+        if (tag === "SPAN") {
+          const isLg = node.classList.contains("news-text-lg");
+          const isSm = node.classList.contains("news-text-sm");
+          if (isLg || isSm) {
+            const span = document.createElement("span");
+            span.className = isLg ? "news-text-lg" : "news-text-sm";
+            while (node.firstChild) span.appendChild(node.firstChild);
+            node.replaceWith(span);
+            clean(span);
+            return;
+          }
+        }
+
+        if (tag === "DIV" || tag === "P") {
+          const fragment = document.createDocumentFragment();
+          if (node.previousSibling) fragment.appendChild(document.createElement("br"));
+          while (node.firstChild) fragment.appendChild(node.firstChild);
+          if (node.nextSibling) fragment.appendChild(document.createElement("br"));
+          node.replaceWith(fragment);
+          clean(parent);
+          return;
+        }
+
+        while (node.firstChild) node.parentNode.insertBefore(node.firstChild, node);
+        node.remove();
+      });
+    };
+
+    clean(root);
+    return root.innerHTML.replace(/(<br>\s*)+$/g, "").trim();
+  }
+
+  function renderNewsBodyHtml(raw) {
+    const value = String(raw || "");
+    if (!value) return "";
+    if (!hasHtmlTags(value)) {
+      return escapeHtml(value).replaceAll("\n", "<br>");
+    }
+    return sanitizeNewsHtml(value);
+  }
+
+  function plainTextFromHtml(html) {
+    const div = document.createElement("div");
+    div.innerHTML = String(html || "");
+    return (div.textContent || "").replace(/\u00a0/g, " ").trim();
+  }
+
+  function syncHiddenBody() {
+    if (!fieldBody || !bodyEditor) return;
+    fieldBody.value = sanitizeNewsHtml(bodyEditor.innerHTML);
+  }
+
+  function setEditorBody(raw) {
+    if (!bodyEditor || !fieldBody) return;
+    const value = String(raw || "");
+    if (!value) {
+      bodyEditor.innerHTML = "";
+      fieldBody.value = "";
+      return;
+    }
+    if (!hasHtmlTags(value)) {
+      bodyEditor.innerHTML = escapeHtml(value).replaceAll("\n", "<br>");
+    } else {
+      bodyEditor.innerHTML = sanitizeNewsHtml(value);
+    }
+    fieldBody.value = sanitizeNewsHtml(bodyEditor.innerHTML);
+  }
+
+  function wrapSelection(className) {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return false;
+    if (!bodyEditor.contains(selection.anchorNode)) return false;
+
+    try {
+      const range = selection.getRangeAt(0);
+      const span = document.createElement("span");
+      span.className = className;
+      span.appendChild(range.extractContents());
+      range.insertNode(span);
+      selection.removeAllRanges();
+      const next = document.createRange();
+      next.selectNodeContents(span);
+      selection.addRange(next);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function applyFormat(command) {
+    if (!bodyEditor) return;
+    bodyEditor.focus();
+
+    if (command === "bold") {
+      document.execCommand("bold", false);
+    } else if (command === "italic") {
+      document.execCommand("italic", false);
+    } else if (command === "larger") {
+      wrapSelection("news-text-lg");
+    } else if (command === "smaller") {
+      wrapSelection("news-text-sm");
+    } else if (command === "clear") {
+      document.execCommand("removeFormat", false);
+      const selection = window.getSelection();
+      if (selection && !selection.isCollapsed && bodyEditor.contains(selection.anchorNode)) {
+        const text = selection.toString();
+        document.execCommand("insertText", false, text);
+      }
+    }
+
+    syncHiddenBody();
+  }
+
+  formatToolbar?.addEventListener("mousedown", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest("[data-format]");
+    if (!btn) return;
+    // Zachowaj zaznaczenie w edytorze.
+    event.preventDefault();
+  });
+
+  formatToolbar?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest("[data-format]");
+    if (!btn) return;
+    applyFormat(btn.getAttribute("data-format"));
+  });
+
+  bodyEditor?.addEventListener("input", () => {
+    if (!fieldBody || !bodyEditor) return;
+    fieldBody.value = sanitizeNewsHtml(bodyEditor.innerHTML);
+  });
+
+  bodyEditor?.addEventListener("paste", (event) => {
+    event.preventDefault();
+    const text = event.clipboardData?.getData("text/plain") || "";
+    document.execCommand("insertText", false, text);
+  });
 
   async function apiRequest(payload) {
     if (!scriptUrl) {
@@ -107,7 +288,7 @@
         <div>
           <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
           <h3>${escapeHtml(post.title)}</h3>
-          <p>${escapeHtml(post.body)}</p>
+          <div class="admin-post-body">${renderNewsBodyHtml(post.body)}</div>
         </div>
         <div class="admin-post-actions">
           <button type="button" class="btn btn-ghost" data-edit="${escapeHtml(post.id)}">Edytuj</button>
@@ -122,7 +303,7 @@
     fieldId.value = "";
     fieldDate.value = new Date().toISOString().slice(0, 10);
     fieldTitle.value = "";
-    fieldBody.value = "";
+    setEditorBody("");
     editorTitle.textContent = "Nowy post";
   }
 
@@ -130,7 +311,7 @@
     fieldId.value = post.id;
     fieldDate.value = post.date;
     fieldTitle.value = post.title;
-    fieldBody.value = post.body;
+    setEditorBody(post.body);
     editorTitle.textContent = "Edycja posta";
   }
 
@@ -197,6 +378,20 @@
 
   postForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    syncHiddenBody();
+
+    const plain = plainTextFromHtml(fieldBody.value);
+    if (!plain) {
+      setStatus(editorStatus, "Uzupełnij treść posta.", "is-error");
+      bodyEditor?.focus();
+      return;
+    }
+
+    if (fieldBody.value.length > 4000) {
+      setStatus(editorStatus, "Treść jest zbyt długa (max 4000 znaków).", "is-error");
+      return;
+    }
+
     if (!postForm.reportValidity()) return;
 
     const post = {

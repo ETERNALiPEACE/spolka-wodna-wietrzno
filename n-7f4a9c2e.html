@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=14" />
-  <link rel="stylesheet" href="n-7f4a9c2e.css?v=14" />
+  <link rel="stylesheet" href="styles.css?v=16" />
+  <link rel="stylesheet" href="n-7f4a9c2e.css?v=16" />
 </head>
 <body class="admin-body">
   <div class="page-bg" aria-hidden="true"></div>
@@ -54,8 +54,34 @@
             <input id="post-title" name="title" type="text" required maxlength="160" />
           </div>
           <div class="field">
-            <label for="post-body">Treść</label>
-            <textarea id="post-body" name="body" rows="6" required maxlength="4000"></textarea>
+            <label for="post-body-editor">Treść</label>
+            <div class="news-format-toolbar" role="toolbar" aria-label="Formatowanie tekstu">
+              <button type="button" class="news-format-btn" data-format="bold" title="Pogrubienie (wytłuszczenie)">
+                <strong>B</strong>
+              </button>
+              <button type="button" class="news-format-btn" data-format="italic" title="Kursywa">
+                <em>I</em>
+              </button>
+              <button type="button" class="news-format-btn" data-format="larger" title="Większe litery">
+                A+
+              </button>
+              <button type="button" class="news-format-btn" data-format="smaller" title="Mniejsze litery">
+                A−
+              </button>
+              <button type="button" class="news-format-btn" data-format="clear" title="Wyczyść formatowanie">
+                Wyczyść
+              </button>
+            </div>
+            <div
+              id="post-body-editor"
+              class="news-body-editor"
+              contenteditable="true"
+              role="textbox"
+              aria-multiline="true"
+              aria-label="Treść posta"
+            ></div>
+            <textarea id="post-body" name="body" required maxlength="4000" hidden></textarea>
+            <p class="news-format-hint">Zaznacz tekst i użyj przycisków: pogrubienie, kursywa, większe/mniejsze litery.</p>
           </div>
           <div class="form-actions admin-actions">
             <button class="btn" type="submit" id="save-post-btn">Zapisz post</button>
@@ -76,7 +102,7 @@
     </section>
   </main>
 
-  <script src="config.js?v=14"></script>
-  <script src="n-7f4a9c2e.js?v=14"></script>
+  <script src="config.js?v=16"></script>
+  <script src="n-7f4a9c2e.js?v=16"></script>
 </body>
 </html>

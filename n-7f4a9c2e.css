@@ -99,12 +99,6 @@
   color: var(--deep);
 }
 
-.admin-post p {
-  margin: 0;
-  color: var(--muted);
-  white-space: pre-wrap;
-}
-
 .admin-post-actions {
   display: flex;
   flex-wrap: wrap;
@@ -118,4 +112,80 @@
 
 .news-empty {
   color: var(--muted);
+}
+
+.news-format-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.55rem;
+}
+
+.news-format-btn {
+  appearance: none;
+  min-width: 2.4rem;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: #fff;
+  color: var(--deep);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.news-format-btn:hover {
+  border-color: var(--lake);
+  color: var(--lake);
+}
+
+.news-format-btn em {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.news-body-editor {
+  min-height: 9rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  line-height: 1.55;
+  outline: none;
+  overflow-wrap: anywhere;
+}
+
+.news-body-editor:focus {
+  border-color: var(--lake);
+  box-shadow: 0 0 0 3px rgba(61, 130, 186, 0.15);
+}
+
+.news-body-editor:empty::before {
+  content: "Wpisz treść aktualności…";
+  color: var(--muted);
+}
+
+.news-format-hint {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.admin-post-body {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.admin-post-body .news-text-lg {
+  font-size: 1.22em;
+  line-height: 1.35;
+}
+
+.admin-post-body .news-text-sm {
+  font-size: 0.88em;
 }

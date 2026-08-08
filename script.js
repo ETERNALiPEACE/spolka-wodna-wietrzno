@@ -378,8 +378,87 @@
       <li class="news-item">
         <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
         <h3>${escapeHtml(post.title)}</h3>
-        <p>${escapeHtml(post.body)}</p>
+        <div class="news-item-body">${formatNewsBodyHtml(post.body)}</div>
       </li>`;
+  }
+
+  function hasHtmlTags(value) {
+    return /<[a-z][\s\S]*>/i.test(String(value || ""));
+  }
+
+  function sanitizeNewsHtml(html) {
+    const root = document.createElement("div");
+    root.innerHTML = String(html || "");
+
+    const clean = (parent) => {
+      [...parent.childNodes].forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) return;
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+          node.remove();
+          return;
+        }
+
+        const tag = node.tagName;
+        if (tag === "BR") {
+          [...node.attributes].forEach((attr) => node.removeAttribute(attr.name));
+          return;
+        }
+
+        if (tag === "STRONG" || tag === "B") {
+          const strong = document.createElement("strong");
+          while (node.firstChild) strong.appendChild(node.firstChild);
+          node.replaceWith(strong);
+          clean(strong);
+          return;
+        }
+
+        if (tag === "EM" || tag === "I") {
+          const em = document.createElement("em");
+          while (node.firstChild) em.appendChild(node.firstChild);
+          node.replaceWith(em);
+          clean(em);
+          return;
+        }
+
+        if (tag === "SPAN") {
+          const isLg = node.classList.contains("news-text-lg");
+          const isSm = node.classList.contains("news-text-sm");
+          if (isLg || isSm) {
+            const span = document.createElement("span");
+            span.className = isLg ? "news-text-lg" : "news-text-sm";
+            while (node.firstChild) span.appendChild(node.firstChild);
+            node.replaceWith(span);
+            clean(span);
+            return;
+          }
+        }
+
+        if (tag === "DIV" || tag === "P") {
+          const fragment = document.createDocumentFragment();
+          if (node.previousSibling) fragment.appendChild(document.createElement("br"));
+          while (node.firstChild) fragment.appendChild(node.firstChild);
+          if (node.nextSibling) fragment.appendChild(document.createElement("br"));
+          node.replaceWith(fragment);
+          clean(parent);
+          return;
+        }
+
+        while (node.firstChild) node.parentNode.insertBefore(node.firstChild, node);
+        node.remove();
+      });
+    };
+
+    clean(root);
+    return root.innerHTML.replace(/(<br>\s*)+$/g, "").trim();
+  }
+
+  function formatNewsBodyHtml(raw) {
+    const value = String(raw || "");
+    if (!value) return "";
+    if (!hasHtmlTags(value)) {
+      return escapeHtml(value).replaceAll("\n", "<br>");
+    }
+    return sanitizeNewsHtml(value);
   }
 
   const NEWS_PAGE_SIZE = 10;
