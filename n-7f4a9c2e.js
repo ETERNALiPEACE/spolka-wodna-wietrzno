@@ -1,7 +1,7 @@
 (() => {
   const newsConfig = window.NEWS_CONFIG || {};
   const scriptUrl = String(newsConfig.scriptUrl || "").trim();
-  const adminPassword = String(newsConfig.adminPassword || "");
+  const adminPasswordHash = String(newsConfig.adminPasswordHash || "").toLowerCase();
 
   const loginPanel = document.getElementById("login-panel");
   const editorPanel = document.getElementById("editor-panel");
@@ -24,6 +24,14 @@
   let posts = [];
 
   const LOCAL_KEY = "spolka-wodna-news-posts";
+
+  async function sha256Hex(value) {
+    const data = new TextEncoder().encode(String(value));
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return Array.from(new Uint8Array(digest))
+      .map((byte) => byte.toString(16).padStart(2, "0"))
+      .join("");
+  }
 
   function setStatus(el, message, type) {
     if (!el) return;
@@ -161,7 +169,7 @@
       return;
     }
     storageHint.innerHTML =
-      "Tryb lokalny: posty zapisują się w tej przeglądarce. Aby były widoczne dla wszystkich, wdroż <code>apps-script/News.gs</code> i uzupełnij <code>NEWS_CONFIG.scriptUrl</code> w <code>config.js</code> — albo pobierz plik JSON i wgraj go do <code>data/news.json</code>.";
+      "Tryb lokalny: posty zapisują się w tej przeglądarce. Aby były widoczne dla wszystkich, wdroż backend aktualności i uzupełnij <code>NEWS_CONFIG.scriptUrl</code> — albo pobierz plik JSON i wgraj go do <code>data/news.json</code>.";
   }
 
   function downloadNewsJson() {
@@ -201,7 +209,13 @@
   loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const password = String(new FormData(loginForm).get("password") || "");
-    if (!adminPassword || password !== adminPassword) {
+    if (!adminPasswordHash) {
+      setStatus(loginStatus, "Brak konfiguracji dostępu.", "is-error");
+      return;
+    }
+
+    const hash = await sha256Hex(password);
+    if (hash !== adminPasswordHash) {
       setStatus(loginStatus, "Nieprawidłowe hasło.", "is-error");
       return;
     }

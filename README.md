@@ -8,7 +8,6 @@ Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukie
 - `styles.css` — wygląd
 - `script.js` — nawigacja, formularz awarii, aktualności
 - `config.js` — konfiguracja maila i aktualności
-- `admin.html` — panel dodawania/edycji aktualności
 - `data/news.json` — domyślna lista aktualności
 - `apps-script/News.gs` — backend aktualności (Google Apps Script)
 - `dokumenty/` — statut PDF
@@ -28,14 +27,7 @@ Wysyłka idzie przez Google Apps Script — adres endpointu jest w `config.js` (
 
 ## Aktualności
 
-1. Wejdź na `admin.html`
-2. Zaloguj się hasłem z `NEWS_CONFIG.adminPassword` (domyślnie `wietrzno`)
-3. Dodawaj, edytuj i usuwaj posty
+Publiczna lista ładuje się z backendu (`NEWS_CONFIG.scriptUrl`) albo z `data/news.json`.
 
-### Żeby posty były widoczne dla wszystkich online
-
-1. Wdróż skrypt z `apps-script/News.gs` jako aplikację internetową
-2. Wklej URL `/exec` do `NEWS_CONFIG.scriptUrl` w `config.js`
-3. Ustaw to samo hasło w skrypcie i w `config.js`
-
-Bez `scriptUrl` działa tryb lokalny (ta sama przeglądarka) oraz przycisk pobierania `news.json` do ręcznego wgrania do `data/news.json`.
+Panel redakcji jest celowo niepubliczny (osobny, nieoczywisty adres + hasło trzymane jako hash w `config.js`).  
+Po wdrożeniu `apps-script/News.gs` wklej URL `/exec` do `NEWS_CONFIG.scriptUrl` i ustaw własne hasło w skrypcie.

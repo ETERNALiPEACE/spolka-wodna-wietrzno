@@ -7,10 +7,10 @@
  *    - Wykonuje jako: Ja
  *    - Kto ma dostęp: Każdy
  * 4. Skopiuj URL zakończony na /exec do config.js → NEWS_CONFIG.scriptUrl
- * 5. Ustaw to samo ADMIN_PASSWORD co w config.js
+ * 5. Ustaw poniżej własne hasło (to samo, którego używasz w panelu redakcji)
  */
 
-var ADMIN_PASSWORD = "wietrzno";
+var ADMIN_PASSWORD = "WSTAW_WLASNE_HASLO";
 var PROPERTY_KEY = "NEWS_POSTS";
 
 function doGet() {

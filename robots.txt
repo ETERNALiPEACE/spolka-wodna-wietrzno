@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /n-7f4a9c2e.html
+Disallow: /n-7f4a9c2e.js
+Disallow: /n-7f4a9c2e.css
+Disallow: /apps-script/
