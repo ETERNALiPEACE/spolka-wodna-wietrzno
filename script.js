@@ -11,6 +11,8 @@
   }
 
   function activate(tabId) {
+    if (!tabId || !document.getElementById(`panel-${tabId}`)) return;
+
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === tabId;
       tab.classList.toggle("is-active", active);
@@ -22,6 +24,26 @@
       panel.classList.toggle("is-active", active);
       panel.hidden = !active;
     });
+
+    const nextHash = `#${tabId}`;
+    if (window.location.hash !== nextHash) {
+      if (window.history?.replaceState) {
+        window.history.replaceState(null, "", nextHash);
+      } else {
+        window.location.hash = tabId;
+      }
+    }
+  }
+
+  function tabFromLocation() {
+    const hash = (window.location.hash || "").replace(/^#/, "");
+    if (hash && document.getElementById(`panel-${hash}`)) return hash;
+
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab");
+    if (tab && document.getElementById(`panel-${tab}`)) return tab;
+
+    return null;
   }
 
   function setStatus(message, type) {
@@ -343,13 +365,15 @@
     });
   }
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("tab") === "report") {
-    activate("report");
+  const initialTab = tabFromLocation();
+  if (initialTab) {
+    activate(initialTab);
   }
-  if (params.get("tab") === "news") {
-    activate("news");
-  }
+
+  window.addEventListener("hashchange", () => {
+    const hashTab = tabFromLocation();
+    if (hashTab) activate(hashTab);
+  });
 
   function escapeHtml(value) {
     return String(value)
