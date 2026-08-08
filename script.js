@@ -386,6 +386,27 @@
     return /<[a-z][\s\S]*>/i.test(String(value || ""));
   }
 
+  function normalizeColor(value) {
+    const raw = String(value || "").trim().toLowerCase();
+    if (/^#[0-9a-f]{6}$/.test(raw)) return raw;
+    if (/^#[0-9a-f]{3}$/.test(raw)) {
+      return `#${raw[1]}${raw[1]}${raw[2]}${raw[2]}${raw[3]}${raw[3]}`;
+    }
+    const rgb = raw.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+    if (rgb) {
+      const toHex = (n) => Number(n).toString(16).padStart(2, "0");
+      return `#${toHex(rgb[1])}${toHex(rgb[2])}${toHex(rgb[3])}`;
+    }
+    return "";
+  }
+
+  function extractSafeColor(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const fromAttr = normalizeColor(el.getAttribute("color") || "");
+    if (fromAttr) return fromAttr;
+    return normalizeColor(el.style?.color || "");
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -420,12 +441,23 @@
           return;
         }
 
-        if (tag === "SPAN") {
+        if (tag === "U") {
+          const underline = document.createElement("u");
+          while (node.firstChild) underline.appendChild(node.firstChild);
+          node.replaceWith(underline);
+          clean(underline);
+          return;
+        }
+
+        if (tag === "SPAN" || tag === "FONT") {
           const isLg = node.classList.contains("news-text-lg");
           const isSm = node.classList.contains("news-text-sm");
-          if (isLg || isSm) {
+          const color = extractSafeColor(node);
+          if (isLg || isSm || color) {
             const span = document.createElement("span");
-            span.className = isLg ? "news-text-lg" : "news-text-sm";
+            if (isLg) span.className = "news-text-lg";
+            if (isSm) span.className = "news-text-sm";
+            if (color) span.style.color = color;
             while (node.firstChild) span.appendChild(node.firstChild);
             node.replaceWith(span);
             clean(span);

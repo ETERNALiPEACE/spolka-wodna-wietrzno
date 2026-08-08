@@ -812,6 +812,10 @@ body {
   font-style: italic;
 }
 
+.news-item-body u {
+  text-decoration: underline;
+}
+
 .news-pagination {
   margin-top: 1.75rem;
   padding-top: 1.25rem;

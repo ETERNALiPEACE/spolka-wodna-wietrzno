@@ -63,6 +63,27 @@
     return /<[a-z][\s\S]*>/i.test(String(value || ""));
   }
 
+  function normalizeColor(value) {
+    const raw = String(value || "").trim().toLowerCase();
+    if (/^#[0-9a-f]{6}$/.test(raw)) return raw;
+    if (/^#[0-9a-f]{3}$/.test(raw)) {
+      return `#${raw[1]}${raw[1]}${raw[2]}${raw[2]}${raw[3]}${raw[3]}`;
+    }
+    const rgb = raw.match(/^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+    if (rgb) {
+      const toHex = (n) => Number(n).toString(16).padStart(2, "0");
+      return `#${toHex(rgb[1])}${toHex(rgb[2])}${toHex(rgb[3])}`;
+    }
+    return "";
+  }
+
+  function extractSafeColor(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const fromAttr = normalizeColor(el.getAttribute("color") || "");
+    if (fromAttr) return fromAttr;
+    return normalizeColor(el.style?.color || "");
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -97,12 +118,23 @@
           return;
         }
 
-        if (tag === "SPAN") {
+        if (tag === "U") {
+          const underline = document.createElement("u");
+          while (node.firstChild) underline.appendChild(node.firstChild);
+          node.replaceWith(underline);
+          clean(underline);
+          return;
+        }
+
+        if (tag === "SPAN" || tag === "FONT") {
           const isLg = node.classList.contains("news-text-lg");
           const isSm = node.classList.contains("news-text-sm");
-          if (isLg || isSm) {
+          const color = extractSafeColor(node);
+          if (isLg || isSm || color) {
             const span = document.createElement("span");
-            span.className = isLg ? "news-text-lg" : "news-text-sm";
+            if (isLg) span.className = "news-text-lg";
+            if (isSm) span.className = "news-text-sm";
+            if (color) span.style.color = color;
             while (node.firstChild) span.appendChild(node.firstChild);
             node.replaceWith(span);
             clean(span);
@@ -186,6 +218,33 @@
     }
   }
 
+  let savedEditorRange = null;
+
+  function saveEditorSelection() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+    if (!bodyEditor.contains(selection.anchorNode)) return;
+    savedEditorRange = selection.getRangeAt(0).cloneRange();
+  }
+
+  function restoreEditorSelection() {
+    if (!savedEditorRange || !bodyEditor) return false;
+    bodyEditor.focus();
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(savedEditorRange);
+    return true;
+  }
+
+  function applyTextColor(colorValue) {
+    const color = normalizeColor(colorValue);
+    if (!color || !bodyEditor) return;
+    restoreEditorSelection();
+    bodyEditor.focus();
+    document.execCommand("foreColor", false, color);
+    syncHiddenBody();
+  }
+
   function applyFormat(command) {
     if (!bodyEditor) return;
     bodyEditor.focus();
@@ -194,6 +253,8 @@
       document.execCommand("bold", false);
     } else if (command === "italic") {
       document.execCommand("italic", false);
+    } else if (command === "underline") {
+      document.execCommand("underline", false);
     } else if (command === "larger") {
       wrapSelection("news-text-lg");
     } else if (command === "smaller") {
@@ -210,13 +271,17 @@
     syncHiddenBody();
   }
 
+  const colorInput = document.getElementById("news-text-color");
+
   formatToolbar?.addEventListener("mousedown", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
+    saveEditorSelection();
     const btn = target.closest("[data-format]");
-    if (!btn) return;
-    // Zachowaj zaznaczenie w edytorze.
-    event.preventDefault();
+    if (btn) {
+      // Zachowaj zaznaczenie w edytorze.
+      event.preventDefault();
+    }
   });
 
   formatToolbar?.addEventListener("click", (event) => {
@@ -225,6 +290,14 @@
     const btn = target.closest("[data-format]");
     if (!btn) return;
     applyFormat(btn.getAttribute("data-format"));
+  });
+
+  colorInput?.addEventListener("input", () => {
+    applyTextColor(colorInput.value);
+  });
+
+  colorInput?.addEventListener("change", () => {
+    applyTextColor(colorInput.value);
   });
 
   bodyEditor?.addEventListener("input", () => {
