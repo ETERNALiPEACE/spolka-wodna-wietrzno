@@ -8,40 +8,58 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="styles.css?v=32" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
   <div class="wave-layer" aria-hidden="true"></div>
 
-  <nav class="tabs" role="tablist" aria-label="Sekcje strony">
-    <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" data-tab="home">
-      Strona główna
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-info" id="tab-info" data-tab="info">
-      Informacje
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news" data-tab="news">
-      Aktualności
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-forms" id="tab-forms" data-tab="forms">
-      Formularze
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
-      Kontakt
-    </button>
-    <button class="tab tab-alert" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
-      Zgłoszenie awarii
-    </button>
-  </nav>
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <button type="button" class="top-brand" data-go-tab="home" aria-label="Strona główna — Spółka Wodna Wietrzno">
+        <span class="top-brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 48 56" width="40" height="46" focusable="false">
+            <path fill="#1a4a7a" d="M24 2C14 16 8 24.5 8 34a16 16 0 0 0 32 0C40 24.5 34 16 24 2Z"/>
+            <path fill="#e8f2fc" d="M24 14c-5.5 8-9 13-9 18.5a9 9 0 0 0 18 0C33 27 29.5 22 24 14Z"/>
+            <path fill="#3b82c4" d="M15.5 36.5c2.2-1.6 4.6-2.4 8.5-2.4s6.3.8 8.5 2.4c.7.5.4 1.6-.5 1.6h-16c-.9 0-1.2-1.1-.5-1.6Z"/>
+          </svg>
+        </span>
+        <span class="top-brand-text">
+          <span class="top-brand-title">Spółka Wodna Wodociągowa</span>
+          <span class="top-brand-sub">Wietrzno · Łęki Dukielskie</span>
+        </span>
+      </button>
 
-  <header class="site-header">
+      <nav class="tabs" role="tablist" aria-label="Sekcje strony">
+        <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" data-tab="home">
+          Strona główna
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-info" id="tab-info" data-tab="info">
+          Informacje
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news" data-tab="news">
+          Aktualności
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-forms" id="tab-forms" data-tab="forms">
+          Formularze
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
+          Kontakt
+        </button>
+        <button class="tab tab-alert" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
+          Zgłoszenie awarii
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="site-header">
     <div class="brand-block">
       <p class="brand-mark">Wietrzno - Łęki Dukielskie · Podkarpacie</p>
       <h1 class="brand-name">Spółka Wodna<br />Wodociągu Wiejskiego</h1>
       <p class="brand-lead">Niezawodne zaopatrzenie w wodę dla mieszkańców naszej gminy.</p>
     </div>
-  </header>
+  </div>
 
   <main class="panels">
     <section class="panel is-active" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
@@ -362,7 +380,7 @@
     <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
   </footer>
 
-  <script src="config.js?v=31"></script>
-  <script src="script.js?v=31"></script>
+  <script src="config.js?v=32"></script>
+  <script src="script.js?v=32"></script>
 </body>
 </html>
