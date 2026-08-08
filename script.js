@@ -417,27 +417,51 @@
       if (homeList) homeList.innerHTML = html;
     }
 
-    // Apps Script: tylko gdy ma faktyczne posty (pusta tablica = brak treści w chmurze).
+    function mergePosts(primary, secondary) {
+      const byId = new Map();
+      for (const post of secondary || []) {
+        if (post?.id) byId.set(String(post.id), post);
+      }
+      // Wpisy z chmury nadpisują lokalne o tym samym id.
+      for (const post of primary || []) {
+        if (post?.id) byId.set(String(post.id), post);
+      }
+      return [...byId.values()];
+    }
+
+    let remotePosts = [];
+    let localPosts = [];
+
     try {
       if (scriptUrl) {
         const response = await fetch(scriptUrl, { method: "GET" });
         const result = await response.json();
-        if (result?.success && Array.isArray(result.posts) && result.posts.length) {
-          renderNewsList(result.posts);
-          return;
+        if (result?.success && Array.isArray(result.posts)) {
+          remotePosts = result.posts;
         }
       }
     } catch {
-      // fallback do lokalnego pliku
+      // zostaje lokalny plik
     }
 
     try {
       const response = await fetch(`data/news.json?v=${Date.now()}`);
       const data = await response.json();
-      renderNewsList(data.posts || []);
+      localPosts = Array.isArray(data.posts) ? data.posts : [];
     } catch {
-      showNewsError();
+      if (!remotePosts.length) {
+        showNewsError();
+        return;
+      }
     }
+
+    const posts = mergePosts(remotePosts, localPosts);
+    if (!posts.length) {
+      renderNewsList([]);
+      return;
+    }
+
+    renderNewsList(posts);
   }
 
   loadNewsPosts();
