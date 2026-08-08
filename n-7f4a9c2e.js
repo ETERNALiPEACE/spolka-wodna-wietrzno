@@ -86,7 +86,7 @@
 
   function extractSafeSizeClass(el) {
     if (!(el instanceof HTMLElement)) return "";
-    const sizes = [14, 16, 18, 20, 24];
+    const sizes = [12, 14, 16, 18, 20, 24];
     for (const size of sizes) {
       if (el.classList.contains(`news-text-${size}`)) return `news-text-${size}`;
     }
@@ -278,6 +278,8 @@
     }
   }
 
+  const FONT_SIZES = [12, 14, 16, 18, 20, 24];
+
   function applyFontSize(sizeValue) {
     if (!bodyEditor) return;
     restoreEditorSelection();
@@ -292,6 +294,14 @@
 
     syncHiddenBody();
     syncFontSizeSelect(size);
+  }
+
+  function stepFontSize(delta) {
+    const current = Number(fontSizeSelect?.value) || 16;
+    let idx = FONT_SIZES.indexOf(current);
+    if (idx < 0) idx = FONT_SIZES.indexOf(16);
+    const nextIdx = Math.min(FONT_SIZES.length - 1, Math.max(0, idx + Number(delta || 0)));
+    applyFontSize(FONT_SIZES[nextIdx]);
   }
 
   let savedEditorRange = null;
@@ -361,17 +371,25 @@
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
     const formatBtn = target.closest("[data-format]");
+    const sizeStepBtn = target.closest("[data-size-step]");
     const colorWrap = target.closest(".news-format-color-wrap");
-    const sizeWrap = target.closest(".news-format-size-wrap");
-    if (!formatBtn && !colorWrap && !sizeWrap) return;
+    const sizeSelect = target.closest(".news-format-size-select");
+    if (!formatBtn && !sizeStepBtn && !colorWrap && !sizeSelect) return;
     saveEditorSelection();
-    // Format buttons: block focus steal. Inputs/select: leave native behavior.
-    if (formatBtn) event.preventDefault();
+    // Format/step buttons: block focus steal. Color/select: leave native behavior.
+    if (formatBtn || sizeStepBtn) event.preventDefault();
   });
 
   formatToolbar?.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
+
+    const sizeStepBtn = target.closest("[data-size-step]");
+    if (sizeStepBtn) {
+      stepFontSize(sizeStepBtn.getAttribute("data-size-step"));
+      return;
+    }
+
     const btn = target.closest("[data-format]");
     if (!btn) return;
     applyFormat(btn.getAttribute("data-format"));

@@ -409,7 +409,7 @@
 
   function extractSafeSizeClass(el) {
     if (!(el instanceof HTMLElement)) return "";
-    const sizes = [14, 16, 18, 20, 24];
+    const sizes = [12, 14, 16, 18, 20, 24];
     for (const size of sizes) {
       if (el.classList.contains(`news-text-${size}`)) return `news-text-${size}`;
     }

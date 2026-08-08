@@ -794,6 +794,11 @@ body {
   line-height: 1.55;
 }
 
+.news-item-body .news-text-12 {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .news-item-body .news-text-14,
 .news-item-body .news-text-sm {
   font-size: 14px;
