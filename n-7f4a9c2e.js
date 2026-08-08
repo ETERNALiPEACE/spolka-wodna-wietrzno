@@ -276,6 +276,9 @@
     } else {
       fontSizeSelect.value = "16";
     }
+    if (fontSizeDisplay) {
+      fontSizeDisplay.textContent = fontSizeSelect.value;
+    }
   }
 
   const FONT_SIZES = [12, 14, 16, 18, 20, 24];
@@ -354,9 +357,10 @@
     syncHiddenBody();
   }
 
+  const fontSizeSelect = document.getElementById("news-font-size");
+  const fontSizeDisplay = document.getElementById("news-font-size-display");
   const colorInput = document.getElementById("news-text-color");
   const colorSwatch = document.getElementById("news-text-color-swatch");
-  const fontSizeSelect = document.getElementById("news-font-size");
 
   function syncColorSwatch(colorValue) {
     if (!colorSwatch) return;

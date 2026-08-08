@@ -161,32 +161,47 @@
   height: 2.5rem;
 }
 
-.news-format-size-select {
-  appearance: none;
-  -webkit-appearance: none;
+.news-format-size-box {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   box-sizing: border-box;
   height: 2.5rem;
   min-width: 3.4rem;
-  margin: 0;
-  padding: 0 1.55rem 0 0.65rem;
+  padding: 0 1.55rem 0 0.7rem;
   border: 1px solid var(--line);
   border-radius: 0.65rem;
   background:
     #fff
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%234b5563' d='M1 1l4 4 4-4'/%3E%3C/svg%3E")
     no-repeat right 0.55rem center;
-  color: var(--deep);
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: calc(2.5rem - 2px);
-  vertical-align: middle;
-  cursor: pointer;
-  overflow: visible;
 }
 
-.news-format-size-select:focus {
-  outline: none;
+.news-format-size-value {
+  display: block;
+  color: var(--deep);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.news-format-size-select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.news-format-size-box:focus-within {
   border-color: var(--lake);
 }
 
