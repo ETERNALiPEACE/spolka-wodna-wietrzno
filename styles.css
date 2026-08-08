@@ -228,10 +228,6 @@ body {
 }
 
 @media (max-width: 860px) {
-  :root {
-    --top-bar-h: 9.75rem;
-  }
-
   .top-bar-inner {
     padding: 0.9rem 0.85rem;
     flex-wrap: wrap;
