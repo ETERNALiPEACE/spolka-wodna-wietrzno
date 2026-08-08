@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=34" />
+  <link rel="stylesheet" href="styles.css?v=35" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -65,10 +65,64 @@
           Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
           Znajdziesz tu informacje o spółce, aktualności, formularze oraz kontakt do biura.
         </p>
-        <div class="home-actions">
-          <button type="button" class="btn" data-go-tab="news">Aktualności</button>
-          <button type="button" class="btn btn-ghost" data-go-tab="report">Zgłoś awarię</button>
-          <button type="button" class="btn btn-ghost" data-go-tab="contact">Kontakt</button>
+
+        <div class="home-tiles" aria-label="Szybkie akcje">
+          <article class="home-tile home-tile--alert">
+            <div class="home-tile-head">
+              <svg class="home-tile-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M14.7 5.3a1 1 0 0 1 0 1.4l-1.3 1.3 3.6 3.6 1.3-1.3a1 1 0 1 1 1.4 1.4l-8 8a1 1 0 0 1-1.4 0l-3.6-3.6 8-8a1 1 0 0 1 1.4 0Zm-7.1 9.9 2.2 2.2 1.1-1.1-2.2-2.2-1.1 1.1ZM4.2 19.1a1.75 1.75 0 0 0 2.5 0l.4-.4-2.5-2.5-.4.4a1.75 1.75 0 0 0 0 2.5Z"/>
+              </svg>
+              <span>Zgłoś awarię</span>
+            </div>
+            <div class="home-tile-body">
+              <p class="home-tile-label">Zgłoszenie awarii</p>
+              <a class="home-tile-phone" href="tel:+48887467078">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M7.2 3.5c.5-.5 1.3-.6 1.9-.2l2.1 1.3c.6.4.8 1.2.5 1.8l-.9 1.9a1.4 1.4 0 0 0 .3 1.6l2.9 2.9c.4.4 1.1.5 1.6.3l1.9-.9c.6-.3 1.4-.1 1.8.5l1.3 2.1c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.7.7-1.7 1-2.7.8-2.4-.4-5.2-2.1-7.8-4.7S4.5 9.9 4.1 7.5c-.2-1 .1-2 .8-2.7l1.3-1.3Z"/>
+                </svg>
+                <span>887 467 078</span>
+              </a>
+              <p class="home-tile-label">Firma świadcząca usługi naprawcze awarii</p>
+              <a class="home-tile-phone" href="tel:+48604306458">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M7.2 3.5c.5-.5 1.3-.6 1.9-.2l2.1 1.3c.6.4.8 1.2.5 1.8l-.9 1.9a1.4 1.4 0 0 0 .3 1.6l2.9 2.9c.4.4 1.1.5 1.6.3l1.9-.9c.6-.3 1.4-.1 1.8.5l1.3 2.1c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.7.7-1.7 1-2.7.8-2.4-.4-5.2-2.1-7.8-4.7S4.5 9.9 4.1 7.5c-.2-1 .1-2 .8-2.7l1.3-1.3Z"/>
+                </svg>
+                <span>604 306 458</span>
+              </a>
+              <button type="button" class="home-tile-btn" data-go-tab="report">Formularz online</button>
+            </div>
+          </article>
+
+          <article class="home-tile home-tile--connect">
+            <div class="home-tile-head">
+              <svg class="home-tile-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 14.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4Zm0-9.7c-1.9 0-3.2 1.2-3.2 2.9 0 .5.4.9.9.9s.9-.4.9-.9c0-.7.5-1.2 1.4-1.2.8 0 1.3.4 1.3 1.1 0 .5-.2.8-.9 1.3l-.5.4c-.8.6-1.2 1.2-1.2 2.2v.3c0 .5.4.9.9.9s.9-.4.9-.9v-.2c0-.4.1-.6.7-1.1l.5-.4c1.1-.8 1.6-1.6 1.6-2.7 0-1.8-1.4-2.9-3.3-2.9Z"/>
+              </svg>
+              <span>Jak podłączyć wodę?</span>
+            </div>
+            <div class="home-tile-body">
+              <p class="home-tile-text">
+                Instrukcja krok po kroku co należy zrobić oraz jakie wnioski złożyć,
+                aby podłączyć wodę do domu.
+              </p>
+              <button type="button" class="home-tile-btn" data-go-tab="info">Szczegółowe informacje</button>
+            </div>
+          </article>
+
+          <article class="home-tile home-tile--forms">
+            <div class="home-tile-head">
+              <svg class="home-tile-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M7 2h7l5 5v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L14 3.5ZM8 12h8v1.5H8V12Zm0 3.5h8V17H8v-1.5Zm0-7h4V10H8V8.5Z"/>
+              </svg>
+              <span>Wnioski</span>
+            </div>
+            <div class="home-tile-body">
+              <p class="home-tile-text">
+                Na podstronie wnioski znajdziesz wszystkie potrzebne dokumenty.
+              </p>
+              <button type="button" class="home-tile-btn" data-go-tab="forms">Wnioski do pobrania</button>
+            </div>
+          </article>
         </div>
 
         <div class="home-news">
@@ -116,6 +170,22 @@
               Awarię lub usterkę zgłosisz w zakładce <strong>Zgłoszenie awarii</strong>.
             </p>
           </article>
+        </div>
+
+        <div class="info-section" id="jak-podlaczyc-wode">
+          <h3 class="info-section-title">Jak podłączyć wodę?</h3>
+          <p class="info-section-lead">
+            Kolejność działań przy podłączaniu wody do nieruchomości.
+          </p>
+          <ol class="connect-steps">
+            <li>Pobierz i wypełnij formularz wniosku o wydanie warunków przyłączenia (zakładka Formularze).</li>
+            <li>Złóż wniosek w biurze spółki wraz z wymaganymi załącznikami.</li>
+            <li>Odbierz warunki przyłączenia i wykonaj przyłącze zgodnie z wytycznymi.</li>
+            <li>Zgłoś gotowość do odbioru przyłącza i podpisz umowę na dostawę wody.</li>
+          </ol>
+          <p>
+            <button type="button" class="btn" data-go-tab="forms">Przejdź do wniosków</button>
+          </p>
         </div>
 
         <div class="info-section">
@@ -376,7 +446,7 @@
     <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
   </footer>
 
-  <script src="config.js?v=34"></script>
-  <script src="script.js?v=34"></script>
+  <script src="config.js?v=35"></script>
+  <script src="script.js?v=35"></script>
 </body>
 </html>

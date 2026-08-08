@@ -845,6 +845,145 @@ body {
   border: 1px solid var(--line);
 }
 
+.home-tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.15rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 760px) {
+  .home-tiles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+}
+
+.home-tile {
+  --tile: var(--lake);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(26, 74, 122, 0.1);
+  border-bottom: 5px solid var(--tile);
+  border-radius: 10px;
+  box-shadow: 0 12px 28px rgba(26, 74, 122, 0.1);
+  overflow: hidden;
+  min-height: 100%;
+}
+
+.home-tile--alert {
+  --tile: #c62828;
+}
+
+.home-tile--connect {
+  --tile: #2b6cb0;
+}
+
+.home-tile--forms {
+  --tile: #163a5f;
+}
+
+.home-tile-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.9rem 0.9rem 0;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  background: var(--tile);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.home-tile-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+}
+
+.home-tile-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  flex: 1;
+  padding: 1.15rem 1rem 1.35rem;
+  text-align: center;
+}
+
+.home-tile-label {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.home-tile-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.home-tile-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--deep);
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+}
+
+.home-tile-phone svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--tile);
+  flex-shrink: 0;
+}
+
+.home-tile-phone:hover {
+  color: var(--tile);
+}
+
+.home-tile-phone:focus-visible {
+  outline: 2px solid var(--tile);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.home-tile-btn {
+  appearance: none;
+  border: 0;
+  margin-top: 0.35rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 6px;
+  background: var(--tile);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.home-tile-btn:hover {
+  filter: brightness(0.94);
+}
+
+.home-tile-btn:focus-visible {
+  outline: 2px solid var(--tile);
+  outline-offset: 3px;
+}
+
 .home-news {
   margin-top: 2.25rem;
   padding-top: 1.75rem;
