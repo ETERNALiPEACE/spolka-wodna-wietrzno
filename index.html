@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -276,16 +276,55 @@
             <textarea id="description" name="description" rows="5" required></textarea>
           </div>
 
-          <div class="field">
-            <label for="noticed">Data i godzina zauważenia</label>
-            <input
-              id="noticed"
-              name="noticed"
-              type="datetime-local"
-              class="datetime-input"
-              step="60"
-            />
-            <p class="field-hint">Wybierz datę i godzinę z kalendarza (nie trzeba wpisywać ręcznie).</p>
+          <div class="field datetime-field">
+            <label for="noticed-display">Data i godzina zauważenia</label>
+            <input type="hidden" id="noticed" name="noticed" value="" />
+            <button
+              type="button"
+              id="noticed-display"
+              class="datetime-trigger"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              aria-controls="noticed-popover"
+            >
+              Wybierz datę i godzinę
+            </button>
+            <div
+              id="noticed-popover"
+              class="datetime-popover"
+              role="dialog"
+              aria-label="Wybór daty i godziny"
+              hidden
+            >
+              <div class="datetime-popover-inner">
+                <div class="datetime-calendar">
+                  <div class="datetime-cal-head">
+                    <button type="button" class="datetime-nav" data-nav="-1" aria-label="Poprzedni miesiąc">‹</button>
+                    <p class="datetime-month" id="noticed-month"></p>
+                    <button type="button" class="datetime-nav" data-nav="1" aria-label="Następny miesiąc">›</button>
+                  </div>
+                  <div class="datetime-weekdays" aria-hidden="true">
+                    <span>pon</span><span>wto</span><span>śro</span><span>czw</span><span>pią</span><span>sob</span><span>nie</span>
+                  </div>
+                  <div class="datetime-days" id="noticed-days"></div>
+                  <div class="datetime-cal-actions">
+                    <button type="button" class="datetime-link" data-action="clear">Wyczyść</button>
+                    <button type="button" class="datetime-link" data-action="today">Dzisiaj</button>
+                  </div>
+                </div>
+                <div class="datetime-time">
+                  <div class="datetime-time-col" aria-label="Godzina">
+                    <p class="datetime-time-label">Godz.</p>
+                    <div class="datetime-time-list" id="noticed-hours"></div>
+                  </div>
+                  <div class="datetime-time-col" aria-label="Minuta">
+                    <p class="datetime-time-label">Min.</p>
+                    <div class="datetime-time-list" id="noticed-minutes"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="field-hint">Wybierz datę i godzinę z kalendarza.</p>
           </div>
 
           <div class="form-actions">
@@ -342,7 +381,7 @@
     <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
   </footer>
 
-  <script src="config.js?v=2"></script>
-  <script src="script.js?v=2"></script>
+  <script src="config.js?v=3"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>
