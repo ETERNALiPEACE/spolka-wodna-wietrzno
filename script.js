@@ -186,8 +186,13 @@
       });
     }
 
-    trigger.addEventListener("click", () => {
+    trigger.addEventListener("click", (event) => {
+      event.stopPropagation();
       setOpen(popover.hidden);
+    });
+
+    popover.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
 
     popover.querySelectorAll("[data-nav]").forEach((btn) => {
@@ -214,7 +219,7 @@
       render();
     });
 
-    document.addEventListener("click", (event) => {
+    document.addEventListener("pointerdown", (event) => {
       const target = event.target;
       if (!(target instanceof Node)) return;
       if (popover.hidden) return;
