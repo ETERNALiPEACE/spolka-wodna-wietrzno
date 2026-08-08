@@ -32,6 +32,19 @@
     if (type) reportStatus.classList.add(type);
   }
 
+  function formatNoticed(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "—";
+
+    const date = new Date(raw);
+    if (Number.isNaN(date.getTime())) return raw;
+
+    return new Intl.DateTimeFormat("pl-PL", {
+      dateStyle: "long",
+      timeStyle: "short",
+    }).format(date);
+  }
+
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => activate(tab.dataset.tab));
   });
@@ -73,6 +86,7 @@
       }
 
       const data = new FormData(reportForm);
+      const noticedRaw = String(data.get("noticed") || "").trim();
       const payload = {
         name: String(data.get("name") || "").trim(),
         email: String(data.get("email") || "").trim(),
@@ -80,7 +94,7 @@
         address: String(data.get("address") || "").trim(),
         type: String(data.get("type") || "").trim(),
         description: String(data.get("description") || "").trim(),
-        noticed: String(data.get("noticed") || "").trim() || "—",
+        noticed: formatNoticed(noticedRaw),
       };
 
       if (submitBtn) submitBtn.disabled = true;
