@@ -273,6 +273,7 @@
 
   const colorInput = document.getElementById("news-text-color");
   const colorSwatch = document.getElementById("news-text-color-swatch");
+  const colorBtn = document.getElementById("news-color-btn");
 
   function syncColorSwatch(colorValue) {
     if (!colorSwatch) return;
@@ -286,7 +287,7 @@
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
     saveEditorSelection();
-    const btn = target.closest("[data-format]");
+    const btn = target.closest("[data-format], #news-color-btn");
     if (btn) {
       // Zachowaj zaznaczenie w edytorze.
       event.preventDefault();
@@ -299,6 +300,11 @@
     const btn = target.closest("[data-format]");
     if (!btn) return;
     applyFormat(btn.getAttribute("data-format"));
+  });
+
+  colorBtn?.addEventListener("click", () => {
+    saveEditorSelection();
+    colorInput?.click();
   });
 
   colorInput?.addEventListener("input", () => {
