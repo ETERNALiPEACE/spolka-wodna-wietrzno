@@ -4,9 +4,7 @@ window.MAIL_CONFIG = {
 };
 
 window.NEWS_CONFIG = {
-  // Po wdrożeniu skryptu z apps-script/News.gs wklej tu adres /exec
+  // Tylko publiczny adres skryptu — hasła NIE trzymaj w tym pliku / na GitHubie.
+  // Hasło ustawiasz wyłącznie w Google Apps Script (apps-script/News.gs po wdrożeniu).
   scriptUrl: "",
-  // SHA-256 hasła do panelu redakcji (bez jawnego hasła w kodzie)
-  adminPasswordHash:
-    "07ca2a95a69ebe99af711871de7edd2c0eb275b9d1153492d87430868ea028ae",
 };

@@ -1,33 +1,41 @@
 /**
  * Skrypt Google Apps Script do przechowywania aktualności.
  *
+ * WAŻNE O HAŚLE:
+ * - Hasło wpisz TYLKO tutaj, w edytorze Apps Script (po wdrożeniu).
+ * - NIE wklejaj prawdziwego hasła z powrotem do repozytorium GitHub.
+ * - Publiczna strona sprawdza hasło przez ten skrypt, więc w kodzie GitHuba go nie ma.
+ *
  * 1. Wejdź na https://script.google.com/ → Nowy projekt
  * 2. Wklej ten kod i zapisz
- * 3. Wdróż → Nowa wdrożenie → Aplikacja internetowa
+ * 3. Ustaw własne hasło w ADMIN_PASSWORD poniżej
+ * 4. Wdróż → Nowa wdrożenie → Aplikacja internetowa
  *    - Wykonuje jako: Ja
  *    - Kto ma dostęp: Każdy
- * 4. Skopiuj URL zakończony na /exec do config.js → NEWS_CONFIG.scriptUrl
- * 5. Ustaw poniżej własne hasło (to samo, którego używasz w panelu redakcji)
+ * 5. Skopiuj URL zakończony na /exec do config.js → NEWS_CONFIG.scriptUrl
+ * 6. Przy każdej zmianie hasła zrób NOWE wdrożenie (lub wersję) skryptu
  */
 
 var ADMIN_PASSWORD = "WSTAW_WLASNE_HASLO";
 var PROPERTY_KEY = "NEWS_POSTS";
 
 function doGet() {
+  // Lista postów jest publiczna — bez hasła.
   return jsonOutput({ success: true, posts: getPosts() });
 }
 
 function doPost(e) {
   try {
     var data = JSON.parse((e.postData && e.postData.contents) || "{}");
+    var action = String(data.action || "");
+
     if (String(data.password || "") !== ADMIN_PASSWORD) {
       return jsonOutput({ success: false, message: "Nieprawidłowe hasło." });
     }
 
-    var action = String(data.action || "");
     var posts = getPosts();
 
-    if (action === "list") {
+    if (action === "login" || action === "list") {
       return jsonOutput({ success: true, posts: posts });
     }
 

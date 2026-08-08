@@ -1,7 +1,6 @@
 (() => {
   const newsConfig = window.NEWS_CONFIG || {};
   const scriptUrl = String(newsConfig.scriptUrl || "").trim();
-  const adminPasswordHash = String(newsConfig.adminPasswordHash || "").toLowerCase();
 
   const loginPanel = document.getElementById("login-panel");
   const editorPanel = document.getElementById("editor-panel");
@@ -22,16 +21,6 @@
 
   let sessionPassword = "";
   let posts = [];
-
-  const LOCAL_KEY = "spolka-wodna-news-posts";
-
-  async function sha256Hex(value) {
-    const data = new TextEncoder().encode(String(value));
-    const digest = await crypto.subtle.digest("SHA-256", data);
-    return Array.from(new Uint8Array(digest))
-      .map((byte) => byte.toString(16).padStart(2, "0"))
-      .join("");
-  }
 
   function setStatus(el, message, type) {
     if (!el) return;
@@ -68,24 +57,11 @@
     return `post-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 
-  function readLocalPosts() {
-    try {
-      const raw = localStorage.getItem(LOCAL_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : null;
-    } catch {
-      return null;
-    }
-  }
-
-  function writeLocalPosts(items) {
-    localStorage.setItem(LOCAL_KEY, JSON.stringify(items));
-  }
-
   async function apiRequest(payload) {
     if (!scriptUrl) {
-      throw new Error("Brak NEWS_CONFIG.scriptUrl");
+      throw new Error(
+        "Brak NEWS_CONFIG.scriptUrl. Wdróż apps-script/News.gs i wklej adres /exec do config.js."
+      );
     }
     const response = await fetch(scriptUrl, {
       method: "POST",
@@ -100,23 +76,8 @@
   }
 
   async function loadPosts() {
-    if (scriptUrl) {
-      const result = await apiRequest({ action: "list" });
-      posts = sortPosts(result.posts || []);
-      writeLocalPosts(posts);
-      return posts;
-    }
-
-    const local = readLocalPosts();
-    if (local) {
-      posts = sortPosts(local);
-      return posts;
-    }
-
-    const response = await fetch(`data/news.json?v=${Date.now()}`);
-    const data = await response.json();
-    posts = sortPosts(data.posts || []);
-    writeLocalPosts(posts);
+    const result = await apiRequest({ action: "list" });
+    posts = sortPosts(result.posts || []);
     return posts;
   }
 
@@ -163,36 +124,8 @@
 
   function updateStorageHint() {
     if (!storageHint) return;
-    if (scriptUrl) {
-      storageHint.textContent =
-        "Posty są zapisywane online (Google Apps Script) i od razu pojawiają się na stronie publicznej.";
-      return;
-    }
-    storageHint.innerHTML =
-      "Tryb lokalny: posty zapisują się w tej przeglądarce. Aby były widoczne dla wszystkich, wdroż backend aktualności i uzupełnij <code>NEWS_CONFIG.scriptUrl</code> — albo pobierz plik JSON i wgraj go do <code>data/news.json</code>.";
-  }
-
-  function downloadNewsJson() {
-    const blob = new Blob([JSON.stringify({ posts }, null, 2)], {
-      type: "application/json",
-    });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "news.json";
-    link.click();
-    URL.revokeObjectURL(url);
-  }
-
-  function ensureDownloadButton() {
-    if (scriptUrl || document.getElementById("download-json-btn")) return;
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = "download-json-btn";
-    btn.className = "btn btn-ghost";
-    btn.textContent = "Pobierz news.json";
-    btn.addEventListener("click", downloadNewsJson);
-    document.querySelector(".admin-list-head")?.appendChild(btn);
+    storageHint.textContent =
+      "Hasło jest sprawdzane po stronie Google Apps Script (poza GitHubem). Posty zapisują się online i od razu widać je na stronie.";
   }
 
   async function refresh() {
@@ -209,24 +142,36 @@
   loginForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     const password = String(new FormData(loginForm).get("password") || "");
-    if (!adminPasswordHash) {
-      setStatus(loginStatus, "Brak konfiguracji dostępu.", "is-error");
+
+    if (!scriptUrl) {
+      setStatus(
+        loginStatus,
+        "Panel wymaga wdrożonego skryptu News.gs. Hasła nie trzymamy już w GitHubie — ustaw je tylko w Apps Script i wklej scriptUrl do config.js.",
+        "is-error"
+      );
       return;
     }
 
-    const hash = await sha256Hex(password);
-    if (hash !== adminPasswordHash) {
-      setStatus(loginStatus, "Nieprawidłowe hasło.", "is-error");
+    if (!password) {
+      setStatus(loginStatus, "Podaj hasło.", "is-error");
       return;
     }
 
     sessionPassword = password;
-    loginPanel.hidden = true;
-    editorPanel.hidden = false;
-    updateStorageHint();
-    ensureDownloadButton();
-    resetForm();
-    await refresh();
+    setStatus(loginStatus, "Sprawdzanie hasła…");
+
+    try {
+      await apiRequest({ action: "login" });
+      loginPanel.hidden = true;
+      editorPanel.hidden = false;
+      updateStorageHint();
+      resetForm();
+      await refresh();
+      setStatus(loginStatus, "", null);
+    } catch (error) {
+      sessionPassword = "";
+      setStatus(loginStatus, error.message || "Nieprawidłowe hasło.", "is-error");
+    }
   });
 
   resetBtn?.addEventListener("click", () => {
@@ -252,22 +197,11 @@
     const isEdit = Boolean(fieldId.value);
 
     try {
-      if (scriptUrl) {
-        const result = await apiRequest({
-          action: isEdit ? "update" : "add",
-          post,
-        });
-        posts = sortPosts(result.posts || []);
-      } else {
-        if (isEdit) {
-          posts = posts.map((item) => (item.id === post.id ? post : item));
-        } else {
-          posts = [post, ...posts.filter((item) => item.id !== post.id)];
-        }
-        posts = sortPosts(posts);
-        writeLocalPosts(posts);
-      }
-
+      const result = await apiRequest({
+        action: isEdit ? "update" : "add",
+        post,
+      });
+      posts = sortPosts(result.posts || []);
       renderPosts();
       resetForm();
       setStatus(
@@ -300,13 +234,8 @@
     if (!window.confirm("Usunąć ten post?")) return;
 
     try {
-      if (scriptUrl) {
-        const result = await apiRequest({ action: "delete", id: deleteId });
-        posts = sortPosts(result.posts || []);
-      } else {
-        posts = posts.filter((item) => item.id !== deleteId);
-        writeLocalPosts(posts);
-      }
+      const result = await apiRequest({ action: "delete", id: deleteId });
+      posts = sortPosts(result.posts || []);
       renderPosts();
       if (fieldId.value === deleteId) resetForm();
       setStatus(editorStatus, "Post został usunięty.", "is-ok");
@@ -314,9 +243,4 @@
       setStatus(editorStatus, error.message || "Nie udało się usunąć posta.", "is-error");
     }
   });
-
-  // Publiczna strona też czyta lokalne posty, gdy brak scriptUrl (ta sama przeglądarka).
-  window.NEWS_LOCAL_BRIDGE = {
-    key: LOCAL_KEY,
-  };
 })();
