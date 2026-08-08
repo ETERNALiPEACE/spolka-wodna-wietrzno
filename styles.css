@@ -71,7 +71,6 @@ body {
   border-bottom: 1px solid var(--line);
   box-shadow: 0 8px 28px rgba(26, 74, 122, 0.08);
   backdrop-filter: blur(10px);
-  animation: riseIn 0.7s ease both;
 }
 
 .top-bar-inner {
@@ -117,18 +116,6 @@ body {
   margin: 0 auto;
   padding: clamp(2rem, 6vw, 4.5rem) 1.5rem 2rem;
   text-align: center;
-  animation: riseIn 0.9s ease both;
-}
-
-@keyframes riseIn {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .brand-mark {
@@ -279,17 +266,21 @@ body {
 
 .panel {
   display: none;
-  animation: panelIn 0.45s ease both;
 }
 
 .panel.is-active {
   display: block;
 }
 
+/* Tylko przy zmianie zakładki — nie przy pierwszym wczytaniu / odświeżeniu */
+.panel.is-entering {
+  animation: panelIn 0.35s ease both;
+}
+
 @keyframes panelIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;

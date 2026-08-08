@@ -10,7 +10,10 @@
     year.textContent = String(new Date().getFullYear());
   }
 
-  function activate(tabId) {
+  function activate(tabId, options = {}) {
+    const animate = options.animate === true;
+    const nextId = `panel-${tabId}`;
+
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === tabId;
       tab.classList.toggle("is-active", active);
@@ -18,11 +21,25 @@
     });
 
     panels.forEach((panel) => {
-      const active = panel.id === `panel-${tabId}`;
+      const active = panel.id === nextId;
+      const wasActive = panel.classList.contains("is-active");
+      panel.classList.remove("is-entering");
       panel.classList.toggle("is-active", active);
       panel.hidden = !active;
+      if (animate && active && !wasActive) {
+        // Restart animacji wejścia tylko przy realnej zmianie zakładki.
+        void panel.offsetWidth;
+        panel.classList.add("is-entering");
+      }
     });
   }
+
+  panels.forEach((panel) => {
+    panel.addEventListener("animationend", (event) => {
+      if (event.target !== panel || event.animationName !== "panelIn") return;
+      panel.classList.remove("is-entering");
+    });
+  });
 
   function setStatus(message, type) {
     if (!reportStatus) return;
@@ -252,14 +269,14 @@
   const dateTimePicker = initDateTimePicker();
 
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => activate(tab.dataset.tab));
+    tab.addEventListener("click", () => activate(tab.dataset.tab, { animate: true }));
   });
 
   document.querySelectorAll("[data-go-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       const target = button.getAttribute("data-go-tab");
       if (!target) return;
-      activate(target);
+      activate(target, { animate: true });
       document.getElementById(`tab-${target}`)?.focus();
     });
   });
@@ -279,7 +296,7 @@
       const delta = event.key === "ArrowRight" ? 1 : -1;
       const next = (currentIndex + delta + tabs.length) % tabs.length;
       tabs[next].focus();
-      activate(tabs[next].dataset.tab);
+      activate(tabs[next].dataset.tab, { animate: true });
     }
   });
 
@@ -671,13 +688,21 @@
       if (fingerprint === shownFingerprint) return;
       shownFingerprint = fingerprint;
       renderNewsList(next);
+      if (list) list.removeAttribute("aria-busy");
+      if (homeList) homeList.removeAttribute("aria-busy");
     }
 
     function showNewsError() {
       const html =
         '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
-      if (list) list.innerHTML = html;
-      if (homeList) homeList.innerHTML = html;
+      if (list) {
+        list.innerHTML = html;
+        list.removeAttribute("aria-busy");
+      }
+      if (homeList) {
+        homeList.innerHTML = html;
+        homeList.removeAttribute("aria-busy");
+      }
     }
 
     const cached = readNewsCache(cacheKey);
