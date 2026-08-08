@@ -285,11 +285,12 @@
   formatToolbar?.addEventListener("mousedown", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
-    const control = target.closest("[data-format], .news-format-color-wrap");
-    if (!control) return;
+    const formatBtn = target.closest("[data-format]");
+    const colorWrap = target.closest(".news-format-color-wrap");
+    if (!formatBtn && !colorWrap) return;
     saveEditorSelection();
-    // Zachowaj zaznaczenie w edytorze.
-    event.preventDefault();
+    // Format buttons: block focus steal. Color input: leave native click alone.
+    if (formatBtn) event.preventDefault();
   });
 
   formatToolbar?.addEventListener("click", (event) => {
