@@ -38,9 +38,10 @@ body {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(59, 130, 196, 0.28), transparent 55%),
-    radial-gradient(ellipse 70% 45% at 95% 5%, rgba(26, 74, 122, 0.16), transparent 50%),
-    linear-gradient(165deg, #d6e8fa 0%, #f3f8fd 42%, #e4effa 100%);
+    /* Słabszy błękit u samej góry — mniej przebija przy belce podczas malowania */
+    radial-gradient(ellipse 80% 50% at 10% 8%, rgba(59, 130, 196, 0.16), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 95% 18%, rgba(26, 74, 122, 0.1), transparent 50%),
+    linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
 }
 
 .wave-layer {
@@ -67,10 +68,10 @@ body {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.96);
+  /* Pełne krycie — półprzezroczystość + blur pokazywały niebieskie tło przy odświeżeniu */
+  background: #fff;
   border-bottom: 1px solid var(--line);
   box-shadow: 0 8px 28px rgba(26, 74, 122, 0.08);
-  backdrop-filter: blur(10px);
 }
 
 .top-bar-inner {

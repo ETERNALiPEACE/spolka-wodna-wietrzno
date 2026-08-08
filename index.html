@@ -5,10 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spółka Wodna Wietrzno</title>
   <meta name="description" content="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie. Informacje, aktualności, formularze i kontakt." />
+  <!-- Krytyczne tło od razu — bez niebieskiego błysku belki przed styles.css / fontami -->
+  <style>
+    html, body { margin: 0; background: #f3f8fd; }
+    .top-bar {
+      background: #fff;
+      border-bottom: 1px solid rgba(43, 108, 176, 0.18);
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css?v=42" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=41" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </noscript>
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -23,6 +35,8 @@
           width="220"
           height="90"
           alt="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie"
+          decoding="async"
+          fetchpriority="high"
         />
       </button>
 
@@ -455,7 +469,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=41"></script>
-  <script src="script.js?v=41"></script>
+  <script src="config.js?v=42"></script>
+  <script src="script.js?v=42"></script>
 </body>
 </html>
