@@ -1,17 +1,4 @@
-/* Konfiguracja wysyłki formularza awarii (EmailJS).
- *
- * 1. Załóż konto na https://www.emailjs.com/
- * 2. Dodaj usługę e-mail i szablon wiadomości.
- * 3. Uzupełnij poniższe wartości.
- * 4. Szablon powinien przyjmować pola: name, phone, email, address, type, description, noticed.
- *
- * Gdy publicKey jest pusty, formularz otworzy klienta poczty (mailto) jako zapas.
- */
-window.SITE_CONFIG = {
-  reportEmail: "leogamepl@gmail.com",
-  emailjs: {
-    publicKey: "",
-    serviceId: "",
-    templateId: ""
-  }
+window.MAIL_CONFIG = {
+  scriptUrl:
+    "https://script.google.com/macros/s/AKfycbyxUvc1phmGg_7TuNrNSvDFXAShHZPZuA6LZ5abHq_E2mxePy8fmLEdmcay6GA5FWBM5A/exec",
 };

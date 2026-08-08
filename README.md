@@ -21,5 +21,4 @@ python3 -m http.server 8080
 
 ## Formularz awarii
 
-Uzupełnij dane EmailJS w `config.js`, aby zgłoszenia szły automatycznie na `leogamepl@gmail.com`.
-Bez konfiguracji formularz otwiera klienta poczty (`mailto`).
+Wysyłka idzie przez Google Apps Script — adres endpointu jest w `config.js` (`MAIL_CONFIG.scriptUrl`).
