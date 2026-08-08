@@ -361,6 +361,10 @@ body {
   margin: 0.45rem 0;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .info-block h3 {
   margin: 0 0 0.75rem;
   font-size: 0.85rem;
