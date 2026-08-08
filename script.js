@@ -328,7 +328,10 @@
 
         reportForm.reset();
         dateTimePicker?.reset();
-        setStatus("Zgłoszenie zostało wysłane na leogamepl@gmail.com.", "is-ok");
+        setStatus(
+          "Państwa zgłoszenie zostało skierowane do rozpatrzenia przez Spółkę Wodną. Odpowiedź zostanie udzielona w najkrótszym możliwym terminie.",
+          "is-ok"
+        );
       } catch {
         setStatus(
           "Nie udało się połączyć z wysyłką. Sprawdź URL w config.js i czy skrypt jest wdrożony publicznie.",
