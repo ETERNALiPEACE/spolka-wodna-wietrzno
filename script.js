@@ -5,6 +5,28 @@
   const reportForm = document.getElementById("report-form");
   const reportStatus = document.getElementById("report-status");
   const submitBtn = reportForm?.querySelector('button[type="submit"]');
+  const topBar = document.getElementById("top-bar");
+  const topBarSpace = document.getElementById("top-bar-space");
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+
+  function syncTopBarSpace() {
+    if (!topBar) return;
+    const height = Math.ceil(topBar.getBoundingClientRect().height);
+    if (!height) return;
+    document.documentElement.style.setProperty("--top-bar-h", `${height}px`);
+    if (topBarSpace) topBarSpace.style.height = `${height}px`;
+  }
+
+  syncTopBarSpace();
+  if (topBar && typeof ResizeObserver !== "undefined") {
+    const ro = new ResizeObserver(() => syncTopBarSpace());
+    ro.observe(topBar);
+  }
+  window.addEventListener("load", syncTopBarSpace, { once: true });
 
   if (year) {
     year.textContent = String(new Date().getFullYear());
