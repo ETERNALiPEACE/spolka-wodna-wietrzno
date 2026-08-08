@@ -91,12 +91,12 @@ body {
   background: transparent;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
   padding: 0;
   cursor: pointer;
   text-align: left;
   color: inherit;
   flex-shrink: 0;
+  line-height: 0;
 }
 
 .top-brand:focus-visible {
@@ -106,31 +106,9 @@ body {
 }
 
 .top-brand-logo {
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-
-.top-brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  line-height: 1.2;
-}
-
-.top-brand-title {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  text-transform: uppercase;
-  color: var(--deep);
-}
-
-.top-brand-sub {
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--lake);
+  display: block;
+  width: clamp(160px, 22vw, 220px);
+  height: auto;
 }
 
 .site-header {
@@ -272,12 +250,8 @@ body {
 }
 
 @media (max-width: 560px) {
-  .top-brand-title {
-    font-size: 0.8rem;
-  }
-
-  .top-brand-sub {
-    font-size: 0.74rem;
+  .top-brand-logo {
+    width: min(200px, 72vw);
   }
 
   .tab {
