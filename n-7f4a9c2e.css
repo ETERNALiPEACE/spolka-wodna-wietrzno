@@ -15,14 +15,17 @@
 
 /* Ekran logowania: węższa karta, wyśrodkowana na stronie */
 .admin-shell:has(#editor-panel[hidden]) {
-  width: min(100% - 2rem, 26rem);
+  width: min(100% - 2rem, 28rem);
   min-height: 100vh;
   align-content: center;
-  padding: 1.5rem 0;
+  padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem);
+  box-sizing: border-box;
 }
 
 .admin-shell:has(#editor-panel[hidden]) .admin-header {
   justify-content: space-between;
+  gap: 0.75rem;
+  padding-inline: 0.15rem;
 }
 
 .admin-shell:has(#editor-panel[hidden]) #login-panel {
@@ -39,6 +42,17 @@
 
 .admin-header .brand-mark {
   margin: 0;
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  max-width: min(100%, 14rem);
+}
+
+.admin-shell:has(#editor-panel[hidden]) .admin-header .btn {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.88rem;
 }
 
 .admin-card h2 {
