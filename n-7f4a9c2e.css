@@ -1,5 +1,7 @@
 .admin-body {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-shell {
@@ -8,6 +10,23 @@
   padding: 2rem 0 3rem;
   display: grid;
   gap: 1.25rem;
+  flex: 1;
+}
+
+/* Ekran logowania: węższa karta, wyśrodkowana na stronie */
+.admin-shell:has(#editor-panel[hidden]) {
+  width: min(100% - 2rem, 26rem);
+  min-height: 100vh;
+  align-content: center;
+  padding: 1.5rem 0;
+}
+
+.admin-shell:has(#editor-panel[hidden]) .admin-header {
+  justify-content: space-between;
+}
+
+.admin-shell:has(#editor-panel[hidden]) #login-panel {
+  width: 100%;
 }
 
 .admin-header {
@@ -23,16 +42,30 @@
 }
 
 .admin-card h2 {
-  margin: 0 0 0.5rem;
+  margin: 0 0 1rem;
   font-family: var(--font-display);
   font-size: 1.45rem;
   color: var(--deep);
+  text-align: center;
+}
+
+.admin-shell:has(#editor-panel[hidden]) .admin-card {
+  padding: 1.75rem 1.5rem;
 }
 
 .admin-login-form {
-  max-width: 24rem;
+  width: 100%;
+  max-width: none;
   display: grid;
   gap: 1rem;
+}
+
+.admin-login-form .form-actions {
+  margin-top: 0.25rem;
+}
+
+.admin-login-form .form-actions .btn {
+  width: 100%;
 }
 
 .admin-editor {
