@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spółka Wodna Wietrzno</title>
+  <meta name="description" content="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie. Informacje, aktualności, formularze i kontakt." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="wave-layer" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="brand-block">
+      <p class="brand-mark">Wietrzno - Łęki Dukielskie · Podkarpacie</p>
+      <h1 class="brand-name">Spółka Wodna<br />Wodociągu Wiejskiego</h1>
+      <p class="brand-lead">Niezawodne zaopatrzenie w wodę dla mieszkańców naszej gminy.</p>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sekcje strony">
+    <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" data-tab="home">
+      Strona główna
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-info" id="tab-info" data-tab="info">
+      Informacje
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news" data-tab="news">
+      Aktualności
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-structure" id="tab-structure" data-tab="structure">
+      Struktura spółki
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-statute" id="tab-statute" data-tab="statute">
+      Statut
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-forms" id="tab-forms" data-tab="forms">
+      Formularze
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
+      Zgłoszenie awarii
+    </button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
+      Kontakt
+    </button>
+  </nav>
+
+  <main class="panels">
+    <section class="panel is-active" id="panel-home" role="tabpanel" aria-labelledby="tab-home">
+      <div class="panel-inner home-panel">
+        <h2>Witamy</h2>
+        <p class="lead">
+          Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
+          Znajdziesz tu informacje o spółce, aktualności, formularze oraz kontakt do biura.
+        </p>
+        <div class="home-actions">
+          <button type="button" class="btn" data-go-tab="news">Aktualności</button>
+          <button type="button" class="btn btn-ghost" data-go-tab="report">Zgłoś awarię</button>
+          <button type="button" class="btn btn-ghost" data-go-tab="contact">Kontakt</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-info" role="tabpanel" aria-labelledby="tab-info" hidden>
+      <div class="panel-inner">
+        <h2>O spółce</h2>
+        <p class="lead">
+          Spółka Wodna Wodociągu Wiejskiego z siedzibą w Wietrznie prowadzi eksploatację
+          sieci wodociągowej oraz dba o ciągłość i jakość dostaw wody dla mieszkańców.
+        </p>
+
+        <div class="info-grid">
+          <article class="info-block">
+            <h3>Zakres działalności</h3>
+            <ul>
+              <li>Zaopatrzenie w wodę pitną</li>
+              <li>Utrzymanie i modernizacja sieci</li>
+              <li>Obsługa awarii i zgłoszeń</li>
+              <li>Przyłączanie nowych odbiorców</li>
+            </ul>
+          </article>
+          <article class="info-block">
+            <h3>Godziny pracy biura</h3>
+            <ul>
+              <li>Poniedziałek–piątek: 7:00–15:00</li>
+              <li>Sobota–niedziela: nieczynne</li>
+              <li>Awarie: zakładka „Zgłoszenie awarii”</li>
+            </ul>
+          </article>
+          <article class="info-block">
+            <h3>Dla mieszkańców</h3>
+            <p>
+              W zakładce <strong>Formularze</strong> pobierzesz wniosek PDF.
+              Awarię lub usterkę zgłosisz w zakładce <strong>Zgłoszenie awarii</strong>.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-news" role="tabpanel" aria-labelledby="tab-news" hidden>
+      <div class="panel-inner">
+        <h2>Aktualności</h2>
+        <p class="lead">Komunikaty i informacje dla mieszkańców Wietrzna oraz Łęk Dukielskich.</p>
+
+        <ul class="news-list">
+          <li class="news-item">
+            <time datetime="2026-08-01">1 sierpnia 2026</time>
+            <h3>Godziny pracy biura w sierpniu</h3>
+            <p>
+              Przypominamy, że biuro spółki czynne jest od poniedziałku do piątku
+              w godzinach 7:00–15:00. Sprawy awaryjne prosimy zgłaszać przez zakładkę
+              „Zgłoszenie awarii”.
+            </p>
+          </li>
+          <li class="news-item">
+            <time datetime="2026-07-15">15 lipca 2026</time>
+            <h3>Jakość wody — wyniki badań</h3>
+            <p>
+              Badania jakości wody pitnej przebiegły pomyślnie. Woda dostarczana
+              odbiorcom spełnia obowiązujące normy.
+            </p>
+          </li>
+          <li class="news-item">
+            <time datetime="2026-06-20">20 czerwca 2026</time>
+            <h3>Prace eksploatacyjne na sieci</h3>
+            <p>
+              Trwają bieżące prace utrzymaniowe sieci wodociągowej. O ewentualnych
+              krótkich przerwach w dostawie będziemy informować na bieżąco.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-structure" role="tabpanel" aria-labelledby="tab-structure" hidden>
+      <div class="panel-inner">
+        <h2>Struktura spółki</h2>
+        <p class="lead">
+          Organy Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
+        </p>
+
+        <div class="org-list">
+          <article class="org-block">
+            <h3>Walne Zgromadzenie</h3>
+            <p>Najwyższy organ spółki. Podejmuje uchwały w sprawach określonych w statucie, w tym wybór władz oraz zatwierdzanie sprawozdań.</p>
+          </article>
+          <article class="org-block">
+            <h3>Zarząd</h3>
+            <ul class="org-people">
+              <li>
+                <span class="org-role">Prezes Zarządu</span>
+                <span class="org-name">do uzupełnienia</span>
+              </li>
+              <li>
+                <span class="org-role">Członek Zarządu</span>
+                <span class="org-name">do uzupełnienia</span>
+              </li>
+            </ul>
+          </article>
+          <article class="org-block">
+            <h3>Komisja Rewizyjna</h3>
+            <ul class="org-people">
+              <li>
+                <span class="org-role">Przewodniczący</span>
+                <span class="org-name">do uzupełnienia</span>
+              </li>
+              <li>
+                <span class="org-role">Członek</span>
+                <span class="org-name">do uzupełnienia</span>
+              </li>
+              <li>
+                <span class="org-role">Członek</span>
+                <span class="org-name">do uzupełnienia</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-statute" role="tabpanel" aria-labelledby="tab-statute" hidden>
+      <div class="panel-inner">
+        <h2>Statut</h2>
+        <p class="lead">
+          Statut określa cele, organy oraz zasady działania Spółki Wodnej Wodociągu Wiejskiego.
+        </p>
+
+        <ul class="form-list">
+          <li class="form-item">
+            <div>
+              <h3>Statut spółki (PDF)</h3>
+              <p>Aktualny dokument statutowy do pobrania i wglądu.</p>
+            </div>
+            <a
+              class="btn"
+              href="dokumenty/statut.pdf"
+              download="Statut-Spolki-Wodnej.pdf"
+            >Pobierz PDF</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-forms" role="tabpanel" aria-labelledby="tab-forms" hidden>
+      <div class="panel-inner">
+        <h2>Formularze do pobrania</h2>
+        <p class="lead">
+          Pobierz formularz PDF, wypełnij go i złóż w biurze spółki.
+        </p>
+
+        <ul class="form-list">
+          <li class="form-item">
+            <div>
+              <h3>Formularz wniosku o wydanie warunków przyłączenia</h3>
+              <p>Dokument PDF do pobrania i wypełnienia.</p>
+            </div>
+            <a
+              class="btn"
+              href="formularze/Formularz-wniosku-o-wydanie-warunkow-przylaczenia.pdf"
+              download="Formularz-wniosku-o-wydanie-warunkow-przylaczenia.pdf"
+            >Pobierz PDF</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-report" role="tabpanel" aria-labelledby="tab-report" hidden>
+      <div class="panel-inner">
+        <h2>Zgłoszenie awarii / usterki</h2>
+        <p class="lead">
+          Wypełnij formularz i kliknij „Wyślij” — zgłoszenie trafi automatycznie na
+          <strong>leogamepl@gmail.com</strong>.
+        </p>
+
+        <form id="report-form" class="report-form" novalidate>
+          <div class="form-row">
+            <div class="field">
+              <label for="name">Imię i nazwisko zgłaszającego</label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="phone">Telefon kontaktowy</label>
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Adres e-mail</label>
+            <input id="email" name="email" type="email" required autocomplete="email" />
+          </div>
+
+          <div class="field">
+            <label for="address">Adres miejsca awarii</label>
+            <input id="address" name="address" type="text" required autocomplete="street-address" />
+          </div>
+
+          <div class="field">
+            <label for="type">Rodzaj zgłoszenia</label>
+            <select id="type" name="type" required>
+              <option value="">Wybierz…</option>
+              <option>Brak wody</option>
+              <option>Niskie ciśnienie</option>
+              <option>Wyciek / uszkodzenie sieci</option>
+              <option>Zła jakość wody</option>
+              <option>Inne</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="description">Opis usterki</label>
+            <textarea id="description" name="description" rows="5" required></textarea>
+          </div>
+
+          <div class="field">
+            <label for="noticed">Data i godzina zauważenia</label>
+            <input id="noticed" name="noticed" type="text" placeholder="np. 7.08.2026, godz. 10:30" />
+          </div>
+
+          <div class="form-actions">
+            <button class="btn" type="submit">Wyślij</button>
+          </div>
+
+          <p id="report-status" class="form-status" hidden></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-contact" role="tabpanel" aria-labelledby="tab-contact" hidden>
+      <div class="panel-inner">
+        <h2>Kontakt</h2>
+        <p class="lead">Zapraszamy do kontaktu z biurem spółki.</p>
+
+        <div class="contact-layout">
+          <address class="contact-card">
+            <p class="contact-name">Spółka Wodna Wodociągu Wiejskiego</p>
+            <p>38-451 Wietrzno<br />woj. podkarpackie</p>
+            <dl class="contact-meta">
+              <div>
+                <dt>NIP</dt>
+                <dd>6842024949</dd>
+              </div>
+              <div>
+                <dt>Telefon</dt>
+                <dd><a href="tel:+48134333054">(13) 433 30 54</a></dd>
+              </div>
+            </dl>
+            <a
+              class="map-link"
+              href="https://www.google.com/maps?q=49.59788629174893,21.703655558521557"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Otwórz w Google Maps</a>
+          </address>
+
+          <div class="map-wrap">
+            <iframe
+              title="Lokalizacja biura Spółki Wodnej w Wietrznie"
+              src="https://maps.google.com/maps?q=49.59788629174893,21.703655558521557&amp;z=16&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
