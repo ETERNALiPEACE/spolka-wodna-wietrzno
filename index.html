@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=7" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -31,12 +31,6 @@
     </button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news" data-tab="news">
       Aktualności
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-structure" id="tab-structure" data-tab="structure">
-      Struktura spółki
-    </button>
-    <button class="tab" role="tab" aria-selected="false" aria-controls="panel-statute" id="tab-statute" data-tab="statute">
-      Statut
     </button>
     <button class="tab" role="tab" aria-selected="false" aria-controls="panel-forms" id="tab-forms" data-tab="forms">
       Formularze
@@ -99,6 +93,71 @@
             </p>
           </article>
         </div>
+
+        <div class="info-section">
+          <h3 class="info-section-title">Struktura spółki</h3>
+          <p class="info-section-lead">
+            Organy Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
+          </p>
+
+          <div class="org-list">
+            <article class="org-block">
+              <h3>Walne Zgromadzenie</h3>
+              <p>Najwyższy organ spółki. Podejmuje uchwały w sprawach określonych w statucie, w tym wybór władz oraz zatwierdzanie sprawozdań.</p>
+            </article>
+            <article class="org-block">
+              <h3>Zarząd</h3>
+              <ul class="org-people">
+                <li>
+                  <span class="org-role">Prezes Zarządu</span>
+                  <span class="org-name">do uzupełnienia</span>
+                </li>
+                <li>
+                  <span class="org-role">Członek Zarządu</span>
+                  <span class="org-name">do uzupełnienia</span>
+                </li>
+              </ul>
+            </article>
+            <article class="org-block">
+              <h3>Komisja Rewizyjna</h3>
+              <ul class="org-people">
+                <li>
+                  <span class="org-role">Przewodniczący</span>
+                  <span class="org-name">do uzupełnienia</span>
+                </li>
+                <li>
+                  <span class="org-role">Członek</span>
+                  <span class="org-name">do uzupełnienia</span>
+                </li>
+                <li>
+                  <span class="org-role">Członek</span>
+                  <span class="org-name">do uzupełnienia</span>
+                </li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <div class="info-section">
+          <h3 class="info-section-title">Statut</h3>
+          <p class="info-section-lead">
+            Statut określa cele, organy oraz zasady działania Spółki Wodnej Wodociągu Wiejskiego.
+          </p>
+
+          <ul class="form-list">
+            <li class="form-item">
+              <div>
+                <h3>Statut spółki (PDF)</h3>
+                <p>Aktualny dokument statutowy do pobrania i wglądu.</p>
+              </div>
+              <a
+                class="btn"
+                href="dokumenty/statut.pdf"
+                download="Statut-Spolki-Wodnej.pdf"
+              >Pobierz PDF</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -132,75 +191,6 @@
               Trwają bieżące prace utrzymaniowe sieci wodociągowej. O ewentualnych
               krótkich przerwach w dostawie będziemy informować na bieżąco.
             </p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-structure" role="tabpanel" aria-labelledby="tab-structure" hidden>
-      <div class="panel-inner">
-        <h2>Struktura spółki</h2>
-        <p class="lead">
-          Organy Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
-        </p>
-
-        <div class="org-list">
-          <article class="org-block">
-            <h3>Walne Zgromadzenie</h3>
-            <p>Najwyższy organ spółki. Podejmuje uchwały w sprawach określonych w statucie, w tym wybór władz oraz zatwierdzanie sprawozdań.</p>
-          </article>
-          <article class="org-block">
-            <h3>Zarząd</h3>
-            <ul class="org-people">
-              <li>
-                <span class="org-role">Prezes Zarządu</span>
-                <span class="org-name">do uzupełnienia</span>
-              </li>
-              <li>
-                <span class="org-role">Członek Zarządu</span>
-                <span class="org-name">do uzupełnienia</span>
-              </li>
-            </ul>
-          </article>
-          <article class="org-block">
-            <h3>Komisja Rewizyjna</h3>
-            <ul class="org-people">
-              <li>
-                <span class="org-role">Przewodniczący</span>
-                <span class="org-name">do uzupełnienia</span>
-              </li>
-              <li>
-                <span class="org-role">Członek</span>
-                <span class="org-name">do uzupełnienia</span>
-              </li>
-              <li>
-                <span class="org-role">Członek</span>
-                <span class="org-name">do uzupełnienia</span>
-              </li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" id="panel-statute" role="tabpanel" aria-labelledby="tab-statute" hidden>
-      <div class="panel-inner">
-        <h2>Statut</h2>
-        <p class="lead">
-          Statut określa cele, organy oraz zasady działania Spółki Wodnej Wodociągu Wiejskiego.
-        </p>
-
-        <ul class="form-list">
-          <li class="form-item">
-            <div>
-              <h3>Statut spółki (PDF)</h3>
-              <p>Aktualny dokument statutowy do pobrania i wglądu.</p>
-            </div>
-            <a
-              class="btn"
-              href="dokumenty/statut.pdf"
-              download="Statut-Spolki-Wodnej.pdf"
-            >Pobierz PDF</a>
           </li>
         </ul>
       </div>
@@ -385,7 +375,7 @@
     <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
   </footer>
 
-  <script src="config.js?v=6"></script>
-  <script src="script.js?v=6"></script>
+  <script src="config.js?v=7"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
