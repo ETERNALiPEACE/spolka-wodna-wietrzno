@@ -354,15 +354,21 @@ body {
   margin: 0 0 1.25rem;
   padding-left: 1.25rem;
   color: var(--ink);
-  max-width: 40rem;
+  max-width: none;
 }
 
 .connect-steps li {
   margin: 0.45rem 0;
 }
 
-.nowrap {
+.connect-step-first {
   white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .connect-step-first {
+    white-space: normal;
+  }
 }
 
 .info-block h3 {
