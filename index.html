@@ -6,40 +6,26 @@
   <title>Spółka Wodna Wietrzno</title>
   <meta name="description" content="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie. Informacje, aktualności, formularze i kontakt." />
   <meta name="theme-color" content="#ffffff" />
-  <!-- Belka fixed + białe tło u góry od pierwszego piksela — bez niebieskiego paska / duchów treści -->
+  <!-- Krytyczny CSS belki: sticky, bez JS / spacera -->
   <style>
-    :root { --top-bar-h: 7.25rem; }
     html, body {
       margin: 0;
       background: #fff;
     }
     .page-bg {
       position: fixed;
-      top: var(--top-bar-h);
-      left: 0;
-      right: 0;
-      bottom: 0;
+      inset: 0;
       z-index: -2;
       background: linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
     }
     .wave-layer { display: none; }
     .top-bar {
-      position: fixed;
+      position: sticky;
       top: 0;
-      left: 0;
-      right: 0;
       z-index: 100;
       background: #fff;
       border-bottom: 1px solid rgba(43, 108, 176, 0.18);
       box-shadow: 0 8px 28px rgba(26, 74, 122, 0.08);
-      transform: translateZ(0);
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-    .top-bar-space {
-      height: var(--top-bar-h);
-      background: #fff;
-      pointer-events: none;
     }
     .top-bar-inner {
       display: flex;
@@ -96,7 +82,6 @@
       flex-shrink: 0;
     }
     @media (max-width: 860px) {
-      :root { --top-bar-h: 9.75rem; }
       .top-bar-inner { flex-wrap: wrap; padding: 0.9rem 0.85rem; }
       .tabs {
         width: 100%;
@@ -107,13 +92,8 @@
       .tab-alert { margin-left: auto; }
     }
   </style>
-  <script>
-    /* Bez przywracania scrolla — inaczej przy odświeżeniu treść miga w strefie belki */
-    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
-  </script>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=44" />
+  <link rel="stylesheet" href="styles.css?v=45" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -126,7 +106,7 @@
   <div class="page-bg" aria-hidden="true"></div>
   <div class="wave-layer" aria-hidden="true"></div>
 
-  <header class="top-bar" id="top-bar">
+  <header class="top-bar">
     <div class="top-bar-inner">
       <button type="button" class="top-brand" data-go-tab="home" aria-label="Strona główna — Spółka Wodna Wietrzno">
         <img
@@ -162,7 +142,6 @@
       </nav>
     </div>
   </header>
-  <div class="top-bar-space" id="top-bar-space" aria-hidden="true"></div>
 
   <div class="site-header">
     <div class="brand-block">
@@ -570,7 +549,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=44"></script>
-  <script src="script.js?v=44"></script>
+  <script src="config.js?v=45"></script>
+  <script src="script.js?v=45"></script>
 </body>
 </html>

@@ -10,7 +10,6 @@
   --glow: rgba(59, 130, 196, 0.32);
   --font-display: "Literata", Georgia, serif;
   --font-body: "Manrope", system-ui, sans-serif;
-  --top-bar-h: 7.25rem;
 }
 
 *,
@@ -22,6 +21,8 @@
 html {
   scroll-behavior: smooth;
   background: #fff;
+  /* clip nie psuje sticky (w przeciwieństwie do overflow-x: hidden) */
+  overflow-x: clip;
 }
 
 body {
@@ -32,19 +33,16 @@ body {
   background: #fff;
   line-height: 1.6;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .page-bg {
   position: fixed;
-  top: var(--top-bar-h);
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   z-index: -2;
   background:
-    radial-gradient(ellipse 80% 50% at 10% 0%, rgba(59, 130, 196, 0.16), transparent 55%),
-    radial-gradient(ellipse 70% 45% at 95% 12%, rgba(26, 74, 122, 0.1), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 10% 8%, rgba(59, 130, 196, 0.16), transparent 55%),
+    radial-gradient(ellipse 70% 45% at 95% 18%, rgba(26, 74, 122, 0.1), transparent 50%),
     linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
 }
 
@@ -70,23 +68,12 @@ body {
 }
 
 .top-bar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 100;
   background: #fff;
   border-bottom: 1px solid var(--line);
   box-shadow: 0 8px 28px rgba(26, 74, 122, 0.08);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.top-bar-space {
-  height: var(--top-bar-h);
-  background: #fff;
-  pointer-events: none;
 }
 
 .top-bar-inner {
