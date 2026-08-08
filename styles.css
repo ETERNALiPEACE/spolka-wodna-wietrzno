@@ -75,14 +75,15 @@ body {
 }
 
 .top-bar-inner {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0.95rem 1.35rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 1.1rem clamp(0.85rem, 2vw, 1.5rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem 1.75rem;
-  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  flex-wrap: nowrap;
 }
 
 .top-brand {
@@ -160,11 +161,12 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0.15rem 0.35rem;
-  flex-wrap: wrap;
-  margin: 0;
+  gap: 0.15rem 0.45rem;
+  flex-wrap: nowrap;
+  margin: 0 0 0 auto;
   padding: 0;
-  margin-left: auto;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .tab {
@@ -203,7 +205,7 @@ body {
 }
 
 .tab-alert {
-  margin-left: 0.55rem;
+  margin-left: 0.65rem;
   color: #fff;
   background: #c62828;
   border-color: #c62828;
@@ -212,6 +214,7 @@ body {
   text-decoration: none;
   padding: 0.7rem 1rem;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tab-alert:hover {
@@ -235,11 +238,13 @@ body {
 
 @media (max-width: 860px) {
   .top-bar-inner {
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 0.85rem;
+    flex-wrap: wrap;
   }
 
   .tabs {
     width: 100%;
+    flex-wrap: wrap;
     justify-content: flex-start;
     margin-left: 0;
   }
