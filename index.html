@@ -80,6 +80,16 @@
       margin-left: 0.65rem;
       flex-shrink: 0;
     }
+    @media (max-width: 860px) {
+      .top-bar-inner { flex-wrap: wrap; padding: 0.9rem 0.85rem; }
+      .tabs {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-left: 0;
+      }
+      .tab-alert { margin-left: auto; }
+    }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
   <link rel="stylesheet" href="styles.css?v=43" />
