@@ -154,6 +154,50 @@
   font-weight: 700;
 }
 
+.news-format-size-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  height: 2.5rem;
+  padding: 0 0.55rem 0 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: #fff;
+  color: var(--deep);
+  box-sizing: border-box;
+}
+
+.news-format-size-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.news-format-size-select {
+  appearance: none;
+  height: 1.7rem;
+  min-width: 3.1rem;
+  padding: 0 1.4rem 0 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  background:
+    #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%231a4a7a' d='M1 1l5 5 5-5'/%3E%3C/svg%3E")
+    no-repeat right 0.45rem center;
+  color: var(--deep);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.news-format-size-select:focus {
+  outline: none;
+  border-color: var(--lake);
+}
+
 .news-format-color {
   gap: 0;
   pointer-events: none;
@@ -225,19 +269,50 @@
   color: var(--muted);
 }
 
+.news-body-editor .news-text-14,
+.admin-post-body .news-text-14 {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.news-body-editor .news-text-16,
+.admin-post-body .news-text-16 {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.news-body-editor .news-text-18,
+.admin-post-body .news-text-18 {
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+.news-body-editor .news-text-20,
+.admin-post-body .news-text-20,
+.news-body-editor .news-text-lg,
+.admin-post-body .news-text-lg {
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.news-body-editor .news-text-24,
+.admin-post-body .news-text-24,
+.news-body-editor .news-text-xl,
+.admin-post-body .news-text-xl {
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.news-body-editor .news-text-sm,
+.admin-post-body .news-text-sm {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .admin-post-body {
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
-}
-
-.admin-post-body .news-text-lg {
-  font-size: 1.22em;
-  line-height: 1.35;
-}
-
-.admin-post-body .news-text-sm {
-  font-size: 0.88em;
 }
 
 .admin-post-body u {

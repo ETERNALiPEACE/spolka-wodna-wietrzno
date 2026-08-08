@@ -407,6 +407,18 @@
     return normalizeColor(el.style?.color || "");
   }
 
+  function extractSafeSizeClass(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const sizes = [14, 16, 18, 20, 24];
+    for (const size of sizes) {
+      if (el.classList.contains(`news-text-${size}`)) return `news-text-${size}`;
+    }
+    if (el.classList.contains("news-text-sm")) return "news-text-14";
+    if (el.classList.contains("news-text-lg")) return "news-text-20";
+    if (el.classList.contains("news-text-xl")) return "news-text-24";
+    return "";
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -450,13 +462,11 @@
         }
 
         if (tag === "SPAN" || tag === "FONT") {
-          const isLg = node.classList.contains("news-text-lg");
-          const isSm = node.classList.contains("news-text-sm");
+          const sizeClass = extractSafeSizeClass(node);
           const color = extractSafeColor(node);
-          if (isLg || isSm || color) {
+          if (sizeClass || color) {
             const span = document.createElement("span");
-            if (isLg) span.className = "news-text-lg";
-            if (isSm) span.className = "news-text-sm";
+            if (sizeClass) span.className = sizeClass;
             if (color) span.style.color = color;
             while (node.firstChild) span.appendChild(node.firstChild);
             node.replaceWith(span);

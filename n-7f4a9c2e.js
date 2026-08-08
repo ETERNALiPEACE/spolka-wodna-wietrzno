@@ -84,6 +84,18 @@
     return normalizeColor(el.style?.color || "");
   }
 
+  function extractSafeSizeClass(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const sizes = [14, 16, 18, 20, 24];
+    for (const size of sizes) {
+      if (el.classList.contains(`news-text-${size}`)) return `news-text-${size}`;
+    }
+    if (el.classList.contains("news-text-sm")) return "news-text-14";
+    if (el.classList.contains("news-text-lg")) return "news-text-20";
+    if (el.classList.contains("news-text-xl")) return "news-text-24";
+    return "";
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -127,13 +139,11 @@
         }
 
         if (tag === "SPAN" || tag === "FONT") {
-          const isLg = node.classList.contains("news-text-lg");
-          const isSm = node.classList.contains("news-text-sm");
+          const sizeClass = extractSafeSizeClass(node);
           const color = extractSafeColor(node);
-          if (isLg || isSm || color) {
+          if (sizeClass || color) {
             const span = document.createElement("span");
-            if (isLg) span.className = "news-text-lg";
-            if (isSm) span.className = "news-text-sm";
+            if (sizeClass) span.className = sizeClass;
             if (color) span.style.color = color;
             while (node.firstChild) span.appendChild(node.firstChild);
             node.replaceWith(span);
@@ -207,15 +217,81 @@
       const span = document.createElement("span");
       span.className = className;
       span.appendChild(range.extractContents());
+      // Usuń zagnieżdżone stare klasy rozmiaru.
+      span.querySelectorAll("[class*='news-text-']").forEach((nested) => {
+        const sizeClass = extractSafeSizeClass(nested);
+        if (!sizeClass) return;
+        while (nested.firstChild) nested.parentNode.insertBefore(nested.firstChild, nested);
+        nested.remove();
+      });
       range.insertNode(span);
       selection.removeAllRanges();
       const next = document.createRange();
       next.selectNodeContents(span);
       selection.addRange(next);
+      savedEditorRange = next.cloneRange();
       return true;
     } catch {
       return false;
     }
+  }
+
+  function unwrapFontSizeFromSelection() {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return false;
+    if (!bodyEditor.contains(selection.anchorNode)) return false;
+
+    let node = selection.anchorNode;
+    if (node?.nodeType === Node.TEXT_NODE) node = node.parentElement;
+    const sized = node instanceof HTMLElement
+      ? node.closest("[class*='news-text-']")
+      : null;
+    if (!(sized instanceof HTMLElement) || !bodyEditor.contains(sized)) return false;
+
+    const parent = sized.parentNode;
+    while (sized.firstChild) parent.insertBefore(sized.firstChild, sized);
+    sized.remove();
+    return true;
+  }
+
+  function getFontSizeAtSelection() {
+    const selection = window.getSelection();
+    if (!selection || !selection.anchorNode || !bodyEditor.contains(selection.anchorNode)) {
+      return 16;
+    }
+    let node = selection.anchorNode;
+    if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+    if (!(node instanceof HTMLElement)) return 16;
+    const sized = node.closest("[class*='news-text-']");
+    const sizeClass = sized ? extractSafeSizeClass(sized) : "";
+    const match = sizeClass.match(/news-text-(\d+)/);
+    return match ? Number(match[1]) : 16;
+  }
+
+  function syncFontSizeSelect(size) {
+    if (!fontSizeSelect) return;
+    const value = String(size || 16);
+    if ([...fontSizeSelect.options].some((opt) => opt.value === value)) {
+      fontSizeSelect.value = value;
+    } else {
+      fontSizeSelect.value = "16";
+    }
+  }
+
+  function applyFontSize(sizeValue) {
+    if (!bodyEditor) return;
+    restoreEditorSelection();
+    bodyEditor.focus();
+    const size = Number(sizeValue) || 16;
+
+    if (size === 16) {
+      unwrapFontSizeFromSelection();
+    } else {
+      wrapSelection(`news-text-${size}`);
+    }
+
+    syncHiddenBody();
+    syncFontSizeSelect(size);
   }
 
   let savedEditorRange = null;
@@ -255,10 +331,6 @@
       document.execCommand("italic", false);
     } else if (command === "underline") {
       document.execCommand("underline", false);
-    } else if (command === "larger") {
-      wrapSelection("news-text-lg");
-    } else if (command === "smaller") {
-      wrapSelection("news-text-sm");
     } else if (command === "clear") {
       document.execCommand("removeFormat", false);
       const selection = window.getSelection();
@@ -266,6 +338,7 @@
         const text = selection.toString();
         document.execCommand("insertText", false, text);
       }
+      syncFontSizeSelect(16);
     }
 
     syncHiddenBody();
@@ -273,6 +346,7 @@
 
   const colorInput = document.getElementById("news-text-color");
   const colorSwatch = document.getElementById("news-text-color-swatch");
+  const fontSizeSelect = document.getElementById("news-font-size");
 
   function syncColorSwatch(colorValue) {
     if (!colorSwatch) return;
@@ -281,15 +355,17 @@
   }
 
   syncColorSwatch(colorInput?.value || "#1a4a7a");
+  syncFontSizeSelect(16);
 
   formatToolbar?.addEventListener("mousedown", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLElement)) return;
     const formatBtn = target.closest("[data-format]");
     const colorWrap = target.closest(".news-format-color-wrap");
-    if (!formatBtn && !colorWrap) return;
+    const sizeWrap = target.closest(".news-format-size-wrap");
+    if (!formatBtn && !colorWrap && !sizeWrap) return;
     saveEditorSelection();
-    // Format buttons: block focus steal. Color input: leave native click alone.
+    // Format buttons: block focus steal. Inputs/select: leave native behavior.
     if (formatBtn) event.preventDefault();
   });
 
@@ -301,6 +377,14 @@
     applyFormat(btn.getAttribute("data-format"));
   });
 
+  fontSizeSelect?.addEventListener("mousedown", () => {
+    saveEditorSelection();
+  });
+
+  fontSizeSelect?.addEventListener("change", () => {
+    applyFontSize(fontSizeSelect.value);
+  });
+
   colorInput?.addEventListener("input", () => {
     syncColorSwatch(colorInput.value);
     applyTextColor(colorInput.value);
@@ -309,6 +393,14 @@
   colorInput?.addEventListener("change", () => {
     syncColorSwatch(colorInput.value);
     applyTextColor(colorInput.value);
+  });
+
+  bodyEditor?.addEventListener("mouseup", () => {
+    syncFontSizeSelect(getFontSizeAtSelection());
+  });
+
+  bodyEditor?.addEventListener("keyup", () => {
+    syncFontSizeSelect(getFontSizeAtSelection());
   });
 
   bodyEditor?.addEventListener("input", () => {
