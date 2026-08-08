@@ -103,6 +103,10 @@
   gap: 0.85rem;
 }
 
+#admin-posts-pagination {
+  margin-top: 1.25rem;
+}
+
 .admin-post {
   display: grid;
   gap: 0.65rem;

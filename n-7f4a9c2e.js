@@ -645,6 +645,14 @@
     refresh();
   });
 
+  postsPagination?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest("[data-admin-page]");
+    if (!(btn instanceof HTMLElement) || btn.hasAttribute("disabled")) return;
+    goToAdminPage(btn.getAttribute("data-admin-page"));
+  });
+
   postForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     syncHiddenBody();
@@ -679,6 +687,7 @@
       });
       posts = sortPosts(result.posts || []);
       syncPublicCache();
+      if (!isEdit) adminPage = 1;
       renderPosts();
       resetForm();
       setStatus(
