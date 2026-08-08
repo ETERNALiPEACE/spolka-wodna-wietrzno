@@ -58,12 +58,6 @@
   margin-bottom: 0.5rem;
 }
 
-.admin-hint {
-  margin: 0 0 1rem;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
 .admin-posts {
   list-style: none;
   margin: 0;

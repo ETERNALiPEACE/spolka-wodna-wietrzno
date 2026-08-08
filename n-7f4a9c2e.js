@@ -10,7 +10,6 @@
   const editorStatus = document.getElementById("editor-status");
   const editorTitle = document.getElementById("editor-title");
   const postsList = document.getElementById("admin-posts");
-  const storageHint = document.getElementById("storage-hint");
   const reloadBtn = document.getElementById("reload-posts-btn");
   const resetBtn = document.getElementById("reset-post-btn");
 
@@ -315,12 +314,6 @@
     editorTitle.textContent = "Edycja posta";
   }
 
-  function updateStorageHint() {
-    if (!storageHint) return;
-    storageHint.textContent =
-      "Hasło jest sprawdzane po stronie Google Apps Script (poza GitHubem). Posty zapisują się online i od razu widać je na stronie.";
-  }
-
   async function refresh() {
     setStatus(editorStatus, "Ładowanie postów…");
     try {
@@ -357,7 +350,6 @@
       await apiRequest({ action: "login" });
       loginPanel.hidden = true;
       editorPanel.hidden = false;
-      updateStorageHint();
       resetForm();
       await refresh();
       setStatus(loginStatus, "", null);
