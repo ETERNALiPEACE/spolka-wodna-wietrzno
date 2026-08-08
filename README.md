@@ -37,9 +37,9 @@ python3 -m http.server 8080
 
 Wysyłka: `MAIL_CONFIG.scriptUrl` w `config.js`.
 
-## Aktualności i hasło panelu
+## Aktualności i logowanie do panelu
 
-Hasła **nie trzymaj w GitHubie**. Ustaw je wyłącznie w Google Apps Script (`ADMIN_PASSWORD` w wdrożonym skrypcie).  
+Loginu i hasła **nie trzymaj w GitHubie**. Ustaw je wyłącznie w Google Apps Script (`ADMIN_LOGIN` i `ADMIN_PASSWORD` w wdrożonym skrypcie `News.gs`).  
 Publiczny `config.js` ma tylko `NEWS_CONFIG.scriptUrl`.
 
-Jeśli chcesz, żeby cały kod repozytorium też nie był widoczny dla obcych, ustaw repozytorium jako **prywatne** (GitHub Pages z prywatnego repo może wymagać planu Pro).
+Po zmianie loginu/hasła w Apps Script zrób nowe wdrożenie skryptu.
