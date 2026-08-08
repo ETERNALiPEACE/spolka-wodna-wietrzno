@@ -10,6 +10,7 @@
   const editorStatus = document.getElementById("editor-status");
   const editorTitle = document.getElementById("editor-title");
   const postsList = document.getElementById("admin-posts");
+  const postsPagination = document.getElementById("admin-posts-pagination");
   const reloadBtn = document.getElementById("reload-posts-btn");
   const resetBtn = document.getElementById("reset-post-btn");
 
@@ -23,6 +24,8 @@
   let sessionLogin = "";
   let sessionPassword = "";
   let posts = [];
+  const ADMIN_PAGE_SIZE = 4;
+  let adminPage = 1;
 
   function setStatus(el, message, type) {
     if (!el) return;
@@ -476,14 +479,65 @@
     return posts;
   }
 
+  function getAdminPageCount(total) {
+    return Math.max(1, Math.ceil(total / ADMIN_PAGE_SIZE));
+  }
+
+  function renderAdminPagination(total, page) {
+    if (!postsPagination) return;
+
+    const pageCount = getAdminPageCount(total);
+    if (total <= ADMIN_PAGE_SIZE) {
+      postsPagination.hidden = true;
+      postsPagination.innerHTML = "";
+      return;
+    }
+
+    adminPage = Math.min(Math.max(1, page), pageCount);
+    postsPagination.hidden = false;
+
+    const buttons = [];
+    buttons.push(
+      `<button type="button" class="news-page-btn" data-admin-page="${adminPage - 1}" ${
+        adminPage <= 1 ? "disabled" : ""
+      } aria-label="Poprzednia strona">Poprzednia</button>`
+    );
+
+    for (let i = 1; i <= pageCount; i += 1) {
+      const active = i === adminPage;
+      buttons.push(
+        `<button type="button" class="news-page-btn${active ? " is-active" : ""}" data-admin-page="${i}" ${
+          active ? 'aria-current="page"' : ""
+        }>${i}</button>`
+      );
+    }
+
+    buttons.push(
+      `<button type="button" class="news-page-btn" data-admin-page="${adminPage + 1}" ${
+        adminPage >= pageCount ? "disabled" : ""
+      } aria-label="Następna strona">Następna</button>`
+    );
+
+    postsPagination.innerHTML = `
+      <p class="news-page-status">Strona ${adminPage} z ${pageCount}</p>
+      <div class="news-page-controls">${buttons.join("")}</div>
+    `;
+  }
+
   function renderPosts() {
     if (!postsList) return;
     if (!posts.length) {
       postsList.innerHTML = '<li class="admin-empty">Brak postów. Dodaj pierwszy komunikat.</li>';
+      renderAdminPagination(0, 1);
       return;
     }
 
-    postsList.innerHTML = posts
+    const pageCount = getAdminPageCount(posts.length);
+    adminPage = Math.min(Math.max(1, adminPage), pageCount);
+    const start = (adminPage - 1) * ADMIN_PAGE_SIZE;
+    const pageItems = posts.slice(start, start + ADMIN_PAGE_SIZE);
+
+    postsList.innerHTML = pageItems
       .map(
         (post) => `
       <li class="admin-post" data-id="${escapeHtml(post.id)}">
@@ -499,6 +553,16 @@
       </li>`
       )
       .join("");
+
+    renderAdminPagination(posts.length, adminPage);
+  }
+
+  function goToAdminPage(rawPage) {
+    const next = Number(rawPage);
+    if (!Number.isFinite(next)) return;
+    adminPage = next;
+    renderPosts();
+    postsList?.scrollIntoView({ block: "nearest", behavior: "smooth" });
   }
 
   function resetForm() {
