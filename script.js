@@ -382,6 +382,56 @@
       </li>`;
   }
 
+  const NEWS_PAGE_SIZE = 10;
+  let allNewsPosts = [];
+  let newsPage = 1;
+
+  function getNewsPageCount(total) {
+    return Math.max(1, Math.ceil(total / NEWS_PAGE_SIZE));
+  }
+
+  function renderNewsPagination(total, page) {
+    const nav = document.getElementById("news-pagination");
+    if (!nav) return;
+
+    const pageCount = getNewsPageCount(total);
+    if (total <= NEWS_PAGE_SIZE) {
+      nav.hidden = true;
+      nav.innerHTML = "";
+      return;
+    }
+
+    newsPage = Math.min(Math.max(1, page), pageCount);
+    nav.hidden = false;
+
+    const buttons = [];
+    buttons.push(
+      `<button type="button" class="news-page-btn" data-news-page="${newsPage - 1}" ${
+        newsPage <= 1 ? "disabled" : ""
+      } aria-label="Poprzednia strona">Poprzednia</button>`
+    );
+
+    for (let i = 1; i <= pageCount; i += 1) {
+      const active = i === newsPage;
+      buttons.push(
+        `<button type="button" class="news-page-btn${active ? " is-active" : ""}" data-news-page="${i}" ${
+          active ? 'aria-current="page"' : ""
+        }>${i}</button>`
+      );
+    }
+
+    buttons.push(
+      `<button type="button" class="news-page-btn" data-news-page="${newsPage + 1}" ${
+        newsPage >= pageCount ? "disabled" : ""
+      } aria-label="Następna strona">Następna</button>`
+    );
+
+    nav.innerHTML = `
+      <p class="news-page-status">Strona ${newsPage} z ${pageCount}</p>
+      <div class="news-page-controls">${buttons.join("")}</div>
+    `;
+  }
+
   function renderNewsInto(listId, posts, limit) {
     const list = document.getElementById(listId);
     if (!list) return;
@@ -397,10 +447,45 @@
     list.innerHTML = visible.map(newsItemHtml).join("");
   }
 
-  function renderNewsList(posts) {
-    renderNewsInto("news-list", posts);
-    renderNewsInto("home-news-list", posts, 4);
+  function renderNewsListPage() {
+    const items = sortNewsPosts(allNewsPosts);
+    const pageCount = getNewsPageCount(items.length);
+    newsPage = Math.min(Math.max(1, newsPage), pageCount);
+    const start = (newsPage - 1) * NEWS_PAGE_SIZE;
+    const pageItems = items.slice(start, start + NEWS_PAGE_SIZE);
+
+    renderNewsInto("news-list", pageItems);
+    renderNewsPagination(items.length, newsPage);
+    renderNewsInto("home-news-list", items, 4);
   }
+
+  function renderNewsList(posts) {
+    const next = sortNewsPosts(Array.isArray(posts) ? posts : []);
+    const fingerprint = postsFingerprint(next);
+    const prevFingerprint = postsFingerprint(allNewsPosts);
+    allNewsPosts = next;
+    if (fingerprint !== prevFingerprint) {
+      newsPage = 1;
+    }
+    renderNewsListPage();
+  }
+
+  function goToNewsPage(page) {
+    const pageCount = getNewsPageCount(allNewsPosts.length);
+    const next = Math.min(Math.max(1, Number(page) || 1), pageCount);
+    if (next === newsPage) return;
+    newsPage = next;
+    renderNewsListPage();
+    document.getElementById("panel-news")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  document.getElementById("news-pagination")?.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    const btn = target.closest("[data-news-page]");
+    if (!(btn instanceof HTMLElement) || btn.hasAttribute("disabled")) return;
+    goToNewsPage(btn.getAttribute("data-news-page"));
+  });
 
   function postsFingerprint(posts) {
     return sortNewsPosts(Array.isArray(posts) ? posts : [])
