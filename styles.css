@@ -66,7 +66,7 @@ body {
 .site-header {
   max-width: 920px;
   margin: 0 auto;
-  padding: clamp(3.5rem, 10vw, 6.5rem) 1.5rem 2rem;
+  padding: clamp(2rem, 6vw, 4.5rem) 1.5rem 2rem;
   text-align: center;
   animation: riseIn 0.9s ease both;
 }
@@ -110,13 +110,14 @@ body {
 
 .tabs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: center;
   gap: 0.35rem;
   flex-wrap: wrap;
   max-width: 920px;
   margin: 0 auto;
-  padding: 0 1.25rem;
-  animation: riseIn 0.9s ease 0.15s both;
+  padding: 0.85rem 1.25rem 0;
+  animation: riseIn 0.9s ease both;
 }
 
 .tab {
@@ -148,6 +149,45 @@ body {
 .tab:focus-visible {
   outline: 2px solid var(--teal);
   outline-offset: 3px;
+}
+
+.tab-alert {
+  margin-left: auto;
+  color: #fff;
+  background: #c62828;
+  border-color: #c62828;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.tab-alert:hover {
+  color: #fff;
+  background: #b71c1c;
+  border-color: #b71c1c;
+}
+
+.tab-alert.is-active {
+  color: #fff;
+  background: #8e0000;
+  border-color: #8e0000;
+  box-shadow: none;
+}
+
+.tab-alert:focus-visible {
+  outline: 2px solid #c62828;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .tabs {
+    padding-top: 0.65rem;
+  }
+
+  .tab-alert {
+    margin-left: auto;
+    order: 1;
+    width: auto;
+  }
 }
 
 .panels {
