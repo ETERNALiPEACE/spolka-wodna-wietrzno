@@ -366,6 +366,10 @@ body {
 
 .datetime-trigger {
   appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   width: 100%;
   min-height: 2.75rem;
   padding: 0.7rem 0.85rem;
@@ -379,6 +383,19 @@ body {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.datetime-trigger-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.datetime-trigger-icon {
+  flex: 0 0 auto;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--lake);
+  opacity: 0.9;
+}
+
 .datetime-trigger:hover,
 .datetime-trigger[aria-expanded="true"] {
   border-color: var(--teal);
@@ -386,6 +403,10 @@ body {
 }
 
 .datetime-trigger.is-empty {
+  color: var(--muted);
+}
+
+.datetime-trigger.is-empty .datetime-trigger-icon {
   color: var(--muted);
 }
 

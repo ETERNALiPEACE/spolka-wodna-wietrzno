@@ -60,13 +60,14 @@
   function initDateTimePicker() {
     const hidden = document.getElementById("noticed");
     const trigger = document.getElementById("noticed-display");
+    const triggerText = trigger?.querySelector(".datetime-trigger-text");
     const popover = document.getElementById("noticed-popover");
     const monthLabel = document.getElementById("noticed-month");
     const daysEl = document.getElementById("noticed-days");
     const hoursEl = document.getElementById("noticed-hours");
     const minutesEl = document.getElementById("noticed-minutes");
 
-    if (!hidden || !trigger || !popover || !monthLabel || !daysEl || !hoursEl || !minutesEl) {
+    if (!hidden || !trigger || !triggerText || !popover || !monthLabel || !daysEl || !hoursEl || !minutesEl) {
       return null;
     }
 
@@ -83,12 +84,12 @@
     function syncTrigger() {
       if (!selected) {
         hidden.value = "";
-        trigger.textContent = "Wybierz datę i godzinę";
+        triggerText.textContent = "Wybierz datę i godzinę";
         trigger.classList.add("is-empty");
         return;
       }
       hidden.value = toLocalValue(selected);
-      trigger.textContent = formatDisplay(selected);
+      triggerText.textContent = formatDisplay(selected);
       trigger.classList.remove("is-empty");
     }
 
