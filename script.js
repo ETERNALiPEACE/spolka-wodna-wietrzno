@@ -10,8 +10,45 @@
     year.textContent = String(new Date().getFullYear());
   }
 
+  const TAB_STORAGE_KEY = "spolka-wodna-active-tab";
+
+  function isValidTab(tabId) {
+    return Boolean(tabId && document.getElementById(`panel-${tabId}`));
+  }
+
+  function rememberTab(tabId) {
+    try {
+      sessionStorage.setItem(TAB_STORAGE_KEY, tabId);
+    } catch {
+      // private mode / zablokowany storage
+    }
+  }
+
+  function rememberedTab() {
+    try {
+      const saved = sessionStorage.getItem(TAB_STORAGE_KEY);
+      return isValidTab(saved) ? saved : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function syncTabUrl(tabId) {
+    const nextHash = `#${tabId}`;
+    if (window.location.hash === nextHash) return;
+
+    if (window.history?.replaceState) {
+      const url = new URL(window.location.href);
+      url.hash = tabId;
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+      return;
+    }
+
+    window.location.hash = tabId;
+  }
+
   function activate(tabId) {
-    if (!tabId || !document.getElementById(`panel-${tabId}`)) return;
+    if (!isValidTab(tabId)) return;
 
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === tabId;
@@ -25,25 +62,19 @@
       panel.hidden = !active;
     });
 
-    const nextHash = `#${tabId}`;
-    if (window.location.hash !== nextHash) {
-      if (window.history?.replaceState) {
-        window.history.replaceState(null, "", nextHash);
-      } else {
-        window.location.hash = tabId;
-      }
-    }
+    rememberTab(tabId);
+    syncTabUrl(tabId);
   }
 
   function tabFromLocation() {
     const hash = (window.location.hash || "").replace(/^#/, "");
-    if (hash && document.getElementById(`panel-${hash}`)) return hash;
+    if (isValidTab(hash)) return hash;
 
     const params = new URLSearchParams(window.location.search);
     const tab = params.get("tab");
-    if (tab && document.getElementById(`panel-${tab}`)) return tab;
+    if (isValidTab(tab)) return tab;
 
-    return null;
+    return rememberedTab();
   }
 
   function setStatus(message, type) {
