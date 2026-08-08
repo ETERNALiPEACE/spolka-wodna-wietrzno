@@ -156,6 +156,14 @@
 
 .news-format-color {
   gap: 0;
+  pointer-events: none;
+}
+
+.news-format-color-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 2.5rem;
 }
 
 .news-format-color-inner {
@@ -182,16 +190,16 @@
   flex: 0 0 0.85rem;
 }
 
-#news-text-color {
-  position: fixed;
-  left: -9999px;
-  top: 0;
-  width: 2.5rem;
-  height: 2.5rem;
+.news-format-color-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   border: 0;
   padding: 0;
   margin: 0;
+  cursor: pointer;
 }
 
 .news-body-editor {
