@@ -373,51 +373,36 @@
     });
   }
 
-  function newsItemHtml(post) {
-    return `
-      <li class="news-item">
-        <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
-        <h3>${escapeHtml(post.title)}</h3>
-        <p>${escapeHtml(post.body)}</p>
-      </li>`;
-  }
-
-  function renderNewsInto(listId, posts, limit) {
-    const list = document.getElementById(listId);
+  function renderNewsList(posts) {
+    const list = document.getElementById("news-list");
     if (!list) return;
 
     const items = sortNewsPosts(Array.isArray(posts) ? posts : []);
-    const visible = typeof limit === "number" ? items.slice(0, limit) : items;
-
-    if (!visible.length) {
+    if (!items.length) {
       list.innerHTML = '<li class="news-item news-empty">Brak aktualności do wyświetlenia.</li>';
       return;
     }
 
-    list.innerHTML = visible.map(newsItemHtml).join("");
-  }
-
-  function renderNewsList(posts) {
-    renderNewsInto("news-list", posts);
-    renderNewsInto("home-news-list", posts, 4);
+    list.innerHTML = items
+      .map(
+        (post) => `
+      <li class="news-item">
+        <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(post.body)}</p>
+      </li>`
+      )
+      .join("");
   }
 
   async function loadNewsPosts() {
     const list = document.getElementById("news-list");
-    const homeList = document.getElementById("home-news-list");
-    if (!list && !homeList) return;
+    if (!list) return;
 
     const newsConfig = window.NEWS_CONFIG || {};
     const scriptUrl = String(newsConfig.scriptUrl || "").trim();
-    const localKey = "spolka-wodna-news-posts";
 
-    function showNewsError() {
-      const html =
-        '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
-      if (list) list.innerHTML = html;
-      if (homeList) homeList.innerHTML = html;
-    }
-
+    // Apps Script: tylko gdy ma faktyczne posty (pusta tablica = brak treści w chmurze).
     try {
       if (scriptUrl) {
         const response = await fetch(scriptUrl, { method: "GET" });
@@ -428,20 +413,7 @@
         }
       }
     } catch {
-      // fallback poniżej
-    }
-
-    try {
-      const localRaw = localStorage.getItem(localKey);
-      if (localRaw) {
-        const localPosts = JSON.parse(localRaw);
-        if (Array.isArray(localPosts) && localPosts.length) {
-          renderNewsList(localPosts);
-          return;
-        }
-      }
-    } catch {
-      // fallback poniżej
+      // fallback do lokalnego pliku
     }
 
     try {
@@ -449,7 +421,8 @@
       const data = await response.json();
       renderNewsList(data.posts || []);
     } catch {
-      showNewsError();
+      list.innerHTML =
+        '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
     }
   }
 
