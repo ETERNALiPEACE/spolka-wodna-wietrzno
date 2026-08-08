@@ -561,6 +561,7 @@
       await apiRequest({ action: "login" });
       loginPanel.hidden = true;
       editorPanel.hidden = false;
+      editorPanel.removeAttribute("aria-hidden");
       resetForm();
       await refresh();
       setStatus(loginStatus, "", null);
