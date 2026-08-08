@@ -169,12 +169,6 @@
   color: var(--muted);
 }
 
-.news-format-hint {
-  margin: 0.45rem 0 0;
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-
 .admin-post-body {
   margin: 0;
   color: var(--muted);
