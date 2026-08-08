@@ -40,6 +40,10 @@
   gap: 1.25rem;
 }
 
+.admin-editor[hidden] {
+  display: none !important;
+}
+
 .admin-actions {
   display: flex;
   flex-wrap: wrap;
