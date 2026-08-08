@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "2026-08-01-biuro",
+      "date": "2026-08-01",
+      "title": "Godziny pracy biura w sierpniu",
+      "body": "Przypominamy, że biuro spółki czynne jest od poniedziałku do piątku w godzinach 7:00–15:00. Sprawy awaryjne prosimy zgłaszać przez zakładkę „Zgłoszenie awarii”."
+    },
+    {
+      "id": "2026-07-15-jakosc",
+      "date": "2026-07-15",
+      "title": "Jakość wody — wyniki badań",
+      "body": "Badania jakości wody pitnej przebiegły pomyślnie. Woda dostarczana odbiorcom spełnia obowiązujące normy."
+    },
+    {
+      "id": "2026-06-20-prace",
+      "date": "2026-06-20",
+      "title": "Prace eksploatacyjne na sieci",
+      "body": "Trwają bieżące prace utrzymaniowe sieci wodociągowej. O ewentualnych krótkich przerwach w dostawie będziemy informować na bieżąco."
+    }
+  ]
+}

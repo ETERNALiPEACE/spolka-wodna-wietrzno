@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel aktualności — Spółka Wodna Wietrzno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="admin.css?v=8" />
+</head>
+<body class="admin-body">
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div>
+        <p class="brand-mark">Panel administracyjny</p>
+        <h1>Aktualności</h1>
+      </div>
+      <a class="btn btn-ghost" href="index.html#news">Wróć do strony</a>
+    </header>
+
+    <section id="login-panel" class="panel-inner admin-card">
+      <h2>Logowanie</h2>
+      <p class="lead">Podaj hasło, aby dodawać i edytować posty w aktualnościach.</p>
+      <form id="login-form" class="admin-login-form">
+        <div class="field">
+          <label for="admin-password">Hasło</label>
+          <input id="admin-password" name="password" type="password" required autocomplete="current-password" />
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Zaloguj</button>
+        </div>
+        <p id="login-status" class="form-status" hidden></p>
+      </form>
+    </section>
+
+    <section id="editor-panel" class="admin-editor" hidden>
+      <div class="panel-inner admin-card">
+        <h2 id="editor-title">Nowy post</h2>
+        <form id="post-form" class="report-form" novalidate>
+          <input type="hidden" id="post-id" name="id" value="" />
+          <div class="field">
+            <label for="post-date">Data</label>
+            <input id="post-date" name="date" type="date" required />
+          </div>
+          <div class="field">
+            <label for="post-title">Tytuł</label>
+            <input id="post-title" name="title" type="text" required maxlength="160" />
+          </div>
+          <div class="field">
+            <label for="post-body">Treść</label>
+            <textarea id="post-body" name="body" rows="6" required maxlength="4000"></textarea>
+          </div>
+          <div class="form-actions admin-actions">
+            <button class="btn" type="submit" id="save-post-btn">Zapisz post</button>
+            <button class="btn btn-ghost" type="button" id="reset-post-btn">Wyczyść formularz</button>
+          </div>
+          <p id="editor-status" class="form-status" hidden></p>
+        </form>
+      </div>
+
+      <div class="panel-inner admin-card">
+        <div class="admin-list-head">
+          <h2>Opublikowane posty</h2>
+          <button class="btn btn-ghost" type="button" id="reload-posts-btn">Odśwież</button>
+        </div>
+        <p id="storage-hint" class="admin-hint"></p>
+        <ul id="admin-posts" class="admin-posts"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js?v=8"></script>
+  <script src="admin.js?v=8"></script>
+</body>
+</html>

@@ -347,4 +347,97 @@
   if (params.get("tab") === "report") {
     activate("report");
   }
+  if (params.get("tab") === "news") {
+    activate("news");
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#39;");
+  }
+
+  function formatNewsDate(value) {
+    const date = new Date(`${value}T12:00:00`);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat("pl-PL", { dateStyle: "long" }).format(date);
+  }
+
+  function sortNewsPosts(posts) {
+    return [...posts].sort((a, b) => {
+      if (a.date === b.date) return String(b.id).localeCompare(String(a.id));
+      return a.date < b.date ? 1 : -1;
+    });
+  }
+
+  function renderNewsList(posts) {
+    const list = document.getElementById("news-list");
+    if (!list) return;
+
+    const items = sortNewsPosts(Array.isArray(posts) ? posts : []);
+    if (!items.length) {
+      list.innerHTML = '<li class="news-item news-empty">Brak aktualności do wyświetlenia.</li>';
+      return;
+    }
+
+    list.innerHTML = items
+      .map(
+        (post) => `
+      <li class="news-item">
+        <time datetime="${escapeHtml(post.date)}">${escapeHtml(formatNewsDate(post.date))}</time>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(post.body)}</p>
+      </li>`
+      )
+      .join("");
+  }
+
+  async function loadNewsPosts() {
+    const list = document.getElementById("news-list");
+    if (!list) return;
+
+    const newsConfig = window.NEWS_CONFIG || {};
+    const scriptUrl = String(newsConfig.scriptUrl || "").trim();
+    const localKey = "spolka-wodna-news-posts";
+
+    try {
+      if (scriptUrl) {
+        const response = await fetch(scriptUrl, { method: "GET" });
+        const result = await response.json();
+        if (result?.success && Array.isArray(result.posts)) {
+          renderNewsList(result.posts);
+          return;
+        }
+      }
+    } catch {
+      // fallback poniżej
+    }
+
+    try {
+      const localRaw = localStorage.getItem(localKey);
+      if (localRaw) {
+        const localPosts = JSON.parse(localRaw);
+        if (Array.isArray(localPosts) && localPosts.length) {
+          renderNewsList(localPosts);
+          return;
+        }
+      }
+    } catch {
+      // fallback poniżej
+    }
+
+    try {
+      const response = await fetch(`data/news.json?v=${Date.now()}`);
+      const data = await response.json();
+      renderNewsList(data.posts || []);
+    } catch {
+      list.innerHTML =
+        '<li class="news-item news-empty">Nie udało się wczytać aktualności.</li>';
+    }
+  }
+
+  loadNewsPosts();
 })();
