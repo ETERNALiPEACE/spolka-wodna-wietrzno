@@ -390,12 +390,11 @@ body {
 }
 
 .datetime-popover {
-  position: absolute;
-  z-index: 40;
-  left: 0;
-  right: 0;
-  top: calc(100% - 1.35rem);
-  margin-top: 0.35rem;
+  margin-top: 0.55rem;
+}
+
+.datetime-popover[hidden] {
+  display: none;
 }
 
 .datetime-popover-inner {
