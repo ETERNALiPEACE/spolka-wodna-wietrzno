@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=35" />
+  <link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
   <div class="page-bg" aria-hidden="true"></div>
@@ -32,6 +32,9 @@
         </button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-info" id="tab-info" data-tab="info">
           Informacje
+        </button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="panel-connect" id="tab-connect" data-tab="connect">
+          Jak podłączyć wodę?
         </button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-news" id="tab-news" data-tab="news">
           Aktualności
@@ -105,7 +108,7 @@
                 Instrukcja krok po kroku co należy zrobić oraz jakie wnioski złożyć,
                 aby podłączyć wodę do domu.
               </p>
-              <button type="button" class="home-tile-btn" data-go-tab="info">Szczegółowe informacje</button>
+              <button type="button" class="home-tile-btn" data-go-tab="connect">Szczegółowe informacje</button>
             </div>
           </article>
 
@@ -172,22 +175,6 @@
           </article>
         </div>
 
-        <div class="info-section" id="jak-podlaczyc-wode">
-          <h3 class="info-section-title">Jak podłączyć wodę?</h3>
-          <p class="info-section-lead">
-            Kolejność działań przy podłączaniu wody do nieruchomości.
-          </p>
-          <ol class="connect-steps">
-            <li>Pobierz i wypełnij formularz wniosku o wydanie warunków przyłączenia (zakładka Formularze).</li>
-            <li>Złóż wniosek w biurze spółki wraz z wymaganymi załącznikami.</li>
-            <li>Odbierz warunki przyłączenia i wykonaj przyłącze zgodnie z wytycznymi.</li>
-            <li>Zgłoś gotowość do odbioru przyłącza i podpisz umowę na dostawę wody.</li>
-          </ol>
-          <p>
-            <button type="button" class="btn" data-go-tab="forms">Przejdź do wniosków</button>
-          </p>
-        </div>
-
         <div class="info-section">
           <h3 class="info-section-title">Struktura spółki</h3>
           <p class="info-section-lead">
@@ -252,6 +239,24 @@
             </li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-connect" role="tabpanel" aria-labelledby="tab-connect" hidden>
+      <div class="panel-inner">
+        <h2>Jak podłączyć wodę?</h2>
+        <p class="lead">
+          Kolejność działań przy podłączaniu wody do nieruchomości.
+        </p>
+        <ol class="connect-steps">
+          <li>Pobierz i wypełnij formularz wniosku o wydanie warunków przyłączenia (zakładka Formularze).</li>
+          <li>Złóż wniosek w biurze spółki wraz z wymaganymi załącznikami.</li>
+          <li>Odbierz warunki przyłączenia i wykonaj przyłącze zgodnie z wytycznymi.</li>
+          <li>Zgłoś gotowość do odbioru przyłącza i podpisz umowę na dostawę wody.</li>
+        </ol>
+        <p>
+          <button type="button" class="btn" data-go-tab="forms">Przejdź do wniosków</button>
+        </p>
       </div>
     </section>
 
@@ -443,10 +448,26 @@
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego · Wietrzno</p>
+    <div class="site-footer-inner">
+      <div class="site-footer-left">
+        <p class="site-footer-brand">Spółka Wodna Wodociągu Wiejskiego</p>
+        <p>Wietrzno – Łęki Dukielskie · Podkarpacie</p>
+        <p>© <span id="year"></span> Wszystkie prawa zastrzeżone</p>
+      </div>
+      <div class="site-footer-right">
+        <p class="site-footer-heading">Jak podłączyć wodę?</p>
+        <p>
+          Pobierz wniosek o warunki przyłączenia, złóż go w biurze spółki
+          i wykonaj przyłącze zgodnie z wytycznymi.
+        </p>
+        <button type="button" class="site-footer-link" data-go-tab="connect">
+          Szczegółowa instrukcja
+        </button>
+      </div>
+    </div>
   </footer>
 
-  <script src="config.js?v=35"></script>
-  <script src="script.js?v=35"></script>
+  <script src="config.js?v=36"></script>
+  <script src="script.js?v=36"></script>
 </body>
 </html>
