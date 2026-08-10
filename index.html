@@ -92,19 +92,39 @@
       margin-left: 0.65rem;
       flex-shrink: 0;
     }
-    @media (max-width: 860px) {
-      .top-bar-inner { flex-wrap: wrap; padding: 0.9rem 0.85rem; }
-      .tabs {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        margin-left: 0;
+    .nav-toggle { display: none; }
+    @media (max-width: 960px) {
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        margin-left: auto;
+        border: 1px solid rgba(43, 108, 176, 0.22);
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
       }
-      .tab-alert { margin-left: auto; }
+      .tabs {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+        margin: 0.65rem 0 0;
+      }
+      .top-bar.is-nav-open .tabs { display: flex; }
+      .tab, .tab-alert {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+      }
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=77" />
+  <link rel="stylesheet" href="styles.css?v=78" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -130,7 +150,18 @@
         />
       </button>
 
-      <nav class="tabs" role="tablist" aria-label="Sekcje strony">
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="site-tabs"
+        aria-expanded="false"
+        aria-label="Otwórz menu"
+      >
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="tabs" id="site-tabs" role="tablist" aria-label="Sekcje strony">
         <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" data-tab="home">
           Strona główna
         </button>
@@ -565,6 +596,6 @@
   </footer>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=74"></script>
+  <script src="script.js?v=75"></script>
 </body>
 </html>
