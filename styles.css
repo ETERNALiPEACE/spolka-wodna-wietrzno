@@ -676,6 +676,16 @@ body {
   color: #9aa9bb;
 }
 
+.datetime-day.is-disabled,
+.datetime-day:disabled,
+.datetime-time-option.is-disabled,
+.datetime-time-option:disabled,
+.datetime-nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .datetime-day.is-selected {
   background: var(--lake);
   color: #fff;

@@ -116,6 +116,45 @@
     return `${pad(date.getDate())}.${pad(date.getMonth() + 1)}.${date.getFullYear()} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
 
+  function getPolandNowParts() {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+      timeZone: "Europe/Warsaw",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }).formatToParts(new Date());
+    const get = (type) => Number(parts.find((part) => part.type === type)?.value || 0);
+    const hour = get("hour");
+    return {
+      year: get("year"),
+      month: get("month") - 1,
+      day: get("day"),
+      hour: hour === 24 ? 0 : hour,
+      minute: get("minute"),
+      second: get("second"),
+    };
+  }
+
+  function polandTodayYmd() {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Europe/Warsaw",
+    }).format(new Date());
+  }
+
+  function shiftYmd(ymd, days) {
+    const [y, m, d] = ymd.split("-").map(Number);
+    const dt = new Date(Date.UTC(y, m - 1, d + days));
+    return `${dt.getUTCFullYear()}-${pad(dt.getUTCMonth() + 1)}-${pad(dt.getUTCDate())}`;
+  }
+
+  function toYmd(year, monthIndex, day) {
+    return `${year}-${pad(monthIndex + 1)}-${pad(day)}`;
+  }
+
   function initDateTimePicker() {
     const hidden = document.getElementById("noticed");
     const trigger = document.getElementById("noticed-display");
@@ -130,15 +169,47 @@
       return null;
     }
 
-    const now = new Date();
-    let viewYear = now.getFullYear();
-    let viewMonth = now.getMonth();
+    const MAX_DAYS_BACK = 4;
+    const poland = getPolandNowParts();
+    let viewYear = poland.year;
+    let viewMonth = poland.month;
     let selected = null;
 
     const monthFormatter = new Intl.DateTimeFormat("pl-PL", {
       month: "long",
       year: "numeric",
     });
+
+    function allowedRange() {
+      const maxYmd = polandTodayYmd();
+      const minYmd = shiftYmd(maxYmd, -MAX_DAYS_BACK);
+      return { minYmd, maxYmd };
+    }
+
+    function isDateAllowed(year, monthIndex, day) {
+      const ymd = toYmd(year, monthIndex, day);
+      const { minYmd, maxYmd } = allowedRange();
+      return ymd >= minYmd && ymd <= maxYmd;
+    }
+
+    function clampSelectedToRange() {
+      if (!selected) return;
+      const ymd = toYmd(selected.getFullYear(), selected.getMonth(), selected.getDate());
+      const { minYmd, maxYmd } = allowedRange();
+      if (ymd < minYmd || ymd > maxYmd) {
+        selected = null;
+        return;
+      }
+      const nowPl = getPolandNowParts();
+      const todayYmd = toYmd(nowPl.year, nowPl.month, nowPl.day);
+      if (ymd === todayYmd) {
+        const selectedMinutes = selected.getHours() * 60 + selected.getMinutes();
+        const nowMinutes = nowPl.hour * 60 + nowPl.minute;
+        if (selectedMinutes > nowMinutes) {
+          selected.setHours(nowPl.hour, nowPl.minute, 0, 0);
+        }
+      }
+    }
 
     function syncTrigger() {
       if (!selected) {
@@ -156,8 +227,10 @@
       popover.hidden = !open;
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
       if (open) {
+        const nowPl = getPolandNowParts();
+        viewYear = nowPl.year;
+        viewMonth = nowPl.month;
         render();
-        // Dopasuj widok, żeby cały kalendarz był w kontenerze / na ekranie.
         requestAnimationFrame(() => {
           const field = trigger.closest(".datetime-field") || popover;
           field.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
@@ -179,34 +252,51 @@
         btn.className = "datetime-day";
 
         let dayNum;
-        let date;
+        let year = viewYear;
+        let monthIndex = viewMonth;
         if (i < startOffset) {
           dayNum = prevDays - startOffset + i + 1;
-          date = new Date(viewYear, viewMonth - 1, dayNum);
+          monthIndex = viewMonth - 1;
+          if (monthIndex < 0) {
+            monthIndex = 11;
+            year -= 1;
+          }
           btn.classList.add("is-muted");
         } else if (i >= startOffset + daysInMonth) {
           dayNum = i - startOffset - daysInMonth + 1;
-          date = new Date(viewYear, viewMonth + 1, dayNum);
+          monthIndex = viewMonth + 1;
+          if (monthIndex > 11) {
+            monthIndex = 0;
+            year += 1;
+          }
           btn.classList.add("is-muted");
         } else {
           dayNum = i - startOffset + 1;
-          date = new Date(viewYear, viewMonth, dayNum);
         }
 
+        const allowed = isDateAllowed(year, monthIndex, dayNum);
         btn.textContent = String(dayNum);
+        if (!allowed) {
+          btn.disabled = true;
+          btn.classList.add("is-disabled");
+        }
+
         if (
           selected &&
-          date.getFullYear() === selected.getFullYear() &&
-          date.getMonth() === selected.getMonth() &&
-          date.getDate() === selected.getDate()
+          selected.getFullYear() === year &&
+          selected.getMonth() === monthIndex &&
+          selected.getDate() === dayNum
         ) {
           btn.classList.add("is-selected");
         }
 
         btn.addEventListener("click", () => {
-          const hours = selected ? selected.getHours() : now.getHours();
-          const minutes = selected ? selected.getMinutes() : now.getMinutes();
-          selected = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hours, minutes);
+          if (!allowed) return;
+          const nowPl = getPolandNowParts();
+          const hours = selected ? selected.getHours() : nowPl.hour;
+          const minutes = selected ? selected.getMinutes() : nowPl.minute;
+          selected = new Date(year, monthIndex, dayNum, hours, minutes);
+          clampSelectedToRange();
           viewYear = selected.getFullYear();
           viewMonth = selected.getMonth();
           syncTrigger();
@@ -219,19 +309,48 @@
 
     function renderTimeList(container, count, getValue, onPick) {
       container.innerHTML = "";
+      const nowPl = getPolandNowParts();
+      const todayYmd = toYmd(nowPl.year, nowPl.month, nowPl.day);
+      const selectedYmd = selected
+        ? toYmd(selected.getFullYear(), selected.getMonth(), selected.getDate())
+        : null;
+
       for (let i = 0; i < count; i += 1) {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "datetime-time-option";
         btn.textContent = pad(i);
+
+        let disabled = false;
+        if (selectedYmd === todayYmd) {
+          if (container === hoursEl && i > nowPl.hour) disabled = true;
+          if (
+            container === minutesEl &&
+            selected &&
+            selected.getHours() === nowPl.hour &&
+            i > nowPl.minute
+          ) {
+            disabled = true;
+          }
+        }
+        if (disabled) {
+          btn.disabled = true;
+          btn.classList.add("is-disabled");
+        }
+
         if (selected && getValue(selected) === i) {
           btn.classList.add("is-selected");
         }
         btn.addEventListener("click", () => {
+          if (btn.disabled) return;
           if (!selected) {
-            selected = new Date(viewYear, viewMonth, now.getDate(), now.getHours(), now.getMinutes());
+            selected = new Date(nowPl.year, nowPl.month, nowPl.day, nowPl.hour, nowPl.minute);
+          }
+          if (!isDateAllowed(selected.getFullYear(), selected.getMonth(), selected.getDate())) {
+            selected = new Date(nowPl.year, nowPl.month, nowPl.day, nowPl.hour, nowPl.minute);
           }
           onPick(i);
+          clampSelectedToRange();
           syncTrigger();
           render();
           btn.scrollIntoView({ block: "nearest" });
@@ -252,6 +371,16 @@
       renderTimeList(minutesEl, 60, (d) => d.getMinutes(), (m) => {
         selected.setMinutes(m);
       });
+
+      const { minYmd, maxYmd } = allowedRange();
+      const minMonth = minYmd.slice(0, 7);
+      const maxMonth = maxYmd.slice(0, 7);
+      const viewKey = `${viewYear}-${pad(viewMonth + 1)}`;
+      popover.querySelectorAll("[data-nav]").forEach((btn) => {
+        const delta = Number(btn.getAttribute("data-nav") || 0);
+        if (delta < 0) btn.disabled = viewKey <= minMonth;
+        if (delta > 0) btn.disabled = viewKey >= maxMonth;
+      });
     }
 
     trigger.addEventListener("click", (event) => {
@@ -265,6 +394,7 @@
 
     popover.querySelectorAll("[data-nav]").forEach((btn) => {
       btn.addEventListener("click", () => {
+        if (btn.disabled) return;
         const delta = Number(btn.getAttribute("data-nav") || 0);
         const next = new Date(viewYear, viewMonth + delta, 1);
         viewYear = next.getFullYear();
@@ -280,7 +410,8 @@
     });
 
     popover.querySelector('[data-action="today"]')?.addEventListener("click", () => {
-      selected = new Date();
+      const nowPl = getPolandNowParts();
+      selected = new Date(nowPl.year, nowPl.month, nowPl.day, nowPl.hour, nowPl.minute);
       viewYear = selected.getFullYear();
       viewMonth = selected.getMonth();
       syncTrigger();
@@ -307,9 +438,9 @@
     return {
       reset() {
         selected = null;
-        const fresh = new Date();
-        viewYear = fresh.getFullYear();
-        viewMonth = fresh.getMonth();
+        const nowPl = getPolandNowParts();
+        viewYear = nowPl.year;
+        viewMonth = nowPl.month;
         setOpen(false);
         syncTrigger();
       },
