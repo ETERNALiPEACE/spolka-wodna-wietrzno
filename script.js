@@ -16,7 +16,7 @@
   const HEADER_COPY = {
     home: {
       title: "Spółka Wodna<br />Wodociągu Wiejskiego",
-      lead: "Niezawodne zaopatrzenie w wodę dla mieszkańców naszej gminy.",
+      lead: "Niezawodne zaopatrzenie w wodę dla mieszkańców naszego regionu.",
     },
     info: {
       title: "Informacje",
