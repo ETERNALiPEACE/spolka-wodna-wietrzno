@@ -337,7 +337,9 @@ body {
 #panel-info .lead,
 #panel-info .info-section-lead,
 #panel-info .info-block p,
-#panel-info .org-block > p {
+#panel-info .org-block > p,
+#panel-forms .lead,
+#panel-forms .form-item p {
   text-align: justify;
   hyphens: auto;
   -webkit-hyphens: auto;
