@@ -155,7 +155,15 @@
     function setOpen(open) {
       popover.hidden = !open;
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
-      if (open) render();
+      if (open) {
+        render();
+        // Dopasuj widok, żeby cały kalendarz był w kontenerze / na ekranie.
+        requestAnimationFrame(() => {
+          const field = trigger.closest(".datetime-field") || popover;
+          field.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+          popover.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+        });
+      }
     }
 
     function renderDays() {

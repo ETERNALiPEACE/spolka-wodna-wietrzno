@@ -294,6 +294,10 @@ body {
   box-shadow: 0 20px 50px rgba(26, 74, 122, 0.12);
 }
 
+.panel-inner:has(.datetime-popover:not([hidden])) {
+  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+}
+
 .panel h2 {
   margin: 0 0 0.5rem;
   font-family: var(--font-display);
@@ -511,6 +515,18 @@ body {
 
 .datetime-field {
   position: relative;
+  padding: 0.85rem 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.72);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.datetime-field:has(.datetime-trigger[aria-expanded="true"]),
+.datetime-field:has(.datetime-popover:not([hidden])) {
+  border-color: var(--teal);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.16);
 }
 
 .datetime-trigger {
@@ -524,7 +540,7 @@ body {
   padding: 0.7rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
-  background: rgba(255, 255, 255, 0.9);
+  background: #fff;
   color: var(--ink);
   font: inherit;
   text-align: left;
@@ -548,7 +564,7 @@ body {
 .datetime-trigger:hover,
 .datetime-trigger[aria-expanded="true"] {
   border-color: var(--teal);
-  box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.18);
+  box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.12);
 }
 
 .datetime-trigger.is-empty {
@@ -560,7 +576,9 @@ body {
 }
 
 .datetime-popover {
-  margin-top: 0.55rem;
+  display: block;
+  margin-top: 0.65rem;
+  width: 100%;
 }
 
 .datetime-popover[hidden] {
