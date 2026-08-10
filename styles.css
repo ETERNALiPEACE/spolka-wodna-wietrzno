@@ -376,13 +376,20 @@ body.is-nav-open {
     border-top: none;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+  }
+
+  .top-bar.is-nav-open .tabs > .tab:not(.tab-alert):first-child {
+    margin-top: auto;
   }
 
   .tab {
+    display: inline-flex;
     width: 100%;
     max-width: 22rem;
     text-align: center;
     justify-content: center;
+    align-items: center;
     padding: 0.85rem 1rem;
     border-radius: 10px;
   }

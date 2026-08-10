@@ -563,7 +563,11 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    const currentIndex = tabs.findIndex((tab) => tab.classList.contains("is-active"));
+    const visibleTabs = tabs.filter((tab) => {
+      if (!(tab instanceof HTMLElement)) return false;
+      return window.getComputedStyle(tab).display !== "none";
+    });
+    const currentIndex = visibleTabs.findIndex((tab) => tab.classList.contains("is-active"));
     if (currentIndex < 0) return;
 
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
@@ -575,9 +579,9 @@
       }
       event.preventDefault();
       const delta = event.key === "ArrowRight" ? 1 : -1;
-      const next = (currentIndex + delta + tabs.length) % tabs.length;
-      tabs[next].focus();
-      activate(tabs[next].dataset.tab, { animate: true });
+      const next = (currentIndex + delta + visibleTabs.length) % visibleTabs.length;
+      visibleTabs[next].focus();
+      activate(visibleTabs[next].dataset.tab, { animate: true });
     }
   });
 
