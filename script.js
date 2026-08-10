@@ -44,10 +44,42 @@
     },
   };
 
+  /** Polskie sierotki: nie zostawiaj samotnych a/i/o/u/w/z na końcu wiersza. */
+  function fixPolishOrphans(text) {
+    if (!text) return text;
+    return String(text).replace(/(\s|^|\()([aiouwzAIOUWZ])\s+(?=\S)/g, "$1$2\u00A0");
+  }
+
+  function fixPolishOrphansIn(root) {
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        if (parent.closest("script, style, textarea, code, pre, option, [contenteditable]")) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        if (!node.nodeValue || !/[aiouwzAIOUWZ]/.test(node.nodeValue)) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const next = fixPolishOrphans(node.nodeValue);
+      if (next !== node.nodeValue) node.nodeValue = next;
+    }
+  }
+
   function updateHeader(tabId) {
     const copy = HEADER_COPY[tabId] || HEADER_COPY.home;
-    if (brandName) brandName.innerHTML = copy.title;
-    if (brandLead) brandLead.textContent = copy.lead;
+    if (brandName) {
+      brandName.innerHTML = copy.title;
+      fixPolishOrphansIn(brandName);
+    }
+    if (brandLead) brandLead.textContent = fixPolishOrphans(copy.lead);
   }
 
   function activate(tabId, options = {}) {
@@ -767,6 +799,7 @@
       <p class="news-page-status">Strona ${newsPage} z ${pageCount}</p>
       <div class="news-page-controls">${buttons.join("")}</div>
     `;
+    fixPolishOrphansIn(nav);
   }
 
   function renderNewsInto(listId, posts, limit) {
@@ -782,6 +815,7 @@
     }
 
     list.innerHTML = visible.map(newsItemHtml).join("");
+    fixPolishOrphansIn(list);
   }
 
   function renderNewsListPage() {
@@ -941,5 +975,6 @@
     }
   }
 
+  fixPolishOrphansIn(document.body);
   loadNewsPosts();
 })();

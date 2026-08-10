@@ -330,19 +330,55 @@ body {
   font-size: clamp(1.02rem, 1.5vw, 1.12rem);
   line-height: 1.65;
   text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
 }
 
 #panel-info .lead,
 #panel-info .info-section-lead,
 #panel-info .info-block p,
 #panel-info .org-block > p,
-#panel-forms .lead,
-#panel-forms .form-item p {
+#panel-forms .lead {
   text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
+}
+
+#panel-forms .lead {
+  max-width: none;
+  overflow-wrap: break-word;
+  margin-bottom: 1.25rem;
+}
+
+#panel-forms .lead strong {
+  overflow-wrap: anywhere;
+}
+
+#panel-forms .form-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0;
+  border-bottom: none;
+}
+
+#panel-forms .form-item > div:first-child {
+  flex: none;
+  width: 100%;
+}
+
+#panel-forms .form-item .btn {
+  margin-left: 0;
+}
+
+#panel-forms .form-item h3 {
+  max-width: 36rem;
+}
+
+#panel-forms .form-item p {
+  max-width: 36rem;
 }
 
 .info-grid {
@@ -490,9 +526,19 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 1rem 1.25rem;
   padding: 1.15rem 0;
   border-bottom: 1px solid var(--line);
+}
+
+.form-item > div:first-child {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.form-item .btn {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 .form-item:first-child {
@@ -514,6 +560,19 @@ body {
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
+  text-align: left;
+}
+
+@media (max-width: 560px) {
+  .form-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-item .btn {
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 .report-form {
