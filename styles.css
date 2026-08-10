@@ -1046,6 +1046,11 @@ body {
   flex-shrink: 0;
 }
 
+.home-tile-icon--wrench {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
 .home-tile-body {
   display: flex;
   flex-direction: column;
