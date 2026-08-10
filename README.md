@@ -18,7 +18,7 @@ Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukie
 
 **Placeholdery (brak PDF w repo)**
 - `dokumenty/` — oczekiwany plik: `statut.pdf` (link w Informacjach)
-- `formularze/` — oczekiwany plik: `Formularz-wniosku-o-wydanie-warunkow-przylaczenia.pdf`
+- `formularze/` — plik: `Wniosek-o-przylaczenie-do-sieci-wodociagowej.pdf`
 
 ## Aktualności — skąd się biorą
 
