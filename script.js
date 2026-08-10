@@ -502,14 +502,27 @@
   const topBar = document.querySelector(".top-bar");
   const navToggle = document.getElementById("nav-toggle");
   const navQuery = window.matchMedia("(max-width: 960px)");
+  let navScrollY = 0;
 
   function setNavOpen(open) {
     if (!topBar || !navToggle) return;
     const shouldOpen = Boolean(open) && navQuery.matches;
+    const wasOpen = topBar.classList.contains("is-nav-open");
+
+    if (shouldOpen && !wasOpen) {
+      navScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = `-${navScrollY}px`;
+    }
+
     topBar.classList.toggle("is-nav-open", shouldOpen);
     document.body.classList.toggle("is-nav-open", shouldOpen);
     navToggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
     navToggle.setAttribute("aria-label", shouldOpen ? "Zamknij menu" : "Otwórz menu");
+
+    if (!shouldOpen && wasOpen) {
+      document.body.style.top = "";
+      window.scrollTo(0, navScrollY);
+    }
   }
 
   function closeNav() {
