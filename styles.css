@@ -295,7 +295,7 @@ body {
 }
 
 .panel-inner:has(.datetime-popover:not([hidden])) {
-  padding-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 .panel h2 {
@@ -515,7 +515,7 @@ body {
 
 .datetime-field {
   position: relative;
-  padding: 0.85rem 0.9rem 1rem;
+  padding: 0.75rem 0.85rem 0.75rem;
   border: 1px solid var(--line);
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.72);
@@ -527,6 +527,7 @@ body {
   border-color: var(--teal);
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.16);
+  padding-bottom: 0.4rem;
 }
 
 .datetime-trigger {
@@ -577,7 +578,7 @@ body {
 
 .datetime-popover {
   display: block;
-  margin-top: 0.65rem;
+  margin-top: 0.55rem;
   width: 100%;
 }
 
@@ -593,7 +594,7 @@ body {
   background: #fff;
   border: 2px solid var(--deep);
   border-radius: 1rem;
-  box-shadow: 0 16px 40px rgba(26, 74, 122, 0.22);
+  box-shadow: 0 6px 18px rgba(26, 74, 122, 0.12);
 }
 
 .datetime-calendar {
