@@ -5,6 +5,7 @@
   const reportForm = document.getElementById("report-form");
   const reportStatus = document.getElementById("report-status");
   const submitBtn = reportForm?.querySelector('button[type="submit"]');
+  let navScrollY = 0;
 
   if (year) {
     year.textContent = String(new Date().getFullYear());
@@ -516,7 +517,6 @@
   const topBar = document.querySelector(".top-bar");
   const navToggle = document.getElementById("nav-toggle");
   const navQuery = window.matchMedia("(max-width: 960px)");
-  let navScrollY = 0;
 
   function setNavOpen(open) {
     if (!topBar || !navToggle) return;
