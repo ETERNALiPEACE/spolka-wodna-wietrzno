@@ -1008,9 +1008,13 @@ body {
 
 .home-tile-text {
   margin: 0;
+  width: 100%;
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--muted);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .home-tile-phone {
