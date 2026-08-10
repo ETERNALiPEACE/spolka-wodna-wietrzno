@@ -169,7 +169,7 @@
       return null;
     }
 
-    const MAX_DAYS_BACK = 4;
+    const MAX_DAYS_BACK = 7;
     const poland = getPolandNowParts();
     let viewYear = poland.year;
     let viewMonth = poland.month;
