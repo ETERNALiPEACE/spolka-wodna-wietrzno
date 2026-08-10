@@ -320,6 +320,17 @@ body {
   max-width: 40rem;
 }
 
+.home-panel > h2 {
+  text-align: center;
+}
+
+.home-panel > .lead {
+  max-width: none;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
 #panel-info .lead,
 #panel-info .info-section-lead,
 #panel-info .info-block p,
