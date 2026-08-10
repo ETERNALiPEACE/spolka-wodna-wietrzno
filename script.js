@@ -10,6 +10,46 @@
     year.textContent = String(new Date().getFullYear());
   }
 
+  const brandName = document.getElementById("brand-name");
+  const brandLead = document.getElementById("brand-lead");
+
+  const HEADER_COPY = {
+    home: {
+      title: "Spółka Wodna<br />Wodociągu Wiejskiego",
+      lead: "Niezawodne zaopatrzenie w wodę dla mieszkańców naszej gminy.",
+    },
+    info: {
+      title: "Informacje",
+      lead: "O spółce, strukturze organizacyjnej oraz dokumentach.",
+    },
+    news: {
+      title: "Aktualności",
+      lead: "Komunikaty i informacje dla mieszkańców.",
+    },
+    forms: {
+      title: "Formularze",
+      lead: "Wnioski i dokumenty do pobrania.",
+    },
+    contact: {
+      title: "Kontakt",
+      lead: "Dane kontaktowe biura spółki.",
+    },
+    report: {
+      title: "Zgłoszenie awarii",
+      lead: "Zgłoś awarię lub usterkę sieci wodociągowej.",
+    },
+    connect: {
+      title: "Jak podłączyć wodę?",
+      lead: "Krok po kroku — od wniosku do przyłączenia.",
+    },
+  };
+
+  function updateHeader(tabId) {
+    const copy = HEADER_COPY[tabId] || HEADER_COPY.home;
+    if (brandName) brandName.innerHTML = copy.title;
+    if (brandLead) brandLead.textContent = copy.lead;
+  }
+
   function activate(tabId, options = {}) {
     const animate = options.animate === true;
     const nextId = `panel-${tabId}`;
@@ -32,6 +72,8 @@
         panel.classList.add("is-entering");
       }
     });
+
+    updateHeader(tabId);
   }
 
   panels.forEach((panel) => {
