@@ -982,6 +982,10 @@ body {
   text-align: center;
 }
 
+.home-tile-body > :first-child {
+  margin-top: auto;
+}
+
 .home-tile-label {
   margin: 0;
   font-size: 0.86rem;
