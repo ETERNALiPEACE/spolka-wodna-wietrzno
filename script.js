@@ -507,6 +507,7 @@
     if (!topBar || !navToggle) return;
     const shouldOpen = Boolean(open) && navQuery.matches;
     topBar.classList.toggle("is-nav-open", shouldOpen);
+    document.body.classList.toggle("is-nav-open", shouldOpen);
     navToggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
     navToggle.setAttribute("aria-label", shouldOpen ? "Zamknij menu" : "Otwórz menu");
   }
