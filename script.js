@@ -499,8 +499,54 @@
 
   const dateTimePicker = initDateTimePicker();
 
+  const topBar = document.querySelector(".top-bar");
+  const navToggle = document.getElementById("nav-toggle");
+  const navQuery = window.matchMedia("(max-width: 960px)");
+
+  function setNavOpen(open) {
+    if (!topBar || !navToggle) return;
+    const shouldOpen = Boolean(open) && navQuery.matches;
+    topBar.classList.toggle("is-nav-open", shouldOpen);
+    navToggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+    navToggle.setAttribute("aria-label", shouldOpen ? "Zamknij menu" : "Otwórz menu");
+  }
+
+  function closeNav() {
+    setNavOpen(false);
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener("click", () => {
+      const open = navToggle.getAttribute("aria-expanded") === "true";
+      setNavOpen(!open);
+    });
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!topBar?.classList.contains("is-nav-open")) return;
+    if (!(event.target instanceof Node)) return;
+    if (topBar.contains(event.target)) return;
+    closeNav();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeNav();
+  });
+
+  const onNavBreakpointChange = () => {
+    if (!navQuery.matches) closeNav();
+  };
+  if (typeof navQuery.addEventListener === "function") {
+    navQuery.addEventListener("change", onNavBreakpointChange);
+  } else if (typeof navQuery.addListener === "function") {
+    navQuery.addListener(onNavBreakpointChange);
+  }
+
   tabs.forEach((tab) => {
-    tab.addEventListener("click", () => activate(tab.dataset.tab, { animate: true }));
+    tab.addEventListener("click", () => {
+      activate(tab.dataset.tab, { animate: true });
+      closeNav();
+    });
   });
 
   document.querySelectorAll("[data-go-tab]").forEach((button) => {
@@ -508,7 +554,10 @@
       const target = button.getAttribute("data-go-tab");
       if (!target) return;
       activate(target, { animate: true });
-      document.getElementById(`tab-${target}`)?.focus();
+      closeNav();
+      if (!navQuery.matches) {
+        document.getElementById(`tab-${target}`)?.focus();
+      }
     });
   });
 

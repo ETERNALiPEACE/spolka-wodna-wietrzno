@@ -92,19 +92,39 @@
       margin-left: 0.65rem;
       flex-shrink: 0;
     }
-    @media (max-width: 860px) {
-      .top-bar-inner { flex-wrap: wrap; padding: 0.9rem 0.85rem; }
-      .tabs {
-        width: 100%;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        margin-left: 0;
+    .nav-toggle { display: none; }
+    @media (max-width: 960px) {
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        margin-left: auto;
+        border: 1px solid rgba(43, 108, 176, 0.22);
+        border-radius: 8px;
+        background: #fff;
+        cursor: pointer;
       }
-      .tab-alert { margin-left: auto; }
+      .tabs {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        gap: 0.35rem;
+        margin: 0.65rem 0 0;
+      }
+      .top-bar.is-nav-open .tabs { display: flex; }
+      .tab, .tab-alert {
+        width: 100%;
+        margin-left: 0;
+        text-align: left;
+      }
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=76" />
+  <link rel="stylesheet" href="styles.css?v=78" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -130,7 +150,18 @@
         />
       </button>
 
-      <nav class="tabs" role="tablist" aria-label="Sekcje strony">
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-controls="site-tabs"
+        aria-expanded="false"
+        aria-label="Otwórz menu"
+      >
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="tabs" id="site-tabs" role="tablist" aria-label="Sekcje strony">
         <button class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-home" id="tab-home" data-tab="home">
           Strona główna
         </button>
@@ -176,8 +207,9 @@
         <div class="home-tiles" aria-label="Szybkie akcje">
           <article class="home-tile home-tile--alert">
             <div class="home-tile-head">
-              <svg class="home-tile-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M14.7 5.3a1 1 0 0 1 0 1.4l-1.3 1.3 3.6 3.6 1.3-1.3a1 1 0 1 1 1.4 1.4l-8 8a1 1 0 0 1-1.4 0l-3.6-3.6 8-8a1 1 0 0 1 1.4 0Zm-7.1 9.9 2.2 2.2 1.1-1.1-2.2-2.2-1.1 1.1ZM4.2 19.1a1.75 1.75 0 0 0 2.5 0l.4-.4-2.5-2.5-.4.4a1.75 1.75 0 0 0 0 2.5Z"/>
+              <svg class="home-tile-icon home-tile-icon--wrench" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M16 4.5a4.5 4.5 0 0 1-1.703 3.526L13 5l2.959-1.11q.04.3.041.61"/>
+                <path fill="currentColor" d="M11.5 9c.653 0 1.273-.139 1.833-.39L12 5.5 11 3l3.826-1.53A4.5 4.5 0 0 0 7.29 6.092l-6.116 5.096a2.583 2.583 0 1 0 3.638 3.638L9.908 8.71A4.5 4.5 0 0 0 11.5 9m-1.292-4.361-.596.893.809-.27a.25.25 0 0 1 .287.377l-.596.893.809-.27.158.475-1.5.5a.25.25 0 0 1-.287-.376l.596-.893-.809.27a.25.25 0 0 1-.287-.377l.596-.893-.809.27-.158-.475 1.5-.5a.25.25 0 0 1 .287.376M3 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
               </svg>
               <span>Zgłoś awarię</span>
             </div>
@@ -265,7 +297,6 @@
             <ul>
               <li>Poniedziałek–piątek: 7:00–15:00</li>
               <li>Sobota–niedziela: nieczynne</li>
-              <li>Awarie: zakładka „Zgłoszenie awarii”</li>
             </ul>
           </article>
           <article class="info-block">
@@ -565,6 +596,6 @@
   </footer>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=74"></script>
+  <script src="script.js?v=75"></script>
 </body>
 </html>
