@@ -907,10 +907,9 @@ body {
   justify-content: center;
   gap: 0.55rem;
   margin: 0.9rem 0.9rem 0;
-  padding: 0.75rem 0.9rem;
-  border-radius: 8px;
-  background: var(--tile);
-  color: #fff;
+  padding: 0.35rem 0.9rem 0;
+  background: transparent;
+  color: var(--tile);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.04em;
