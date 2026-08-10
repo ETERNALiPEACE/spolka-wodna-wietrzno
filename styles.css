@@ -20,7 +20,7 @@
 
 html {
   scroll-behavior: smooth;
-  background: #fff;
+  background: #cfe4f7;
   /* clip nie psuje sticky (w przeciwieństwie do overflow-x: hidden) */
   overflow-x: clip;
 }
@@ -30,7 +30,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-body);
   color: var(--ink);
-  background: #fff;
+  background: #cfe4f7;
   line-height: 1.6;
   position: relative;
   overflow-x: clip;
@@ -41,9 +41,10 @@ body {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(ellipse 80% 50% at 10% 8%, rgba(59, 130, 196, 0.16), transparent 55%),
-    radial-gradient(ellipse 70% 45% at 95% 18%, rgba(26, 74, 122, 0.1), transparent 50%),
-    linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
+    radial-gradient(ellipse 90% 55% at 8% -5%, rgba(43, 108, 176, 0.45), transparent 58%),
+    radial-gradient(ellipse 70% 50% at 100% 10%, rgba(26, 74, 122, 0.28), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(59, 130, 196, 0.22), transparent 60%),
+    linear-gradient(165deg, #b9d7f2 0%, #cfe4f7 38%, #dceefb 68%, #e8f3fc 100%);
 }
 
 .wave-layer {
@@ -51,13 +52,13 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 28vh;
+  height: 34vh;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.7;
   display: block;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%232b6cb0' fill-opacity='0.18' d='M0,192L48,186.7C96,181,192,171,288,176C384,181,480,203,576,197.3C672,192,768,160,864,154.7C960,149,1056,171,1152,181.3C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3C/svg%3E")
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320' preserveAspectRatio='none'%3E%3Cpath fill='%231a4a7a' fill-opacity='0.14' d='M0,224L48,213.3C96,203,192,181,288,176C384,171,480,181,576,197.3C672,213,768,235,864,229.3C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'/%3E%3Cpath fill='%232b6cb0' fill-opacity='0.22' d='M0,256L60,245.3C120,235,240,213,360,208C480,203,600,213,720,229.3C840,245,960,267,1080,261.3C1200,256,1320,224,1380,208L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z'/%3E%3C/svg%3E")
     bottom / 100% 100% no-repeat;
   animation: waveDrift 18s ease-in-out infinite alternate;
 }
@@ -294,11 +295,11 @@ body {
 
 .panel-inner {
   padding: clamp(1.5rem, 4vw, 2.5rem);
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   border-radius: 1.5rem;
-  box-shadow: 0 20px 50px rgba(26, 74, 122, 0.08);
+  box-shadow: 0 20px 50px rgba(26, 74, 122, 0.12);
 }
 
 .panel h2 {

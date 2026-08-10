@@ -5,18 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spółka Wodna Wietrzno</title>
   <meta name="description" content="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie. Informacje, aktualności, formularze i kontakt." />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#cfe4f7" />
   <!-- Krytyczny CSS belki: sticky, bez JS / spacera -->
   <style>
     html, body {
       margin: 0;
-      background: #fff;
+      background: #cfe4f7;
     }
     .page-bg {
       position: fixed;
       inset: 0;
       z-index: -2;
-      background: linear-gradient(165deg, #eaf3fb 0%, #f3f8fd 42%, #e4effa 100%);
+      background:
+        radial-gradient(ellipse 90% 55% at 8% -5%, rgba(43, 108, 176, 0.45), transparent 58%),
+        radial-gradient(ellipse 70% 50% at 100% 10%, rgba(26, 74, 122, 0.28), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(59, 130, 196, 0.22), transparent 60%),
+        linear-gradient(165deg, #b9d7f2 0%, #cfe4f7 38%, #dceefb 68%, #e8f3fc 100%);
     }
     .wave-layer { display: none; }
     .top-bar {
@@ -93,7 +97,7 @@
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=47" />
+  <link rel="stylesheet" href="styles.css?v=48" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -549,7 +553,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=47"></script>
-  <script src="script.js?v=47"></script>
+  <script src="config.js?v=48"></script>
+  <script src="script.js?v=48"></script>
 </body>
 </html>
