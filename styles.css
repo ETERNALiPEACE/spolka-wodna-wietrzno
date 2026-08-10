@@ -271,6 +271,8 @@ body {
 }
 
 .panels {
+  position: relative;
+  z-index: 1;
   max-width: 920px;
   margin: 1.75rem auto 0;
   padding: 0 1.25rem 4rem;
@@ -1273,6 +1275,8 @@ body {
 }
 
 .site-footer {
+  position: relative;
+  z-index: 1;
   margin-top: 1rem;
   padding: 0 1.25rem 2.5rem;
   color: var(--muted);
