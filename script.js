@@ -85,6 +85,8 @@
   function activate(tabId, options = {}) {
     const animate = options.animate === true;
     const nextId = `panel-${tabId}`;
+    const previousTab = tabs.find((tab) => tab.classList.contains("is-active"))?.dataset.tab;
+    const tabChanged = previousTab !== tabId;
 
     tabs.forEach((tab) => {
       const active = tab.dataset.tab === tabId;
@@ -106,6 +108,18 @@
     });
 
     updateHeader(tabId);
+
+    if (options.scrollTop === false || !tabChanged) return;
+
+    // Po wyborze zakładki z menu nie wracaj do poprzedniego scrolla.
+    navScrollY = 0;
+
+    if (document.body.classList.contains("is-nav-open")) {
+      // closeNav() odblokuje body i zrobi scroll do navScrollY (0).
+      return;
+    }
+
+    window.scrollTo(0, 0);
   }
 
   panels.forEach((panel) => {
