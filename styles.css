@@ -527,7 +527,7 @@ body {
   border-color: var(--teal);
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 0 0 3px rgba(59, 130, 196, 0.16);
-  padding-bottom: 0.4rem;
+  padding-bottom: calc(0.4rem + 10px);
 }
 
 .datetime-trigger {
