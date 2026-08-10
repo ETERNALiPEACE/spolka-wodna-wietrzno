@@ -311,6 +311,15 @@ body {
   max-width: 40rem;
 }
 
+#panel-info .lead,
+#panel-info .info-section-lead,
+#panel-info .info-block p,
+#panel-info .org-block > p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
 .info-grid {
   display: grid;
   gap: 1.5rem;
