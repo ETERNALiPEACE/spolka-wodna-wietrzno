@@ -134,9 +134,18 @@ body {
 
 .brand-lead {
   margin: 1.25rem auto 0;
-  max-width: 28rem;
-  font-size: 1.05rem;
+  max-width: none;
+  font-size: clamp(0.95rem, 2.15vw, 1.05rem);
   color: var(--muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .brand-lead {
+    white-space: normal;
+    max-width: 22rem;
+    padding: 0 0.5rem;
+  }
 }
 
 .tabs {
