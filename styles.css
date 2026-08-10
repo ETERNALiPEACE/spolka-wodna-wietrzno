@@ -330,8 +330,9 @@ body {
   font-size: clamp(1.02rem, 1.5vw, 1.12rem);
   line-height: 1.65;
   text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
 }
 
 #panel-info .lead,
@@ -340,8 +341,9 @@ body {
 #panel-info .org-block > p,
 #panel-forms .lead {
   text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
 }
 
 #panel-forms .lead {
