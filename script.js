@@ -223,6 +223,23 @@
       trigger.classList.remove("is-empty");
     }
 
+    function scrollFieldIntoView() {
+      const field = trigger.closest(".datetime-field") || popover;
+      const rect = field.getBoundingClientRect();
+      const margin = 20;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      let delta = 0;
+      if (rect.bottom > viewportHeight - margin) {
+        delta = rect.bottom - (viewportHeight - margin);
+      }
+      if (rect.top - delta < margin) {
+        delta = rect.top - margin;
+      }
+      if (delta !== 0) {
+        window.scrollBy({ top: delta, left: 0, behavior: "smooth" });
+      }
+    }
+
     function setOpen(open) {
       popover.hidden = !open;
       trigger.setAttribute("aria-expanded", open ? "true" : "false");
@@ -231,10 +248,11 @@
         viewYear = nowPl.year;
         viewMonth = nowPl.month;
         render();
+        // Wait a frame so the expanded calendar height is measured, then keep
+        // the whole field (trigger + calendar + hint) inside the viewport.
         requestAnimationFrame(() => {
-          const field = trigger.closest(".datetime-field") || popover;
-          field.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
-          popover.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+          scrollFieldIntoView();
+          requestAnimationFrame(scrollFieldIntoView);
         });
       }
     }

@@ -681,9 +681,15 @@ body {
 .datetime-time-option.is-disabled,
 .datetime-time-option:disabled,
 .datetime-nav:disabled {
-  opacity: 0.35;
+  color: #b0bccb;
+  opacity: 1;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.datetime-day.is-muted.is-disabled,
+.datetime-day.is-muted:disabled {
+  color: #c5ced8;
 }
 
 .datetime-day.is-selected {
