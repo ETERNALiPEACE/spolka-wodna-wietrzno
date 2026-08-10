@@ -93,6 +93,7 @@
       flex-shrink: 0;
     }
     .nav-toggle { display: none; }
+    .tab-connect { display: none; }
     @media (max-width: 960px) {
       .nav-toggle {
         display: inline-flex;
@@ -110,21 +111,41 @@
         display: none;
         width: 100%;
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
         flex-wrap: nowrap;
         gap: 0.35rem;
         margin: 0.65rem 0 0;
       }
-      .top-bar.is-nav-open .tabs { display: flex; }
-      .tab, .tab-alert {
+      .top-bar.is-nav-open {
+        position: fixed;
+        inset: 0;
+        height: 100dvh;
+        z-index: 200;
+      }
+      .top-bar.is-nav-open .top-bar-inner {
+        height: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        flex-wrap: nowrap;
+      }
+      .top-bar.is-nav-open .tabs {
+        display: flex;
+        flex: 1 1 auto;
+        margin: 0;
+        padding: 1rem 0 0.5rem;
+      }
+      .tab, .tab-alert, .tab-connect {
+        display: inline-flex;
         width: 100%;
         margin-left: 0;
-        text-align: left;
+        text-align: center;
+        justify-content: center;
       }
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=79" />
+  <link rel="stylesheet" href="styles.css?v=81" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -176,6 +197,10 @@
         </button>
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
           Kontakt
+        </button>
+        <button class="tab tab-connect" role="tab" aria-selected="false" aria-controls="panel-connect" id="tab-connect" data-tab="connect">
+          <span class="tab-connect-icon" aria-hidden="true">?</span>
+          Jak podłączyć wodę?
         </button>
         <button class="tab tab-alert" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
           Zgłoszenie awarii
@@ -598,6 +623,6 @@
   </footer>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=75"></script>
+  <script src="script.js?v=76"></script>
 </body>
 </html>

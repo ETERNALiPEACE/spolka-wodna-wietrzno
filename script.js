@@ -502,13 +502,27 @@
   const topBar = document.querySelector(".top-bar");
   const navToggle = document.getElementById("nav-toggle");
   const navQuery = window.matchMedia("(max-width: 960px)");
+  let navScrollY = 0;
 
   function setNavOpen(open) {
     if (!topBar || !navToggle) return;
     const shouldOpen = Boolean(open) && navQuery.matches;
+    const wasOpen = topBar.classList.contains("is-nav-open");
+
+    if (shouldOpen && !wasOpen) {
+      navScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = `-${navScrollY}px`;
+    }
+
     topBar.classList.toggle("is-nav-open", shouldOpen);
+    document.body.classList.toggle("is-nav-open", shouldOpen);
     navToggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
     navToggle.setAttribute("aria-label", shouldOpen ? "Zamknij menu" : "Otwórz menu");
+
+    if (!shouldOpen && wasOpen) {
+      document.body.style.top = "";
+      window.scrollTo(0, navScrollY);
+    }
   }
 
   function closeNav() {
@@ -562,7 +576,11 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    const currentIndex = tabs.findIndex((tab) => tab.classList.contains("is-active"));
+    const visibleTabs = tabs.filter((tab) => {
+      if (!(tab instanceof HTMLElement)) return false;
+      return window.getComputedStyle(tab).display !== "none";
+    });
+    const currentIndex = visibleTabs.findIndex((tab) => tab.classList.contains("is-active"));
     if (currentIndex < 0) return;
 
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
@@ -574,9 +592,9 @@
       }
       event.preventDefault();
       const delta = event.key === "ArrowRight" ? 1 : -1;
-      const next = (currentIndex + delta + tabs.length) % tabs.length;
-      tabs[next].focus();
-      activate(tabs[next].dataset.tab, { animate: true });
+      const next = (currentIndex + delta + visibleTabs.length) % visibleTabs.length;
+      visibleTabs[next].focus();
+      activate(visibleTabs[next].dataset.tab, { animate: true });
     }
   });
 
