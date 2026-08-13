@@ -1581,12 +1581,12 @@ body.is-nav-open {
 .site-footer-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 1.75rem 1.35rem;
+  padding: 1.5rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1.5rem 2rem;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem 1.35rem;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1606,13 +1606,15 @@ body.is-nav-open {
 .site-footer-brand-block {
   display: flex;
   align-items: center;
-  flex: 1 1 14rem;
-  min-width: min(100%, 12rem);
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  padding-left: 0.35rem;
 }
 
 .site-footer-logo {
   display: block;
-  width: min(13.5rem, 100%);
+  width: min(12.5rem, 100%);
   height: auto;
   aspect-ratio: 491 / 200;
   object-fit: contain;
@@ -1625,8 +1627,8 @@ body.is-nav-open {
 }
 
 .site-footer-contact {
-  flex: 1 1 16rem;
-  min-width: min(100%, 15rem);
+  flex: 0 1 18rem;
+  min-width: min(100%, 14rem);
 }
 
 .site-footer-contact-title {
