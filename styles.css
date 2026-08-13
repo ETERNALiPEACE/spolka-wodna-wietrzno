@@ -1595,11 +1595,12 @@ body.is-nav-open {
 
 .site-footer-copy {
   max-width: 1120px;
-  margin: 0.85rem auto 0;
-  padding: 0 0.15rem;
+  margin: 0.85rem 0 0;
+  padding: 0;
   color: #97c2e8;
   font-size: 0.82rem;
   line-height: 1.4;
+  text-align: left;
 }
 
 .site-footer-brand-block {
