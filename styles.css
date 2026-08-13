@@ -1586,30 +1586,97 @@ body.is-nav-open {
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1.5rem 2.5rem;
+  gap: 1.5rem 2rem;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: 0 10px 28px rgba(26, 74, 122, 0.08);
 }
 
-.site-footer-left,
-.site-footer-right {
-  min-width: min(100%, 16rem);
+.site-footer-brand-block {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex: 1 1 17rem;
+  min-width: min(100%, 15rem);
 }
 
-.site-footer-left {
+.site-footer-logo {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(26, 74, 122, 0.1);
+}
+
+.site-footer-brand-text {
+  min-width: 0;
+}
+
+.site-footer-brand-text p {
+  margin: 0.2rem 0;
+  line-height: 1.5;
+}
+
+.site-footer-contact {
   flex: 1 1 16rem;
+  min-width: min(100%, 15rem);
+}
+
+.site-footer-contact-title {
+  margin: 0 0 0.65rem;
+  color: var(--deep);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.site-footer-contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.site-footer-contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.site-footer-icon {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  color: var(--lake);
+  flex-shrink: 0;
+}
+
+.site-footer-contact a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer-contact a:hover {
+  color: var(--deep);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .site-footer-right {
-  flex: 0 1 22rem;
+  flex: 0 1 14rem;
   margin-left: auto;
   text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 0.55rem;
+  min-width: min(100%, 12rem);
 }
 
 .site-footer-brand,
@@ -1620,16 +1687,13 @@ body.is-nav-open {
 }
 
 .site-footer-brand {
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.3;
 }
 
 .site-footer-heading {
   font-size: 1rem;
-}
-
-.site-footer-left p {
-  margin: 0.2rem 0;
-  line-height: 1.5;
 }
 
 .site-footer-link {
@@ -1671,13 +1735,22 @@ button.site-footer-link.site-footer-heading:hover {
 }
 
 @media (max-width: 700px) {
+  .site-footer-brand-block,
+  .site-footer-contact,
   .site-footer-right {
+    flex: 1 1 100%;
     margin-left: 0;
+  }
+
+  .site-footer-right {
     text-align: left;
     align-items: flex-start;
-    width: 100%;
-    padding-top: 1rem;
+    padding-top: 0.85rem;
     border-top: 1px solid var(--line);
+  }
+
+  .site-footer-contact {
+    padding-top: 0.35rem;
   }
 }
 
