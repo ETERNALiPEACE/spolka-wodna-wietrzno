@@ -1,15 +1,10 @@
 (() => {
   const tabs = Array.from(document.querySelectorAll(".tab"));
   const panels = Array.from(document.querySelectorAll(".panel"));
-  const year = document.getElementById("year");
   const reportForm = document.getElementById("report-form");
   const reportStatus = document.getElementById("report-status");
   const submitBtn = reportForm?.querySelector('button[type="submit"]');
   let navScrollY = 0;
-
-  if (year) {
-    year.textContent = String(new Date().getFullYear());
-  }
 
   const brandName = document.getElementById("brand-name");
   const brandLead = document.getElementById("brand-lead");
@@ -1058,11 +1053,7 @@
     const cached = readNewsCache(cacheKey);
     if (cached) show(cached);
 
-    // Lokalny plik i chmura równolegle — UI nie czeka na wolne Apps Script.
-    const localPromise = fetchJsonWithTimeout("data/news.json", 4000)
-      .then((data) => (Array.isArray(data?.posts) ? data.posts : []))
-      .catch(() => []);
-
+    // Odświeżenie z chmury (Apps Script) — UI nie czeka na wolne połączenie.
     const remotePromise = scriptUrl
       ? fetchJsonWithTimeout(scriptUrl, remoteTimeoutMs)
           .then((result) =>
@@ -1073,11 +1064,6 @@
           .catch(() => null)
       : Promise.resolve(null);
 
-    if (!cached) {
-      const localPosts = await localPromise;
-      if (localPosts.length) show(localPosts);
-    }
-
     const remotePosts = await remotePromise;
     if (remotePosts?.length) {
       writeNewsCache(cacheKey, remotePosts);
@@ -1086,9 +1072,7 @@
     }
 
     if (!shownFingerprint) {
-      const localPosts = await localPromise;
-      if (localPosts.length) show(localPosts);
-      else showNewsError();
+      showNewsError();
     }
   }
 

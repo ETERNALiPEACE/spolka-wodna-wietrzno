@@ -186,10 +186,6 @@
   padding: 0.25rem 0 0;
 }
 
-.news-empty {
-  color: var(--muted);
-}
-
 .news-format-toolbar {
   display: flex;
   flex-wrap: wrap;
