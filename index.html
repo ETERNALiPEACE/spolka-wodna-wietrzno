@@ -145,7 +145,7 @@
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-spolka-wodna.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=82" />
+  <link rel="stylesheet" href="styles.css?v=84" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -605,7 +605,6 @@
         </div>
       </div>
     </section>
-    </section>
 
     <section class="panel" id="panel-privacy" role="tabpanel" aria-labelledby="privacy-title" hidden>
       <div class="panel-inner">
@@ -616,23 +615,59 @@
 
   <footer class="site-footer">
     <div class="site-footer-inner">
-      <div class="site-footer-left">
-        <p class="site-footer-brand">Spółka Wodna Wodociągu Wiejskiego</p>
-        <p>Wietrzno – Łęki Dukielskie · Podkarpacie</p>
-        <p>© <span id="year"></span> Wszystkie prawa zastrzeżone</p>
+      <div class="site-footer-top">
+        <div class="site-footer-brand-block">
+          <img
+            class="site-footer-logo"
+            src="assets/logo-spolka-wodna.png"
+            width="72"
+            height="72"
+            alt=""
+            decoding="async"
+          />
+          <div class="site-footer-brand-text">
+            <p class="site-footer-brand">Spółka Wodna<br />Wodociągu Wiejskiego</p>
+            <p class="site-footer-place">Wietrzno – Łęki Dukielskie</p>
+          </div>
+        </div>
+
+        <div class="site-footer-contact">
+          <p class="site-footer-contact-title">Dane kontaktowe</p>
+          <ul class="site-footer-contact-list">
+            <li>
+              <svg class="site-footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M12 2.5a7 7 0 0 0-7 7c0 4.4 5.4 10.4 6.4 11.5a.8.8 0 0 0 1.2 0C13.6 19.9 19 13.9 19 9.5a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
+              </svg>
+              <span>38-451 Wietrzno, woj. podkarpackie</span>
+            </li>
+            <li>
+              <svg class="site-footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M7.2 3.5c.5-.5 1.3-.6 1.9-.2l2.1 1.3c.6.4.8 1.2.5 1.8l-.9 1.9a1.4 1.4 0 0 0 .3 1.6l2.9 2.9c.4.4 1.1.5 1.6.3l1.9-.9c.6-.3 1.4-.1 1.8.5l1.3 2.1c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.7.7-1.7 1-2.7.8-2.4-.4-5.2-2.1-7.8-4.7S4.5 9.9 4.1 7.5c-.2-1 .1-2 .8-2.7l1.3-1.3Z"/>
+              </svg>
+              <a href="tel:+48134333054">(13) 433 30 54</a>
+            </li>
+            <li>
+              <svg class="site-footer-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M3.5 6.5A2.5 2.5 0 0 1 6 4h12a2.5 2.5 0 0 1 2.5 2.5v11A2.5 2.5 0 0 1 18 20H6a2.5 2.5 0 0 1-2.5-2.5v-11Zm2.1.5 6.1 4.2a.8.8 0 0 0 .9 0L18.7 7H5.6Zm13.4 1.7-5.7 3.9a2.3 2.3 0 0 1-2.6 0L5 8.2V17a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V8.2Z"/>
+              </svg>
+              <a href="mailto:biurowodawietrzno@gmail.com">biurowodawietrzno@gmail.com</a>
+            </li>
+          </ul>
+
+          <div class="site-footer-links">
+            <button type="button" class="site-footer-link" data-go-tab="connect">Jak podłączyć wodę?</button>
+            <button type="button" class="site-footer-link" data-go-tab="privacy">Polityka prywatności</button>
+          </div>
+        </div>
       </div>
-      <div class="site-footer-right">
-        <button type="button" class="site-footer-link site-footer-heading" data-go-tab="connect">
-          Jak podłączyć wodę?
-        </button>
-        <button type="button" class="site-footer-link site-footer-heading" data-go-tab="privacy">
-          Polityka prywatności
-        </button>
+
+      <div class="site-footer-copy">
+        Copyright © <span id="year"></span> Spółka Wodna Wodociągu Wiejskiego
       </div>
     </div>
   </footer>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=81"></script>
+  <script src="script.js?v=83"></script>
 </body>
 </html>
