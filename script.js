@@ -1094,4 +1094,36 @@
 
   fixPolishOrphansIn(document.body);
   loadNewsPosts();
+
+  const scrollTopBtn = document.getElementById("scroll-top");
+  if (scrollTopBtn) {
+    const SCROLL_TOP_SHOW_AFTER = 280;
+    let scrollTopQueued = false;
+
+    function updateScrollTopVisibility() {
+      const y = window.scrollY || window.pageYOffset || 0;
+      const show = y > SCROLL_TOP_SHOW_AFTER;
+      scrollTopBtn.classList.toggle("is-visible", show);
+      scrollTopBtn.setAttribute("aria-hidden", show ? "false" : "true");
+      scrollTopBtn.tabIndex = show ? 0 : -1;
+    }
+
+    function onScrollOrResize() {
+      if (scrollTopQueued) return;
+      scrollTopQueued = true;
+      requestAnimationFrame(() => {
+        scrollTopQueued = false;
+        updateScrollTopVisibility();
+      });
+    }
+
+    scrollTopBtn.addEventListener("click", () => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    updateScrollTopVisibility();
+  }
 })();
