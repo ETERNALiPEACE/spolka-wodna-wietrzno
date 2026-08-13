@@ -1593,6 +1593,15 @@ body.is-nav-open {
   box-shadow: 0 10px 28px rgba(26, 74, 122, 0.08);
 }
 
+.site-footer-copy {
+  max-width: 1120px;
+  margin: 0.85rem auto 0;
+  padding: 0 0.15rem;
+  color: #97c2e8;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .site-footer-brand-block {
   display: flex;
   align-items: center;
