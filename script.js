@@ -43,6 +43,10 @@
       title: "Jak podłączyć wodę?",
       lead: "Krok po kroku — od wniosku do przyłączenia.",
     },
+    privacy: {
+      title: "Polityka prywatności",
+      lead: "Zasady przetwarzania danych osobowych.",
+    },
   };
 
   const TAB_IDS = new Set(Object.keys(HEADER_COPY));

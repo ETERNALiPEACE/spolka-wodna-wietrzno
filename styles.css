@@ -1606,6 +1606,10 @@ body.is-nav-open {
   flex: 0 1 22rem;
   margin-left: auto;
   text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.55rem;
 }
 
 .site-footer-brand,
@@ -1613,6 +1617,10 @@ body.is-nav-open {
   margin: 0 0 0.45rem;
   color: var(--deep);
   font-weight: 700;
+}
+
+.site-footer-right .site-footer-heading {
+  margin: 0;
 }
 
 .site-footer-heading {
