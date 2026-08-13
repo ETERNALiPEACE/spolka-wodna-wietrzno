@@ -12,19 +12,33 @@
   z-index: 1;
   width: min(100% - 2rem, 920px);
   margin: 0 auto;
-  padding: 2rem 0 3rem;
+  padding: 2rem 0 1.5rem;
   display: grid;
   gap: 1.25rem;
   flex: 1;
 }
 
-/* Ekran logowania: węższa karta, wyśrodkowana na stronie */
+/* Ekran logowania: węższa karta, wyśrodkowana nad stopką */
 .admin-shell:has(#editor-panel[hidden]) {
   width: min(100% - 2rem, 28rem);
-  min-height: 100vh;
   align-content: center;
   padding: 1.5rem clamp(0.75rem, 3vw, 1.5rem);
   box-sizing: border-box;
+}
+
+.admin-footer {
+  flex-shrink: 0;
+  width: min(100% - 2rem, 920px);
+  margin: 0 auto;
+  padding: 0.35rem 0 1.15rem;
+}
+
+.admin-copyright {
+  margin: 0;
+  color: #97c2e8;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-align: left;
 }
 
 .admin-shell:has(#editor-panel[hidden]) .admin-header {
