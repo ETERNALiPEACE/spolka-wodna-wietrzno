@@ -1581,13 +1581,13 @@ body.is-nav-open {
 .site-footer-inner {
   max-width: 1120px;
   margin: 0 auto;
-  padding: 1.5rem 1.5rem;
+  padding: 1.35rem 1.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1rem 1.35rem;
-  background: rgba(255, 255, 255, 0.82);
+  justify-content: space-between;
+  gap: 1.25rem 2rem;
+  background: rgba(232, 242, 250, 0.92);
   border: 1px solid var(--line);
   border-radius: 12px;
   box-shadow: 0 10px 28px rgba(26, 74, 122, 0.08);
@@ -1603,25 +1603,32 @@ body.is-nav-open {
   text-align: left;
 }
 
+.site-footer-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 1.85rem;
+  min-width: 0;
+  flex: 1 1 28rem;
+}
+
 .site-footer-brand-block {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex: 0 0 auto;
   min-width: 0;
-  padding-left: 0.35rem;
 }
 
 .site-footer-logo {
   display: block;
-  width: min(12.5rem, 100%);
+  width: min(13rem, 100%);
   height: auto;
   aspect-ratio: 491 / 200;
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 10px;
   background: #fff;
-  padding: 0.35rem 0.55rem;
+  padding: 0.4rem 0.65rem;
   box-shadow: 0 4px 14px rgba(26, 74, 122, 0.1);
   border: 1px solid var(--line);
 }
@@ -1632,10 +1639,23 @@ body.is-nav-open {
 }
 
 .site-footer-contact-title {
-  margin: 0 0 0.65rem;
+  position: relative;
+  margin: 0 0 0.7rem;
+  padding-top: 0.55rem;
   color: var(--deep);
   font-size: 1rem;
   font-weight: 700;
+}
+
+.site-footer-contact-title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.75rem;
+  height: 4px;
+  border-radius: 1px;
+  background: #111;
 }
 
 .site-footer-contact-list {
@@ -1675,14 +1695,19 @@ body.is-nav-open {
 }
 
 .site-footer-right {
-  flex: 0 1 14rem;
+  flex: 0 0 auto;
   margin-left: auto;
   text-align: right;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
   gap: 0.55rem;
-  min-width: min(100%, 12rem);
+  min-width: min(100%, 11rem);
+  padding: 0.95rem 1.15rem;
+  border-radius: 10px;
+  background: rgba(43, 108, 176, 0.14);
+  border: 1px solid rgba(43, 108, 176, 0.12);
 }
 
 .site-footer-heading {
@@ -1731,6 +1756,7 @@ button.site-footer-link.site-footer-heading:hover {
 }
 
 @media (max-width: 700px) {
+  .site-footer-main,
   .site-footer-brand-block,
   .site-footer-contact,
   .site-footer-right {
@@ -1741,12 +1767,10 @@ button.site-footer-link.site-footer-heading:hover {
   .site-footer-right {
     text-align: left;
     align-items: flex-start;
-    padding-top: 0.85rem;
-    border-top: 1px solid var(--line);
   }
 
   .site-footer-contact {
-    padding-top: 0.35rem;
+    padding-top: 0.15rem;
   }
 }
 
