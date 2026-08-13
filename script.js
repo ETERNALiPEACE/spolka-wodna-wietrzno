@@ -45,6 +45,34 @@
     },
   };
 
+  const TAB_IDS = new Set(Object.keys(HEADER_COPY));
+
+  function normalizeTabId(value) {
+    const id = String(value || "").trim().toLowerCase();
+    return TAB_IDS.has(id) ? id : "home";
+  }
+
+  function tabFromLocation() {
+    const hash = window.location.hash.replace(/^#/, "").trim().toLowerCase();
+    if (TAB_IDS.has(hash)) return hash;
+
+    const params = new URLSearchParams(window.location.search);
+    const queryTab = String(params.get("tab") || "").trim().toLowerCase();
+    if (TAB_IDS.has(queryTab)) return queryTab;
+
+    return "home";
+  }
+
+  function syncTabToUrl(tabId) {
+    const id = normalizeTabId(tabId);
+    const nextHash = id === "home" ? "" : `#${id}`;
+    const currentHash = window.location.hash === "#" ? "" : window.location.hash;
+    if (currentHash === nextHash) return;
+
+    const url = `${window.location.pathname}${window.location.search}${nextHash}`;
+    history.replaceState(null, "", url);
+  }
+
   /** Polskie sierotki: nie zostawiaj samotnych a/i/o/u/w/z na końcu wiersza. */
   function fixPolishOrphans(text) {
     if (!text) return text;
@@ -85,12 +113,13 @@
 
   function activate(tabId, options = {}) {
     const animate = options.animate === true;
-    const nextId = `panel-${tabId}`;
+    const id = normalizeTabId(tabId);
+    const nextId = `panel-${id}`;
     const previousTab = tabs.find((tab) => tab.classList.contains("is-active"))?.dataset.tab;
-    const tabChanged = previousTab !== tabId;
+    const tabChanged = previousTab !== id;
 
     tabs.forEach((tab) => {
-      const active = tab.dataset.tab === tabId;
+      const active = tab.dataset.tab === id;
       tab.classList.toggle("is-active", active);
       tab.setAttribute("aria-selected", active ? "true" : "false");
     });
@@ -108,7 +137,11 @@
       }
     });
 
-    updateHeader(tabId);
+    updateHeader(id);
+
+    if (options.updateUrl !== false) {
+      syncTabToUrl(id);
+    }
 
     if (options.scrollTop === false || !tabChanged) return;
 
@@ -672,13 +705,12 @@
     });
   }
 
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("tab") === "report") {
-    activate("report");
-  }
-  if (params.get("tab") === "news") {
-    activate("news");
-  }
+  const initialTab = tabFromLocation();
+  activate(initialTab, { animate: false, scrollTop: false });
+
+  window.addEventListener("hashchange", () => {
+    activate(tabFromLocation(), { animate: true, updateUrl: false });
+  });
 
   function escapeHtml(value) {
     return String(value)
