@@ -1605,11 +1605,11 @@ body.is-nav-open {
 
 .site-footer-main {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 0.55rem 0.7rem;
+  gap: 0.35rem 0.5rem;
   min-width: 0;
-  flex: 1 1 28rem;
+  flex: 0 1 auto;
 }
 
 .site-footer-brand-block {
@@ -1634,8 +1634,9 @@ body.is-nav-open {
 }
 
 .site-footer-contact {
-  flex: 0 1 18rem;
-  min-width: min(100%, 14rem);
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 22rem;
 }
 
 .site-footer-contact-title {
