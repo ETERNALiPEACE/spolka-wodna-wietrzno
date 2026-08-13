@@ -1683,21 +1683,11 @@ body.is-nav-open {
   min-width: min(100%, 12rem);
 }
 
-.site-footer-brand,
 .site-footer-heading {
   margin: 0;
   color: var(--deep);
+  font-size: 1rem;
   font-weight: 700;
-}
-
-.site-footer-brand {
-  margin-bottom: 0.25rem;
-  font-size: 1rem;
-  line-height: 1.3;
-}
-
-.site-footer-heading {
-  font-size: 1rem;
 }
 
 .site-footer-link {
