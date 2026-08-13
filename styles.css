@@ -1846,10 +1846,11 @@ body.is-nav-open .scroll-top {
 .scroll-top-icon {
   position: relative;
   z-index: 1;
-  width: 1.28rem;
-  height: 1.28rem;
+  width: 1.2rem;
+  height: 1.2rem;
   display: block;
-  margin-top: 0.45rem;
+  margin-top: 0.55rem;
+  overflow: visible;
 }
 
 @media (prefers-reduced-motion: reduce) {
