@@ -590,6 +590,41 @@ body.is-nav-open {
   margin: 0.45rem 0;
 }
 
+.privacy-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.privacy-content h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--deep);
+}
+
+.privacy-content p,
+.privacy-content ul {
+  margin: 0;
+  color: var(--ink);
+  max-width: 42rem;
+}
+
+.privacy-content ul {
+  padding-left: 1.25rem;
+}
+
+.privacy-content li {
+  margin: 0.35rem 0;
+}
+
+#panel-privacy .lead,
+#panel-privacy .privacy-content p {
+  text-align: justify;
+  hyphens: none;
+  -webkit-hyphens: none;
+  text-wrap: pretty;
+}
+
 .connect-step-first {
   white-space: nowrap;
 }
@@ -1675,6 +1710,7 @@ button.site-footer-link.site-footer-heading:hover {
   .site-footer-right {
     margin-left: 0;
     text-align: left;
+    align-items: flex-start;
     width: 100%;
     padding-top: 1rem;
     border-top: 1px solid var(--line);
