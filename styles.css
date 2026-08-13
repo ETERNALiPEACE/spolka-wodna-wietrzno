@@ -421,7 +421,7 @@ body.is-nav-open {
   z-index: 1;
   max-width: 920px;
   margin: 1.75rem auto 0;
-  padding: 0 1.25rem 4rem;
+  padding: 0 1.25rem 1.25rem;
 }
 
 .panel {
@@ -1548,8 +1548,8 @@ body.is-nav-open {
 .site-footer {
   position: relative;
   z-index: 1;
-  margin-top: 1rem;
-  padding: 0 1.25rem 0.55rem;
+  margin-top: 0.35rem;
+  padding: 0 1.25rem 0.45rem;
   color: var(--muted);
   font-size: 0.9rem;
 }
@@ -1571,7 +1571,7 @@ body.is-nav-open {
 
 .site-footer-copy {
   max-width: 1120px;
-  margin: 0.75rem 0 0;
+  margin: 0.55rem auto 0;
   padding: 0;
   color: #97c2e8;
   font-size: 0.82rem;
@@ -1603,11 +1603,11 @@ body.is-nav-open {
   aspect-ratio: 900 / 391;
   object-fit: contain;
   flex-shrink: 0;
-  border-radius: 10px;
-  background: #fff;
-  padding: 0.4rem 0.65rem;
-  box-shadow: 0 4px 14px rgba(26, 74, 122, 0.1);
-  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border: 0;
 }
 
 .site-footer-contact {
