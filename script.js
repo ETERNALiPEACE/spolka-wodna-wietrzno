@@ -45,7 +45,7 @@
     },
     privacy: {
       title: "Polityka prywatności",
-      lead: "Zasady przetwarzania danych osobowych.",
+      lead: "",
     },
   };
 
