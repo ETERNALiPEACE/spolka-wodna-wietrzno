@@ -1615,7 +1615,7 @@ body.is-nav-open {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: 0.45rem 0.55rem;
+  gap: 0.45rem 0.75rem;
   flex: 0 1 auto;
   min-width: 0;
 }
