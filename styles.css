@@ -1612,8 +1612,8 @@ body.is-nav-open {
 }
 
 .site-footer-logo {
-  width: 4rem;
-  height: 4rem;
+  width: 6.75rem;
+  height: 6.75rem;
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 50%;
