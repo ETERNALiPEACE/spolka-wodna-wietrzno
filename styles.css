@@ -1,3 +1,6 @@
+/* ========================================
+   ZMIENNE CSS I KOLORY
+   ======================================== */
 :root {
   --deep: #1a4a7a;
   --lake: #2b6cb0;
@@ -17,6 +20,9 @@
   box-sizing: border-box;
 }
 
+/* ========================================
+   ELEMENTY BAZOWE (HTML, BODY)
+   ======================================== */
 html {
   scroll-behavior: smooth;
   /* clip nie psuje sticky (w przeciwieństwie do overflow-x: hidden) */
@@ -47,6 +53,10 @@ body {
   overflow-x: clip;
 }
 
+/* ========================================
+   STOPKA GÓRNA - NAWIGACJA I LOGO
+   Sticky header z logo, nawigacją i przyciskami
+   ======================================== */
 .top-bar {
   position: sticky;
   top: 0;
@@ -96,6 +106,10 @@ body {
   object-fit: contain;
 }
 
+/* ========================================
+   NAGŁÓWEK STRONY
+   Główny baner z tytułem i opisem spółki
+   ======================================== */
 .site-header {
   position: relative;
   z-index: 1;
@@ -140,6 +154,10 @@ body {
   }
 }
 
+/* ========================================
+   ZAKŁADKI / NAWIGACJA
+   Przyciski dla przełączania między sekcjami
+   ======================================== */
 .tabs {
   display: flex;
   justify-content: flex-end;
@@ -416,6 +434,10 @@ body.is-nav-open {
   }
 }
 
+/* ========================================
+   PANELE SEKCJI
+   Kontenery dla poszczególnych treści strony
+   ======================================== */
 .panels {
   position: relative;
   z-index: 1;
@@ -741,6 +763,10 @@ body.is-nav-open {
   }
 }
 
+/* ========================================
+   FORMULARZE I POLA WEJŚCIA
+   Style dla pól tekstowych, select, textarea
+   ======================================== */
 .report-form {
   display: flex;
   flex-direction: column;
@@ -772,6 +798,10 @@ body.is-nav-open {
   color: var(--muted);
 }
 
+/* ========================================
+   SELEKTOR DATY I GODZINY
+   Kalendarz i wybór czasu dla zgłaszania awarii
+   ======================================== */
 .datetime-field {
   position: relative;
   padding: 0.75rem 0.85rem 0.75rem;
@@ -1280,6 +1310,10 @@ body.is-nav-open {
   outline-offset: 3px;
 }
 
+/* ========================================
+   AKTUALNOŚCI NA STRONIE GŁÓWNEJ
+   Sekcja ostatnich aktualności na home page
+   ======================================== */
 .home-news {
   margin-top: 2.25rem;
   padding-top: 1.75rem;
@@ -1304,6 +1338,10 @@ body.is-nav-open {
   font-family: inherit;
 }
 
+/* ========================================
+   LISTA I POJEDYNCZE AKTUALNOŚCI
+   Styling dla artykułów i paginacji
+   ======================================== */
 .news-list {
   list-style: none;
   margin: 0;
@@ -1545,6 +1583,9 @@ body.is-nav-open {
   border: 0;
 }
 
+/* ========================================
+   STOPKA DOLNA
+   ======================================== */
 .site-footer {
   position: relative;
   z-index: 1;
@@ -1570,9 +1611,9 @@ body.is-nav-open {
 }
 
 .site-footer-copy {
-  max-width: 1120px;
-  margin: 0.55rem auto 0;
-  padding: 0;
+  width: 100%;
+  margin: 0.55rem 0 0;
+  padding: 0 1.25rem;
   color: #97c2e8;
   font-size: 0.82rem;
   line-height: 1.4;
@@ -1747,6 +1788,10 @@ button.site-footer-link.site-footer-heading:hover {
   }
 }
 
+/* ========================================
+   PRZYCISK POWROTU NA GÓRĘ
+   Scrolluje stronę do góry zakładki
+   ======================================== */
 .scroll-top {
   position: fixed;
   right: max(0.85rem, env(safe-area-inset-right, 0px));

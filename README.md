@@ -2,44 +2,37 @@
 
 Oficjalna strona Spółki Wodnej Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie.
 
-## Pliki
+## O projekcie
 
-**Strona publiczna**
-- `index.html` — struktura strony (zakładki)
-- `styles.css` — wygląd
-- `script.js` — nawigacja, formularz awarii, aktualności
-- `config.js` — URL-e Apps Script (mail + aktualności)
-- `assets/logo-spolka-wodna.png` — logo spółki
-- `robots.txt` — blokada indeksowania panelu admina
+Strona zawiera informacje o spółce, aktualności, formularze do pobrania, dane kontaktowe i możliwość zgłoszenia awarii online.
 
-**Panel aktualności (opcjonalny)**
-- `n-7f4a9c2e.html` / `.js` / `.css` — ukryty panel edycji
-- `apps-script/News.gs` — szablon backendu (wdrażasz w Google Apps Script, nie jest serwowany ze strony)
+## Pliki główne
 
-**Dokumenty**
-- `formularze/` — plik: `Wniosek-o-przylaczenie-do-sieci-wodociagowej.pdf`
-- `dokumenty/` — oczekiwany plik: `statut.pdf` (link w Informacjach; katalog może być poza repo)
+- `index.html` — struktura strony
+- `styles.css` — stylowanie
+- `script.js` — logika nawigacji i formularzy
+- `config.js` — konfiguracja (linki do Google Apps Script)
+- `assets/` — logo i grafiki
+- `formularze/` — dokumenty PDF
 
-## Aktualności — skąd się biorą
-
-1. Od razu: ostatni zapis z przeglądarki (`localStorage`).
-2. W tle: odświeżenie z `NEWS_CONFIG.scriptUrl` (Google Apps Script).
-3. Jeśli chmura zwróci posty → podmiana listy + zapis do cache.
-4. Timeout chmury: domyślnie 2,5 s (`NEWS_CONFIG.timeoutMs`).
-
-## Uruchomienie
+## Jak uruchomić
 
 ```bash
 python3 -m http.server 8080
 ```
 
-## Formularz awarii
+Następnie otwórz `https://eternalipeace.github.io/spolka-wodna-wietrzno/` w przeglądarce.
 
-Wysyłka: `MAIL_CONFIG.scriptUrl` w `config.js`.
+## Funkcjonalności
 
-## Aktualności i logowanie do panelu
+- **Nawigacja** — 7 sekcji dostępne z menu
+- **Aktualności** — pobierane z Google Apps Script
+- **Formularz awarii** — zgłaszanie problemów online
+- **Responsywny design** — działa na mobile i desktop
 
-Loginu i hasła **nie trzymaj w GitHubie**. Ustaw je wyłącznie w Google Apps Script (`ADMIN_LOGIN` i `ADMIN_PASSWORD` w wdrożonym skrypcie `News.gs`).  
-Publiczny `config.js` ma tylko `NEWS_CONFIG.scriptUrl`.
+## Integracja z Google Apps Script
 
-Po zmianie loginu/hasła w Apps Script zrób nowe wdrożenie skryptu.
+Aktualności i formularze awarii wysyłane są do Google Apps Script. 
+Adresy URL skryptów znajdują się w `config.js`.
+
+Dane loginu i hasła do panelu adminstracyjnego ustawiaj wyłącznie w Google Apps Script, nie w GitHubie.
