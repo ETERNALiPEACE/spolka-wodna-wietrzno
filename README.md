@@ -16,12 +16,7 @@ Strona zawiera informacje o spółce, aktualności, formularze do pobrania, dane
 - `formularze/` — dokumenty PDF
 
 ## Jak uruchomić
-
-```bash
-python3 -m http.server 8080
-```
-
-Następnie otwórz `https://eternalipeace.github.io/spolka-wodna-wietrzno/` w przeglądarce.
+Otwórz `https://eternalipeace.github.io/spolka-wodna-wietrzno/` w przeglądarce.
 
 ## Funkcjonalności
 
