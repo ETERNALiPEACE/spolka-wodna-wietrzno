@@ -102,7 +102,7 @@ body {
   display: block;
   width: auto;
   height: clamp(52px, 7vw, 70px);
-  aspect-ratio: 640 / 576;
+  aspect-ratio: 895 / 282;
   object-fit: contain;
 }
 
