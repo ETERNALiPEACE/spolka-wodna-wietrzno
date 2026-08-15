@@ -58,7 +58,7 @@
     .top-brand-logo {
       display: block;
       width: auto;
-      height: clamp(52px, 7vw, 70px);
+      height: clamp(64px, 9vw, 92px);
       aspect-ratio: 895 / 282;
       object-fit: contain;
     }
@@ -68,10 +68,10 @@
       justify-content: flex-end;
       flex-wrap: nowrap;
       gap: 0.15rem 0.45rem;
-      margin: 0 0 0 auto;
+      margin: 0;
       padding: 0;
       min-width: 0;
-      flex: 1 1 auto;
+      flex: 0 0 auto;
     }
     .tab {
       appearance: none;
@@ -144,7 +144,7 @@
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-sw-a.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=146" />
+  <link rel="stylesheet" href="styles.css?v=192" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -195,8 +195,11 @@
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
           Kontakt
         </button>
+        <hr class="nav-sep" />
         <button class="tab tab-connect" role="tab" aria-selected="false" aria-controls="panel-connect" id="tab-connect" data-tab="connect">
-          <span class="tab-connect-icon" aria-hidden="true">?</span>
+          <svg class="tab-connect-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+          </svg>
           Jak podłączyć wodę?
         </button>
         <button class="tab tab-alert" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
