@@ -1,0 +1,10 @@
+127.0.0.1 - - [15/Aug/2026 17:20:58] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:20:58] "GET /styles.css?v=109 HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /styles.css?v=109 HTTP/1.1" 200 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /assets/logo-sw-a.png HTTP/1.1" 304 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /assets/logo_spwo_b.png HTTP/1.1" 304 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /config.js?v=73 HTTP/1.1" 304 -
+127.0.0.1 - - [15/Aug/2026 17:21:03] "GET /script.js?v=87 HTTP/1.1" 304 -
