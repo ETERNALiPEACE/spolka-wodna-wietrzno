@@ -1220,14 +1220,9 @@ body.is-nav-open {
 }
 
 .home-tile-icon {
-  width: 1.15rem;
-  height: 1.15rem;
-  flex-shrink: 0;
-}
-
-.home-tile-icon--wrench {
   width: 1.35rem;
   height: 1.35rem;
+  flex-shrink: 0;
 }
 
 .home-tile-body {
