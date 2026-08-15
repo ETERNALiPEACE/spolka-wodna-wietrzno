@@ -511,6 +511,11 @@ body.is-nav-open {
   text-wrap: pretty;
 }
 
+#panel-info .lead {
+  max-width: none;
+  margin-bottom: 1.25rem;
+}
+
 #panel-info .lead,
 #panel-info .info-section-lead,
 #panel-info .info-block p,
@@ -638,6 +643,13 @@ body.is-nav-open {
 .info-block li + li {
   margin-top: 0.35rem;
 }
+
+/* Godziny pracy biura — bez kropek (bulletów), z wcięciem */
+.info-block ul.hours-list {
+  list-style: none;
+  padding-left: 1.1rem;
+}
+
 
 .org-list {
   display: grid;
@@ -1197,6 +1209,22 @@ body.is-nav-open {
 
 .home-tile--connect {
   --tile: #2b6cb0;
+}
+
+/* Nagłówek „Jak podłączyć wodę?” — zawsze w jednej linii */
+.home-tile--connect .home-tile-head {
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.home-tile--connect .home-tile-head span {
+  white-space: nowrap;
+}
+
+/* Ikonka dobrana tak, żeby tekst mieścił się w jednej linii */
+.home-tile--connect .home-tile-head .home-tile-icon {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .home-tile--forms {
