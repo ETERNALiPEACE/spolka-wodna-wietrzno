@@ -144,7 +144,8 @@
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-sw-a.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=121" />
+  <link rel="stylesheet" href="styles.css?v=122" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -651,13 +652,12 @@
           </address>
 
           <div class="map-wrap">
-            <iframe
-              title="Lokalizacja biura Spółki Wodnej w Wietrznie"
-              src="https://maps.google.com/maps?q=49.59788629174893,21.703655558521557&amp;z=16&amp;output=embed"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-            ></iframe>
+            <div
+              id="map"
+              class="map-leaflet"
+              role="application"
+              aria-label="Lokalizacja biura Spółki Wodnej w Wietrznie na mapie OpenStreetMap"
+            ></div>
           </div>
         </div>
       </div>
@@ -745,5 +745,35 @@
 
   <script src="config.js?v=73"></script>
   <script src="script.js?v=87"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    (function () {
+      var panel = document.getElementById("panel-contact");
+      var mapEl = document.getElementById("map");
+      if (!panel || !mapEl || typeof L === "undefined") return;
+      var map = null;
+      function init() {
+        if (map) return;
+        map = L.map("map", { scrollWheelZoom: false, attributionPrefix: false }).setView([49.597886, 21.703656], 17);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap",
+          maxZoom: 19
+        }).addTo(map);
+        L.marker([49.597886, 21.703656]).addTo(map);
+        setTimeout(function () { map.invalidateSize(); }, 80);
+      }
+      var tab = document.getElementById("tab-contact");
+      if (tab) {
+        tab.addEventListener("click", function () {
+          init();
+          setTimeout(function () { if (map) map.invalidateSize(); }, 120);
+        });
+      }
+      if (window.location.hash.replace("#", "") === "contact") init();
+      new MutationObserver(function () {
+        if (panel.classList.contains("is-active") && !map) init();
+      }).observe(panel, { attributes: true, attributeFilter: ["class", "hidden"] });
+    })();
+  </script>
 </body>
 </html>

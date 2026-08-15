@@ -1599,7 +1599,8 @@ body.is-nav-open {
   box-shadow: 0 12px 30px rgba(26, 74, 122, 0.08);
 }
 
-.map-wrap iframe {
+.map-wrap iframe,
+.map-wrap .map-leaflet {
   display: block;
   width: 100%;
   height: min(55vh, 380px);
