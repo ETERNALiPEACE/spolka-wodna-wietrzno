@@ -515,6 +515,19 @@
       render();
     });
 
+    popover.querySelector('[data-action="save"]')?.addEventListener("click", () => {
+      if (!selected) {
+        const nowPl = getPolandNowParts();
+        selected = new Date(nowPl.year, nowPl.month, nowPl.day, nowPl.hour, nowPl.minute);
+        viewYear = selected.getFullYear();
+        viewMonth = selected.getMonth();
+        clampSelectedToRange();
+      }
+      syncTrigger();
+      setOpen(false);
+      trigger.focus();
+    });
+
     document.addEventListener("pointerdown", (event) => {
       const target = event.target;
       if (!(target instanceof Node)) return;

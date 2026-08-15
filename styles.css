@@ -119,6 +119,16 @@ body {
   text-align: center;
 }
 
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("assets/logo-sw-b-t.png") center 100% / auto 95% no-repeat;
+  opacity: 0.14;
+  pointer-events: none;
+}
+
 .brand-mark {
   margin: 0 0 1rem;
   font-size: 0.78rem;
@@ -130,12 +140,19 @@ body {
 
 .brand-name {
   margin: 0;
+  box-sizing: border-box;
+  min-height: 2.24em; /* zawsze 2 linie, żeby wysokość sekcji hero była stała */
   font-family: var(--font-display);
   font-size: clamp(2.1rem, 6vw, 3.6rem);
   font-weight: 700;
   line-height: 1.12;
   color: var(--deep);
   letter-spacing: -0.02em;
+}
+
+/* 1-linijkowe tytuły (Informacje, Kontakt itd.) wyśrodkuj w 2-linijkowym bloku */
+.brand-name:not(:has(br)) {
+  padding-top: 0.56em;
 }
 
 .brand-lead {
@@ -1011,6 +1028,39 @@ body.is-nav-open {
   background: #f7fbff;
 }
 
+.datetime-save-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding: 0.7rem 0.9rem 0.9rem;
+  border-top: 1px solid var(--line);
+  background: #f7fbff;
+}
+
+.datetime-save {
+  appearance: none;
+  border: 0;
+  background: var(--lake);
+  color: #fff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.datetime-save:hover {
+  background: var(--deep);
+}
+
+.datetime-save:focus-visible {
+  outline: 2px solid var(--deep);
+  outline-offset: 2px;
+}
+
 .datetime-time-col {
   display: flex;
   flex-direction: column;
@@ -1034,11 +1084,34 @@ body.is-nav-open {
 }
 
 .datetime-time-list {
+  --sb-track-color: #2b6cb0;
+  --sb-thumb-color: #edeff1;
+  --sb-size: 11px;
   max-height: 19.5rem;
   overflow-y: auto;
-  padding: 0.3rem;
+  padding: 0.3rem 0.5rem 0.3rem 0.3rem;
   display: grid;
   gap: 0.2rem;
+}
+
+.datetime-time-list::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.datetime-time-list::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 1px;
+}
+
+.datetime-time-list::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .datetime-time-list {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }
 
 .datetime-time-option {
@@ -1650,9 +1723,9 @@ body.is-nav-open {
 
 .site-footer-logo {
   display: block;
-  width: min(9.5rem, 100%);
-  height: auto;
-  aspect-ratio: 640 / 576;
+  width: auto;
+  height: clamp(76px, 9vw, 104px);
+  aspect-ratio: 895 / 282;
   object-fit: contain;
   flex-shrink: 0;
   border-radius: 8px;
