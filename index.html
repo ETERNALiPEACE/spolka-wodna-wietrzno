@@ -58,7 +58,7 @@
     .top-brand-logo {
       display: block;
       width: auto;
-      height: clamp(64px, 9vw, 92px);
+      height: clamp(52px, 7vw, 70px);
       aspect-ratio: 895 / 282;
       object-fit: contain;
     }
@@ -68,10 +68,10 @@
       justify-content: flex-end;
       flex-wrap: nowrap;
       gap: 0.15rem 0.45rem;
-      margin: 0;
+      margin: 0 0 0 auto;
       padding: 0;
       min-width: 0;
-      flex: 0 0 auto;
+      flex: 1 1 auto;
     }
     .tab {
       appearance: none;
@@ -144,8 +144,7 @@
     }
   </style>
   <link rel="preload" as="image" href="assets/logo-sw-a.png" fetchpriority="high" />
-  <link rel="stylesheet" href="styles.css?v=192" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css?v=109" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" />
@@ -195,11 +194,8 @@
         <button class="tab" role="tab" aria-selected="false" aria-controls="panel-contact" id="tab-contact" data-tab="contact">
           Kontakt
         </button>
-        <hr class="nav-sep" />
         <button class="tab tab-connect" role="tab" aria-selected="false" aria-controls="panel-connect" id="tab-connect" data-tab="connect">
-          <svg class="tab-connect-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-          </svg>
+          <span class="tab-connect-icon" aria-hidden="true">?</span>
           Jak podłączyć wodę?
         </button>
         <button class="tab tab-alert" role="tab" aria-selected="false" aria-controls="panel-report" id="tab-report" data-tab="report">
@@ -234,24 +230,25 @@
           <article class="home-tile home-tile--alert">
             <div class="home-tile-head">
 
-              <svg class="home-tile-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                <path fill-rule="evenodd" d="M12 6.75a5.25 5.25 0 0 1 6.775-5.025.75.75 0 0 1 .313 1.248l-3.32 3.319c.063.475.276.934.641 1.299.365.365.824.578 1.3.64l3.318-3.319a.75.75 0 0 1 1.248.313 5.25 5.25 0 0 1-5.472 6.756c-1.018-.086-1.87.1-2.309.634L7.344 21.3A3.298 3.298 0 1 1 2.7 16.657l8.684-7.151c.533-.44.72-1.291.634-2.309A5.342 5.342 0 0 1 12 6.75ZM4.117 19.125a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75h-.008a.75.75 0 0 1-.75-.75v-.008Z" clip-rule="evenodd" />
+              <svg class="home-tile-icon home-tile-icon--wrench" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d="M16 4.5a4.5 4.5 0 0 1-1.703 3.526L13 5l2.959-1.11q.04.3.041.61"/>
+                <path fill="currentColor" d="M11.5 9c.653 0 1.273-.139 1.833-.39L12 5.5 11 3l3.826-1.53A4.5 4.5 0 0 0 7.29 6.092l-6.116 5.096a2.583 2.583 0 1 0 3.638 3.638L9.908 8.71A4.5 4.5 0 0 0 11.5 9m-1.292-4.361-.596.893.809-.27a.25.25 0 0 1 .287.377l-.596.893.809-.27.158.475-1.5.5a.25.25 0 0 1-.287-.376l.596-.893-.809.27a.25.25 0 0 1-.287-.377l.596-.893-.809.27-.158-.475 1.5-.5a.25.25 0 0 1 .287.376M3 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/>
               </svg>
-              
+
               <span>Zgłoś awarię</span>
             </div>
             <div class="home-tile-body">
               <p class="home-tile-label">Zgłoszenie awarii</p>
               <a class="home-tile-phone" href="tel:+48887467078">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" />
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M7.2 3.5c.5-.5 1.3-.6 1.9-.2l2.1 1.3c.6.4.8 1.2.5 1.8l-.9 1.9a1.4 1.4 0 0 0 .3 1.6l2.9 2.9c.4.4 1.1.5 1.6.3l1.9-.9c.6-.3 1.4-.1 1.8.5l1.3 2.1c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.7.7-1.7 1-2.7.8-2.4-.4-5.2-2.1-7.8-4.7S4.5 9.9 4.1 7.5c-.2-1 .1-2 .8-2.7l1.3-1.3Z"/>
                 </svg>
                 <span>887 467 078</span>
               </a>
               <p class="home-tile-label">Firma świadcząca usługi naprawcze awarii</p>
               <a class="home-tile-phone" href="tel:+48604306458">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" />
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path fill="currentColor" d="M7.2 3.5c.5-.5 1.3-.6 1.9-.2l2.1 1.3c.6.4.8 1.2.5 1.8l-.9 1.9a1.4 1.4 0 0 0 .3 1.6l2.9 2.9c.4.4 1.1.5 1.6.3l1.9-.9c.6-.3 1.4-.1 1.8.5l1.3 2.1c.4.6.3 1.4-.2 1.9l-1.1 1.1c-.7.7-1.7 1-2.7.8-2.4-.4-5.2-2.1-7.8-4.7S4.5 9.9 4.1 7.5c-.2-1 .1-2 .8-2.7l1.3-1.3Z"/>
                 </svg>
                 <span>604 306 458</span>
               </a>
@@ -262,8 +259,8 @@
           <article class="home-tile home-tile--connect">
             <div class="home-tile-head">
 
-              <svg class="home-tile-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+              <svg class="home-tile-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm11.378-3.917c-.89-.777-2.366-.777-3.255 0a.75.75 0 0 1-.988-1.129c1.454-1.272 3.776-1.272 5.23 0 1.513 1.324 1.513 3.518 0 4.842a3.75 3.75 0 0 1-.837.552c-.676.328-1.028.774-1.028 1.152v.75a.75.75 0 0 1-1.5 0v-.75c0-1.279 1.06-2.107 1.875-2.502.182-.088.351-.199.503-.331.83-.727.83-1.857 0-2.584ZM12 18a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
               </svg>
 
               <span>Jak podłączyć wodę?</span>
@@ -323,15 +320,16 @@
           </article>
           <article class="info-block">
             <h3>Godziny pracy biura</h3>
-            <ul class="hours-list">
-              <li>Pon–pt: 7:00–15:00</li>
-              <li>Sob–nd: nieczynne</li>
+            <ul>
+              <li>Poniedziałek–piątek: 7:00–15:00</li>
+              <li>Sobota–niedziela: nieczynne</li>
             </ul>
           </article>
           <article class="info-block">
             <h3>Dla mieszkańców</h3>
             <p>
-              W zakładce <strong>Formularze</strong> dostępne są wnioski w formacie PDF, które można pobrać i wydrukować. W przypadku wystąpienia awarii, prosimy o jej zgłoszenie za pomocą dedykowanej zakładki <strong>Zgłoszenie awarii</strong>.
+              W zakładce <strong>Formularze</strong> pobierzesz wniosek PDF.
+              Awarię lub usterkę zgłosisz w zakładce <strong>Zgłoszenie awarii</strong>.
             </p>
           </article>
         </div>
@@ -452,8 +450,6 @@
     <section class="panel" id="panel-news" role="tabpanel" aria-labelledby="tab-news" hidden>
       <div class="panel-inner">
         <h2>Aktualności</h2>
-        <p class="lead">Komunikaty i informacje dla mieszkańców Wietrzna oraz Łęk Dukielskich.</p>
-
         <ul class="news-list" id="news-list" aria-busy="true"></ul>
         <nav class="news-pagination" id="news-pagination" aria-label="Strony aktualności" hidden></nav>
       </div>
@@ -464,8 +460,8 @@
       <div class="panel-inner">
         <h2>Formularze do pobrania</h2>
         <p class="lead">
-          Wypełniony formularz PDF można złożyć osobiście w biurze spółki lub przesłać w formie elektronicznej na adres e-mail:
-          <strong>biurowodawietrzno@gmail.com</strong>.
+          Wypełniony formularz PDF można przesłać w formie elektronicznej na adres e-mail:<strong>biurowodawietrzno@gmail.com</strong>
+           lub złożyć osobiście w biurze spółki wodnej.
         </p>
 
         <ul class="form-list">
@@ -611,9 +607,6 @@
                     <p class="datetime-time-label">Min.</p>
                     <div class="datetime-time-list" id="noticed-minutes"></div>
                   </div>
-                  <div class="datetime-save-row">
-                    <button type="button" class="datetime-save" data-action="save">Zapisz datę</button>
-                  </div>
                 </div>
               </div>
             </div>
@@ -649,15 +642,22 @@
                 <dd><a href="tel:+48134333054">(13) 433 30 54</a></dd>
               </div>
             </dl>
+            <a
+              class="map-link"
+              href="https://www.google.com/maps?q=49.59788629174893,21.703655558521557"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Otwórz w Google Maps</a>
           </address>
 
           <div class="map-wrap">
-            <div
-              id="map"
-              class="map-leaflet"
-              role="application"
-              aria-label="Lokalizacja biura Spółki Wodnej w Wietrznie na mapie OpenStreetMap"
-            ></div>
+            <iframe
+              title="Lokalizacja biura Spółki Wodnej w Wietrznie"
+              src="https://maps.google.com/maps?q=49.59788629174893,21.703655558521557&amp;z=16&amp;output=embed"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
@@ -677,8 +677,10 @@
       <div class="site-footer-brand-block">
         <img
           class="site-footer-logo"
-          src="assets/logo-sw-a-t.png"
-          alt="Spółka Wodna Wodociągu Wiejskiego Wietrzno – Łęki Dukielskie"
+          src="assets/logo-sw-a.png"
+          width="140"
+          height="126"
+          alt="Spółka Wodna Wodociągu Wiejskiego"
           decoding="async"
         />
 
@@ -742,36 +744,6 @@
   </button>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=88"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    (function () {
-      var panel = document.getElementById("panel-contact");
-      var mapEl = document.getElementById("map");
-      if (!panel || !mapEl || typeof L === "undefined") return;
-      var map = null;
-      function init() {
-        if (map) return;
-        map = L.map("map", { scrollWheelZoom: false, attributionPrefix: false }).setView([49.597886, 21.703656], 17);
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution: "© OpenStreetMap",
-          maxZoom: 19
-        }).addTo(map);
-        L.marker([49.597886, 21.703656]).addTo(map);
-        setTimeout(function () { map.invalidateSize(); }, 80);
-      }
-      var tab = document.getElementById("tab-contact");
-      if (tab) {
-        tab.addEventListener("click", function () {
-          init();
-          setTimeout(function () { if (map) map.invalidateSize(); }, 120);
-        });
-      }
-      if (window.location.hash.replace("#", "") === "contact") init();
-      new MutationObserver(function () {
-        if (panel.classList.contains("is-active") && !map) init();
-      }).observe(panel, { attributes: true, attributeFilter: ["class", "hidden"] });
-    })();
-  </script>
+  <script src="script.js?v=87"></script>
 </body>
 </html>
