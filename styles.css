@@ -1577,19 +1577,6 @@ body.is-nav-open {
   text-decoration: underline;
 }
 
-.map-link {
-  display: inline-block;
-  margin-top: 1.25rem;
-  color: var(--lake);
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-decoration: none;
-}
-
-.map-link:hover {
-  text-decoration: underline;
-}
-
 .map-wrap {
   overflow: hidden;
   border-radius: 1rem;
