@@ -197,6 +197,17 @@
   margin: 0;
 }
 
+/* Ekran logowania: napis copyright przypięty do lewego dolnego rogu strony */
+.admin-shell:has(#editor-panel[hidden]) .admin-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0 1.5rem 1.5rem;
+  text-align: left;
+}
+
 /* Przycisk „wróć na górę" — nie schodzi niżej niż napis copyright
    (dół strony ma 3rem odstępu pod stopką) */
 body.admin-body .scroll-top {
