@@ -45,6 +45,10 @@
   gap: 1rem;
 }
 
+.admin-header[hidden] {
+  display: none;
+}
+
 .admin-header .brand-mark {
   margin: 0;
   font-size: clamp(0.95rem, 2.4vw, 1.15rem);
@@ -64,8 +68,22 @@
   text-decoration: none;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .admin-back--editor {
+.admin-shell:has(#editor-panel[hidden]) .admin-back--editor,
+.admin-shell:has(#editor-panel[hidden]) .admin-logout {
   display: none;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.admin-logout {
+  flex: 0 0 auto;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
 
 .admin-back--login {
@@ -102,6 +120,60 @@
   max-width: none;
   display: grid;
   gap: 1rem;
+}
+
+/* Pole hasła z przyciskiem „pokaż/ukryj" */
+.password-wrap {
+  position: relative;
+}
+
+.password-wrap input {
+  padding-right: 3rem;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.45rem;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.password-toggle:hover {
+  color: var(--lake);
+  background: rgba(43, 108, 176, 0.08);
+}
+
+.password-toggle:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+.password-toggle .pw-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.pw-icon-eye-slash {
+  display: none;
+}
+
+.password-toggle[aria-pressed="true"] .pw-icon-eye {
+  display: none;
+}
+
+.password-toggle[aria-pressed="true"] .pw-icon-eye-slash {
+  display: block;
 }
 
 .admin-login-form .form-actions {
@@ -206,6 +278,85 @@
   margin: 0;
   padding: 0 1.5rem 1.5rem;
   text-align: left;
+}
+
+/* Wskaźnik ładowania podczas logowania — wyśrodkowany w miejscu karty */
+.login-loader[hidden] {
+  display: none;
+}
+
+.admin-shell:has(#editor-panel[hidden]) .login-loader:not([hidden]) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading {
+  color: #1a2f45;
+  letter-spacing: 0.3em;
+  margin-bottom: 1em;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-transform: none;
+  text-align: center;
+}
+
+.loading {
+  display: flex;
+  width: 7em;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+}
+
+.load {
+  width: 23px;
+  height: 5px;
+  background-color: #367cbe;
+  animation: 1s move_5011 infinite;
+  border-radius: 5px;
+  margin: 0.12em;
+}
+
+.load:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.load:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.load:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+@keyframes move_5011 {
+  0% {
+    width: 0.2em;
+  }
+
+  25% {
+    width: 0.7em;
+  }
+
+  50% {
+    width: 1.5em;
+  }
+
+  100% {
+    width: 0.2em;
+  }
 }
 
 /* Przycisk „wróć na górę" — nie schodzi niżej niż napis copyright

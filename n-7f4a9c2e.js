@@ -4,8 +4,11 @@
 
   const loginPanel = document.getElementById("login-panel");
   const editorPanel = document.getElementById("editor-panel");
+  const adminHeader = document.querySelector(".admin-header");
   const loginForm = document.getElementById("login-form");
   const loginStatus = document.getElementById("login-status");
+  const loginLoader = document.getElementById("login-loader");
+  const loginSubmitBtn = loginForm?.querySelector('button[type="submit"]');
   const postForm = document.getElementById("post-form");
   const editorStatus = document.getElementById("editor-status");
   const editorTitle = document.getElementById("editor-title");
@@ -13,6 +16,9 @@
   const postsPagination = document.getElementById("admin-posts-pagination");
   const reloadBtn = document.getElementById("reload-posts-btn");
   const resetBtn = document.getElementById("reset-post-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+  const passwordToggle = document.getElementById("password-toggle");
+  const passwordInput = document.getElementById("admin-password");
 
   const fieldId = document.getElementById("post-id");
   const fieldDate = document.getElementById("post-date");
@@ -654,10 +660,15 @@
     sessionLogin = login;
     sessionPassword = password;
     setStatus(loginStatus, "Logowanie…");
+    if (loginLoader) loginLoader.hidden = false;
+    if (loginPanel) loginPanel.hidden = true;
+    if (adminHeader) adminHeader.hidden = true;
+    if (loginSubmitBtn) loginSubmitBtn.disabled = true;
 
     try {
       await apiRequest({ action: "login" });
-      loginPanel.hidden = true;
+      if (loginLoader) loginLoader.hidden = true;
+      if (adminHeader) adminHeader.hidden = false;
       editorPanel.hidden = false;
       editorPanel.removeAttribute("aria-hidden");
       resetForm();
@@ -667,8 +678,35 @@
     } catch (error) {
       sessionLogin = "";
       sessionPassword = "";
+      if (loginPanel) loginPanel.hidden = false;
       setStatus(loginStatus, error.message || "Nieprawidłowy login lub hasło.", "is-error");
+    } finally {
+      if (adminHeader) adminHeader.hidden = false;
+      if (loginLoader) loginLoader.hidden = true;
+      if (loginSubmitBtn) loginSubmitBtn.disabled = false;
     }
+  });
+
+  passwordToggle?.addEventListener("click", () => {
+    const show = passwordToggle.getAttribute("aria-pressed") !== "true";
+    passwordToggle.setAttribute("aria-pressed", String(show));
+    passwordToggle.setAttribute("aria-label", show ? "Ukryj hasło" : "Pokaż hasło");
+    if (passwordInput) passwordInput.type = show ? "text" : "password";
+    passwordInput?.focus();
+  });
+
+  logoutBtn?.addEventListener("click", () => {
+    sessionLogin = "";
+    sessionPassword = "";
+    if (editorPanel) {
+      editorPanel.hidden = true;
+      editorPanel.setAttribute("aria-hidden", "true");
+    }
+    if (loginPanel) loginPanel.hidden = false;
+    loginForm?.reset();
+    resetForm();
+    setStatus(loginStatus, "", null);
+    setStatus(editorStatus, "", null);
   });
 
   resetBtn?.addEventListener("click", () => {

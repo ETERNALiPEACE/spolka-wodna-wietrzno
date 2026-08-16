@@ -10,15 +10,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=54" />
-  <link rel="stylesheet" href="n-7f4a9c2e.css?v=61" />
+  <link rel="stylesheet" href="n-7f4a9c2e.css?v=69" />
 </head>
 <body class="admin-body">
 
   <main class="admin-shell">
     <header class="admin-header">
       <p class="brand-mark">Panel administracyjny</p>
-      <a class="btn btn-ghost admin-back admin-back--editor" href="index.html#news">Wróć do strony</a>
+      <div class="admin-header-actions">
+        <button type="button" class="btn btn-ghost admin-logout" id="logout-btn">Wyloguj</button>
+        <a class="btn btn-ghost admin-back admin-back--editor" href="index.html#news">Wróć do strony</a>
+      </div>
     </header>
+
+    <div class="login-loader" id="login-loader" hidden aria-hidden="true">
+      <div class="loader">
+        <h2 class="heading">ŁADOWANIE</h2>
+        <div class="loading">
+          <span class="load"></span>
+          <span class="load"></span>
+          <span class="load"></span>
+        </div>
+      </div>
+    </div>
 
     <section id="login-panel" class="panel-inner admin-card">
       <h2>Logowanie</h2>
@@ -29,7 +43,18 @@
         </div>
         <div class="field">
           <label for="admin-password">Hasło</label>
-          <input id="admin-password" name="password" type="password" required autocomplete="current-password" />
+          <div class="password-wrap">
+            <input id="admin-password" name="password" type="password" required autocomplete="current-password" />
+            <button type="button" class="password-toggle" id="password-toggle" aria-label="Pokaż hasło" aria-pressed="false">
+              <svg class="pw-icon pw-icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              <svg class="pw-icon pw-icon-eye-slash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" focusable="false">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+              </svg>
+            </button>
+          </div>
         </div>
         <div class="form-actions">
           <button class="btn" type="submit">Zaloguj</button>
@@ -217,6 +242,6 @@
   </button>
 
   <script src="config.js?v=53"></script>
-  <script src="n-7f4a9c2e.js?v=57"></script>
+  <script src="n-7f4a9c2e.js?v=63"></script>
 </body>
 </html>
