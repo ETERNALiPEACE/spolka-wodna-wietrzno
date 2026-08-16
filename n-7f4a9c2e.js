@@ -99,6 +99,18 @@
     return "";
   }
 
+  function extractSafeAlign(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const alignValues = ["left", "center", "right", "justify"];
+    for (const value of alignValues) {
+      if (el.classList.contains(`news-align-${value}`)) return value;
+    }
+    const attrAlign = String(el.getAttribute("align") || "").trim().toLowerCase();
+    if (alignValues.includes(attrAlign)) return attrAlign;
+    const styleAlign = String(el.style?.textAlign || "").trim().toLowerCase();
+    return alignValues.includes(styleAlign) ? styleAlign : "";
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -156,6 +168,15 @@
         }
 
         if (tag === "DIV" || tag === "P") {
+          const align = extractSafeAlign(node);
+          if (align) {
+            const block = document.createElement("p");
+            block.className = `news-align-${align}`;
+            while (node.firstChild) block.appendChild(node.firstChild);
+            node.replaceWith(block);
+            clean(block);
+            return;
+          }
           const fragment = document.createDocumentFragment();
           if (node.previousSibling) fragment.appendChild(document.createElement("br"));
           while (node.firstChild) fragment.appendChild(node.firstChild);
@@ -347,6 +368,19 @@
       document.execCommand("italic", false);
     } else if (command === "underline") {
       document.execCommand("underline", false);
+    } else if (
+      command === "align-left" ||
+      command === "align-center" ||
+      command === "align-right" ||
+      command === "justify"
+    ) {
+      const execMap = {
+        "align-left": "justifyLeft",
+        "align-center": "justifyCenter",
+        "align-right": "justifyRight",
+        justify: "justifyFull",
+      };
+      document.execCommand(execMap[command], false);
     } else if (command === "clear") {
       document.execCommand("removeFormat", false);
       const selection = window.getSelection();
@@ -628,6 +662,7 @@
       editorPanel.removeAttribute("aria-hidden");
       resetForm();
       await refresh();
+      updateAdminScrollTop();
       setStatus(loginStatus, "", null);
     } catch (error) {
       sessionLogin = "";
@@ -730,4 +765,43 @@
       setStatus(editorStatus, error.message || "Nie udało się usunąć posta.", "is-error");
     }
   });
+
+  // Przycisk „wróć na górę" — pływający, pojawia się po przewinięciu,
+  // ale tylko po zalogowaniu (nie na ekranie logowania).
+  const adminScrollTop = document.getElementById("scroll-top");
+  if (adminScrollTop) {
+    const SCROLL_TOP_SHOW_AFTER = 280;
+    let scrollTopQueued = false;
+
+    function editorVisible() {
+      const editor = document.getElementById("editor-panel");
+      return Boolean(editor) && !editor.hidden;
+    }
+
+    function updateAdminScrollTop() {
+      const y = window.scrollY || window.pageYOffset || 0;
+      const show = editorVisible() && y > SCROLL_TOP_SHOW_AFTER;
+      adminScrollTop.classList.toggle("is-visible", show);
+      adminScrollTop.setAttribute("aria-hidden", show ? "false" : "true");
+      adminScrollTop.tabIndex = show ? 0 : -1;
+    }
+
+    function onAdminScrollOrResize() {
+      if (scrollTopQueued) return;
+      scrollTopQueued = true;
+      requestAnimationFrame(() => {
+        scrollTopQueued = false;
+        updateAdminScrollTop();
+      });
+    }
+
+    adminScrollTop.addEventListener("click", () => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      window.scrollTo({ top: 0, left: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+
+    window.addEventListener("scroll", onAdminScrollOrResize, { passive: true });
+    window.addEventListener("resize", onAdminScrollOrResize);
+    updateAdminScrollTop();
+  }
 })();

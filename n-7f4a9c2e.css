@@ -186,6 +186,23 @@
   padding: 0.25rem 0 0;
 }
 
+.admin-footer {
+  margin-top: 0.35rem;
+  text-align: left;
+  color: #f9fcfe;
+  font-size: 0.82rem;
+}
+
+.admin-footer p {
+  margin: 0;
+}
+
+/* Przycisk „wróć na górę" — nie schodzi niżej niż napis copyright
+   (dół strony ma 3rem odstępu pod stopką) */
+body.admin-body .scroll-top {
+  bottom: 3rem;
+}
+
 .news-format-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -365,6 +382,27 @@
   cursor: pointer;
 }
 
+.news-format-align-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2.5rem;
+  padding-left: 0.55rem;
+  border-left: 1px solid var(--line);
+}
+
+.news-format-align-btn {
+  min-width: 2.5rem;
+  width: 2.5rem;
+  padding: 0;
+}
+
+.news-format-align-icon {
+  display: block;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
 .news-body-editor {
   min-height: 9rem;
   padding: 0.85rem 0.95rem;
@@ -376,6 +414,7 @@
   line-height: 1.55;
   outline: none;
   overflow-wrap: anywhere;
+  text-align: justify;
 }
 
 .news-body-editor:focus {
@@ -438,6 +477,7 @@
   margin: 0;
   color: var(--muted);
   line-height: 1.5;
+  text-align: justify;
 }
 
 .admin-post-body u {

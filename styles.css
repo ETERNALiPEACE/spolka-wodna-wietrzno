@@ -345,6 +345,25 @@ body.is-nav-open {
   touch-action: none;
 }
 
+/* Średnie ekrany (961-1120px): przyciśnij menu do prawej (do „Zgłoszenia awarii"),
+   a nie do logo — pomniejsz logo i zagęść zakładki, żeby wszystko się zmieściło */
+@media (min-width: 961px) and (max-width: 1120px) {
+  .top-brand-logo {
+    height: clamp(44px, 5vw, 56px);
+  }
+  .tabs {
+    gap: 0.1rem 0.3rem;
+  }
+  .tab {
+    padding: 0.45rem 0.55rem;
+    font-size: 0.85rem;
+  }
+  .tab-alert {
+    padding: 0.6rem 0.8rem;
+    margin-left: 0.4rem;
+  }
+}
+
 @media (max-width: 960px) {
   .top-bar-inner {
     padding: 0.9rem 0.85rem;
@@ -1602,6 +1621,24 @@ body.is-nav-open {
   color: var(--muted);
   font-size: 0.98rem;
   line-height: 1.55;
+  text-align: justify;
+}
+
+/* Wyrównanie ustawiane w panelu administracyjnym */
+.news-align-justify {
+  text-align: justify;
+}
+
+.news-align-left {
+  text-align: left;
+}
+
+.news-align-center {
+  text-align: center;
+}
+
+.news-align-right {
+  text-align: right;
 }
 
 .news-item-body .news-text-12 {

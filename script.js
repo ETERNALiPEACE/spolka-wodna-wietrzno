@@ -792,6 +792,18 @@
     return "";
   }
 
+  function extractSafeAlign(el) {
+    if (!(el instanceof HTMLElement)) return "";
+    const alignValues = ["left", "center", "right", "justify"];
+    for (const value of alignValues) {
+      if (el.classList.contains(`news-align-${value}`)) return value;
+    }
+    const attrAlign = String(el.getAttribute("align") || "").trim().toLowerCase();
+    if (alignValues.includes(attrAlign)) return attrAlign;
+    const styleAlign = String(el.style?.textAlign || "").trim().toLowerCase();
+    return alignValues.includes(styleAlign) ? styleAlign : "";
+  }
+
   function sanitizeNewsHtml(html) {
     const root = document.createElement("div");
     root.innerHTML = String(html || "");
@@ -849,6 +861,15 @@
         }
 
         if (tag === "DIV" || tag === "P") {
+          const align = extractSafeAlign(node);
+          if (align) {
+            const block = document.createElement("p");
+            block.className = `news-align-${align}`;
+            while (node.firstChild) block.appendChild(node.firstChild);
+            node.replaceWith(block);
+            clean(block);
+            return;
+          }
           const fragment = document.createDocumentFragment();
           if (node.previousSibling) fragment.appendChild(document.createElement("br"));
           while (node.firstChild) fragment.appendChild(node.firstChild);
