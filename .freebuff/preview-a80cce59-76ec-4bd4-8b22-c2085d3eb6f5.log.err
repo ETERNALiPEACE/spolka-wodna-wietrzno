@@ -63,3 +63,8 @@
 127.0.0.1 - - [16/Aug/2026 13:22:43] "GET /index.html HTTP/1.1" 200 -
 127.0.0.1 - - [16/Aug/2026 13:22:43] "GET /styles.css?v=194 HTTP/1.1" 304 -
 127.0.0.1 - - [16/Aug/2026 13:22:43] "GET /script.js?v=90 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 13:37:44] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 13:37:44] "GET /styles.css?v=195 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Aug/2026 13:37:44] "GET /assets/logo-sw-a-t.png HTTP/1.1" 304 -
+127.0.0.1 - - [16/Aug/2026 13:37:44] "GET /script.js?v=90 HTTP/1.1" 304 -
+127.0.0.1 - - [16/Aug/2026 13:37:44] "GET /assets/logo-sw-b-t.png HTTP/1.1" 304 -

@@ -18,6 +18,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  /* brak niebieskiej otoczki przy dotyku na telefonie */
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ========================================
