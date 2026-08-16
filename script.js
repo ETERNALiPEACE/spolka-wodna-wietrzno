@@ -657,6 +657,12 @@
     }
   });
 
+  const phoneInput = reportForm?.querySelector('#phone');
+  phoneInput?.addEventListener("input", () => {
+    const digits = phoneInput.value.replace(/\D/g, "").slice(0, 9);
+    if (phoneInput.value !== digits) phoneInput.value = digits;
+  });
+
   if (reportForm) {
     reportForm.addEventListener("submit", async (event) => {
       event.preventDefault();

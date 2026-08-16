@@ -543,7 +543,7 @@
             </div>
             <div class="field">
               <label for="phone">Telefon kontaktowy</label>
-              <input id="phone" name="phone" type="tel" required autocomplete="tel" />
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="numeric" maxlength="9" pattern="[0-9]{1,9}" />
             </div>
           </div>
 
@@ -756,7 +756,7 @@
   </button>
 
   <script src="config.js?v=73"></script>
-  <script src="script.js?v=89"></script>
+  <script src="script.js?v=90"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     (function () {
