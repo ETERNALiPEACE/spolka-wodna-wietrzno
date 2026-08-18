@@ -842,4 +842,161 @@
     window.addEventListener("resize", onAdminScrollOrResize);
     updateAdminScrollTop();
   }
+
+  /* ===== Admin navigation tabs ===== */
+  const navTabs = document.querySelectorAll(".admin-nav-tab");
+  const tabPosts = document.getElementById("tab-posts");
+  const tabSettings = document.getElementById("tab-settings");
+
+  navTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      navTabs.forEach((t) => t.classList.remove("is-active"));
+      tab.classList.add("is-active");
+      const target = tab.getAttribute("data-tab");
+      if (tabPosts) tabPosts.hidden = target !== "posts";
+      if (tabSettings) tabSettings.hidden = target !== "settings";
+    });
+  });
+
+  /* ===== Settings: Board & Prices (localStorage) ===== */
+  const BOARD_STORAGE_KEY = "spolka-wodna-board-v1";
+  const PRICES_STORAGE_KEY = "spolka-wodna-prices-v1";
+
+  const defaultBoard = [
+    { role: "Przewodniczący Zarządu", names: ["Mateusz Delimata"] },
+    { role: "Członek Zarządu", names: ["Joanna Reczkowska", "Ireneusz Dzdowicz", "Wioletta Bogaczyk", "Leszek Kołacz", "Mieczysław Delimata"] },
+  ];
+
+  const defaultPrices = [
+    { role: "Woda (za 1m³)", names: ["6,50 PLN (netto) + 8% Vat"] },
+    { role: "Abonament miesięczny", names: ["15,00 PLN"] },
+  ];
+
+  function loadSettings(key, defaults) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return JSON.parse(JSON.stringify(defaults));
+  }
+
+  function saveSettings(key, data) {
+    localStorage.setItem(key, JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent("settings-changed", { detail: { key } }));
+  }
+
+  function renderBoardEditor(data) {
+    const container = document.getElementById("board-editor");
+    if (!container) return;
+    container.innerHTML = data.map((entry, i) => `
+      <div class="settings-row" data-idx="${i}">
+        <input class="role-input" type="text" value="${escapeHtml(entry.role)}" placeholder="Rola" aria-label="Rola" />
+        <div class="names-inputs">
+          ${entry.names.map((n, j) => `<input class="name-input" type="text" value="${escapeHtml(n)}" placeholder="Imię i nazwisko" aria-label="Imię i nazwisko ${j + 1}" />`).join("")}
+        </div>
+        <button type="button" class="btn-remove" title="Usuń" aria-label="Usuń">×</button>
+      </div>
+    `).join("");
+  }
+
+  function renderPricesEditor(data) {
+    const container = document.getElementById("prices-editor");
+    if (!container) return;
+    container.innerHTML = data.map((entry, i) => `
+      <div class="settings-row" data-idx="${i}">
+        <input class="role-input" type="text" value="${escapeHtml(entry.role)}" placeholder="Nazwa" aria-label="Nazwa" />
+        <div class="names-inputs">
+          ${entry.names.map((n, j) => `<input class="name-input" type="text" value="${escapeHtml(n)}" placeholder="Wartość" aria-label="Wartość ${j + 1}" />`).join("")}
+        </div>
+        <button type="button" class="btn-remove" title="Usuń" aria-label="Usuń">×</button>
+      </div>
+    `).join("");
+  }
+
+  function collectBoardData() {
+    const container = document.getElementById("board-editor");
+    if (!container) return [];
+    return [...container.querySelectorAll(".settings-row")].map((row) => {
+      const role = row.querySelector(".role-input")?.value.trim() || "";
+      const names = [...row.querySelectorAll(".name-input")].map((inp) => inp.value.trim()).filter(Boolean);
+      return { role, names };
+    }).filter((e) => e.role || e.names.length > 0);
+  }
+
+  function collectPricesData() {
+    const container = document.getElementById("prices-editor");
+    if (!container) return [];
+    return [...container.querySelectorAll(".settings-row")].map((row) => {
+      const role = row.querySelector(".role-input")?.value.trim() || "";
+      const names = [...row.querySelectorAll(".name-input")].map((inp) => inp.value.trim()).filter(Boolean);
+      return { role, names };
+    }).filter((e) => e.role || e.names.length > 0);
+  }
+
+  // Initial render
+  let boardData = loadSettings(BOARD_STORAGE_KEY, defaultBoard);
+  let pricesData = loadSettings(PRICES_STORAGE_KEY, defaultPrices);
+  renderBoardEditor(boardData);
+  renderPricesEditor(pricesData);
+
+  // Add member
+  document.getElementById("add-board-member")?.addEventListener("click", () => {
+    boardData.push({ role: "Członek Zarządu", names: [""] });
+    renderBoardEditor(boardData);
+  });
+
+  // Add price entry
+  document.getElementById("add-price-entry")?.addEventListener("click", () => {
+    pricesData.push({ role: "", names: [""] });
+    renderPricesEditor(pricesData);
+  });
+
+  // Remove member/price (delegation)
+  document.getElementById("board-editor")?.addEventListener("click", (e) => {
+    if (!e.target.closest(".btn-remove")) return;
+    const row = e.target.closest(".settings-row");
+    if (row) {
+      boardData = collectBoardData();
+      boardData.splice(Number(row.dataset.idx), 1);
+      renderBoardEditor(boardData);
+    }
+  });
+
+  document.getElementById("prices-editor")?.addEventListener("click", (e) => {
+    if (!e.target.closest(".btn-remove")) return;
+    const row = e.target.closest(".settings-row");
+    if (row) {
+      pricesData = collectPricesData();
+      pricesData.splice(Number(row.dataset.idx), 1);
+      renderPricesEditor(pricesData);
+    }
+  });
+
+  // Save board
+  document.getElementById("save-board-btn")?.addEventListener("click", () => {
+    boardData = collectBoardData();
+    saveSettings(BOARD_STORAGE_KEY, boardData);
+    setStatus(document.getElementById("board-status"), "Zarząd został zapisany.", "is-ok");
+  });
+
+  // Save prices
+  document.getElementById("save-prices-btn")?.addEventListener("click", () => {
+    pricesData = collectPricesData();
+    saveSettings(PRICES_STORAGE_KEY, pricesData);
+    setStatus(document.getElementById("prices-status"), "Cennik został zapisany.", "is-ok");
+  });
+
+  // Reset board
+  document.getElementById("reset-board-btn")?.addEventListener("click", () => {
+    boardData = JSON.parse(JSON.stringify(defaultBoard));
+    renderBoardEditor(boardData);
+    setStatus(document.getElementById("board-status"), "Przywrócono domyślne dane.", "is-ok");
+  });
+
+  // Reset prices
+  document.getElementById("reset-prices-btn")?.addEventListener("click", () => {
+    pricesData = JSON.parse(JSON.stringify(defaultPrices));
+    renderPricesEditor(pricesData);
+    setStatus(document.getElementById("prices-status"), "Przywrócono domyślne dane.", "is-ok");
+  });
 })();

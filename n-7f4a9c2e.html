@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=54" />
-  <link rel="stylesheet" href="n-7f4a9c2e.css?v=69" />
+  <link rel="stylesheet" href="n-7f4a9c2e.css?v=70" />
 </head>
 <body class="admin-body">
 
@@ -65,6 +65,12 @@
     </section>
 
     <section id="editor-panel" class="admin-editor" hidden aria-hidden="true">
+      <nav class="admin-nav-tabs">
+        <button type="button" class="admin-nav-tab is-active" data-tab="posts">Posty</button>
+        <button type="button" class="admin-nav-tab" data-tab="settings">Ustawienia</button>
+      </nav>
+
+      <div id="tab-posts" class="admin-tab-content">
       <div class="panel-inner admin-card">
         <h2 id="editor-title">Nowy post</h2>
         <form id="post-form" class="report-form" novalidate>
@@ -215,6 +221,37 @@
         <ul id="admin-posts" class="admin-posts"></ul>
         <nav class="news-pagination" id="admin-posts-pagination" aria-label="Strony opublikowanych postów" hidden></nav>
       </div>
+      </div>
+
+      <div id="tab-settings" class="admin-tab-content" hidden>
+        <div class="panel-inner admin-card">
+          <h2>Zarząd</h2>
+          <p class="settings-hint">Edytuj role i nazwiska członków zarządu. Zapisz, aby zaktualizować stronę główną.</p>
+          <div id="board-editor" class="settings-list"></div>
+          <div class="settings-add-row">
+            <button type="button" class="btn btn-ghost" id="add-board-member">+ Dodaj członka</button>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="button" id="save-board-btn">Zapisz zarząd</button>
+            <button class="btn btn-ghost" type="button" id="reset-board-btn">Resetuj</button>
+          </div>
+          <p id="board-status" class="form-status" hidden></p>
+        </div>
+
+        <div class="panel-inner admin-card">
+          <h2>Cennik wody</h2>
+          <p class="settings-hint">Edytuj opłaty eksploatacyjne. Zapisz, aby zaktualizować stronę główną.</p>
+          <div id="prices-editor" class="settings-list"></div>
+          <div class="settings-add-row">
+            <button type="button" class="btn btn-ghost" id="add-price-entry">+ Dodaj pozycję</button>
+          </div>
+          <div class="form-actions">
+            <button class="btn" type="button" id="save-prices-btn">Zapisz cennik</button>
+            <button class="btn btn-ghost" type="button" id="reset-prices-btn">Resetuj</button>
+          </div>
+          <p id="prices-status" class="form-status" hidden></p>
+        </div>
+      </div>
     </section>
 
     <footer class="admin-footer">
@@ -242,6 +279,6 @@
   </button>
 
   <script src="config.js?v=53"></script>
-  <script src="n-7f4a9c2e.js?v=63"></script>
+  <script src="n-7f4a9c2e.js?v=64"></script>
 </body>
 </html>

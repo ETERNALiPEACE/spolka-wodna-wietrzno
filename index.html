@@ -367,7 +367,7 @@
             </article>
             <article class="org-block">
               <h3>Zarząd</h3>
-              <ul class="org-people">
+              <ul class="org-people" id="board-list">
                 <li>
                   <span class="org-role">Przewodniczący Zarządu</span>
                   <span class="org-name">Mateusz Delimata</span>
@@ -415,7 +415,7 @@
           <div class="org-list">
             <article class="org-block">
               <h3>Opłaty eksploatacyjne</h3>
-              <ul class="org-people">
+              <ul class="org-people" id="prices-list">
                 <li>
                     <span class="org-role">Woda (za 1m³)</span>
                     <span class="org-name">6,50 PLN (netto) + 8% Vat</span>
@@ -791,6 +791,42 @@
       new MutationObserver(function () {
         if (panel.classList.contains("is-active") && !map) init();
       }).observe(panel, { attributes: true, attributeFilter: ["class", "hidden"] });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      function escapeHtml(value) {
+        return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", "&#39;");
+      }
+
+      function renderOrgList(ulId, storageKey) {
+        var ul = document.getElementById(ulId);
+        if (!ul) return;
+        var data;
+        try { data = JSON.parse(localStorage.getItem(storageKey)); } catch (e) { data = null; }
+        if (!data || !Array.isArray(data) || data.length === 0) return;
+        ul.innerHTML = data.map(function (entry) {
+          var namesHtml;
+          if (entry.names.length === 1) {
+            namesHtml = '<span class="org-name">' + escapeHtml(entry.names[0]) + '</span>';
+          } else {
+            namesHtml = '<div class="org-names-col">' + entry.names.map(function (n) {
+              return '<span class="org-name">' + escapeHtml(n) + '</span>';
+            }).join('') + '</div>';
+          }
+          return '<li><span class="org-role">' + escapeHtml(entry.role) + '</span>' + namesHtml + '</li>';
+        }).join('');
+      }
+
+      renderOrgList('board-list', 'spolka-wodna-board-v1');
+      renderOrgList('prices-list', 'spolka-wodna-prices-v1');
+
+      window.addEventListener('settings-changed', function (e) {
+        var key = e.detail && e.detail.key;
+        if (key === 'spolka-wodna-board-v1') renderOrgList('board-list', key);
+        if (key === 'spolka-wodna-prices-v1') renderOrgList('prices-list', key);
+      });
     })();
   </script>
 </body>
