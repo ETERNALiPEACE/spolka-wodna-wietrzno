@@ -669,8 +669,16 @@
       await apiRequest({ action: "login" });
       if (loginLoader) loginLoader.hidden = true;
       if (adminHeader) adminHeader.hidden = false;
+      if (adminNavTabs) adminNavTabs.hidden = false;
+      // Reset tabs to Posts
+      navTabs.forEach((t) => t.classList.remove("is-active"));
+      navTabs[0]?.classList.add("is-active");
       editorPanel.hidden = false;
       editorPanel.removeAttribute("aria-hidden");
+      if (settingsPanel) {
+        settingsPanel.hidden = true;
+        settingsPanel.setAttribute("aria-hidden", "true");
+      }
       resetForm();
       await refresh();
       updateAdminScrollTop();
@@ -702,11 +710,19 @@
       editorPanel.hidden = true;
       editorPanel.setAttribute("aria-hidden", "true");
     }
+    if (settingsPanel) {
+      settingsPanel.hidden = true;
+      settingsPanel.setAttribute("aria-hidden", "true");
+    }
+    if (adminNavTabs) adminNavTabs.hidden = true;
     if (loginPanel) loginPanel.hidden = false;
     loginForm?.reset();
     resetForm();
     setStatus(loginStatus, "", null);
     setStatus(editorStatus, "", null);
+    // Reset tabs to Posts
+    navTabs.forEach((t) => t.classList.remove("is-active"));
+    navTabs[0]?.classList.add("is-active");
   });
 
   resetBtn?.addEventListener("click", () => {
@@ -813,7 +829,8 @@
 
     function editorVisible() {
       const editor = document.getElementById("editor-panel");
-      return Boolean(editor) && !editor.hidden;
+      const settings = document.getElementById("settings-panel");
+      return (Boolean(editor) && !editor.hidden) || (Boolean(settings) && !settings.hidden);
     }
 
     function updateAdminScrollTop() {
@@ -845,16 +862,16 @@
 
   /* ===== Admin navigation tabs ===== */
   const navTabs = document.querySelectorAll(".admin-nav-tab");
-  const tabPosts = document.getElementById("tab-posts");
-  const tabSettings = document.getElementById("tab-settings");
+  const adminNavTabs = document.getElementById("admin-nav-tabs");
+  const settingsPanel = document.getElementById("settings-panel");
 
   navTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
       navTabs.forEach((t) => t.classList.remove("is-active"));
       tab.classList.add("is-active");
       const target = tab.getAttribute("data-tab");
-      if (tabPosts) tabPosts.hidden = target !== "posts";
-      if (tabSettings) tabSettings.hidden = target !== "settings";
+      if (editorPanel) editorPanel.hidden = target !== "posts";
+      if (settingsPanel) settingsPanel.hidden = target !== "settings";
     });
   });
 

@@ -739,7 +739,11 @@ body.admin-body .scroll-top {
   border-color: var(--accent, #1a4a7a);
 }
 
-.admin-tab-content {
+.admin-nav-tabs[hidden] {
+  display: none;
+}
+
+.admin-editor {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
