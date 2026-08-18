@@ -1016,4 +1016,67 @@
     renderPricesEditor(pricesData);
     setStatus(document.getElementById("prices-status"), "Przywrócono domyślne dane.", "is-ok");
   });
+
+  /* ===== Committee editor ===== */
+  const COMMITTEE_STORAGE_KEY = "spolka-wodna-committee-v1";
+
+  const defaultCommittee = [
+    { role: "Przewodniczący", names: ["do uzupełnienia"] },
+    { role: "Członek", names: ["do uzupełnienia"] },
+    { role: "Członek", names: ["do uzupełnienia"] },
+  ];
+
+  function renderCommitteeEditor(data) {
+    const container = document.getElementById("committee-editor");
+    if (!container) return;
+    container.innerHTML = data.map((entry, i) => `\r
+      <div class="settings-row" data-idx="${i}">\r
+        <input class="role-input" type="text" value="${escapeHtml(entry.role)}" placeholder="Rola" aria-label="Rola" />\r
+        <div class="names-inputs">\r
+          ${entry.names.map((n, j) => `<input class="name-input" type="text" value="${escapeHtml(n)}" placeholder="Imię i nazwisko" aria-label="Imię i nazwisko ${j + 1}" />`).join("")}\r
+        </div>\r
+        <button type="button" class="btn-remove" title="Usuń" aria-label="Usuń">×</button>\r
+      </div>\r
+    `).join("");
+  }
+
+  function collectCommitteeData() {
+    const container = document.getElementById("committee-editor");
+    if (!container) return [];
+    return [...container.querySelectorAll(".settings-row")].map((row) => {
+      const role = row.querySelector(".role-input")?.value.trim() || "";
+      const names = [...row.querySelectorAll(".name-input")].map((inp) => inp.value.trim()).filter(Boolean);
+      return { role, names };
+    }).filter((e) => e.role || e.names.length > 0);
+  }
+
+  let committeeData = loadSettings(COMMITTEE_STORAGE_KEY, defaultCommittee);
+  renderCommitteeEditor(committeeData);
+
+  document.getElementById("add-committee-member")?.addEventListener("click", () => {
+    committeeData.push({ role: "Członek", names: [""] });
+    renderCommitteeEditor(committeeData);
+  });
+
+  document.getElementById("committee-editor")?.addEventListener("click", (e) => {
+    if (!e.target.closest(".btn-remove")) return;
+    const row = e.target.closest(".settings-row");
+    if (row) {
+      committeeData = collectCommitteeData();
+      committeeData.splice(Number(row.dataset.idx), 1);
+      renderCommitteeEditor(committeeData);
+    }
+  });
+
+  document.getElementById("save-committee-btn")?.addEventListener("click", () => {
+    committeeData = collectCommitteeData();
+    saveSettings(COMMITTEE_STORAGE_KEY, committeeData);
+    setStatus(document.getElementById("committee-status"), "Komisja została zapisana.", "is-ok");
+  });
+
+  document.getElementById("reset-committee-btn")?.addEventListener("click", () => {
+    committeeData = JSON.parse(JSON.stringify(defaultCommittee));
+    renderCommitteeEditor(committeeData);
+    setStatus(document.getElementById("committee-status"), "Przywrócono domyślne dane.", "is-ok");
+  });
 })();

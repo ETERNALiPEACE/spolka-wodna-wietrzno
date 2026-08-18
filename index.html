@@ -386,7 +386,7 @@
             </article>
             <article class="org-block">
               <h3>Komisja Rewizyjna</h3>
-              <ul class="org-people">
+              <ul class="org-people" id="committee-list">
                 <li>
                   <span class="org-role">Przewodniczący</span>
                   <span class="org-name">do uzupełnienia</span>
@@ -820,11 +820,13 @@
       }
 
       renderOrgList('board-list', 'spolka-wodna-board-v1');
+      renderOrgList('committee-list', 'spolka-wodna-committee-v1');
       renderOrgList('prices-list', 'spolka-wodna-prices-v1');
 
       window.addEventListener('settings-changed', function (e) {
         var key = e.detail && e.detail.key;
         if (key === 'spolka-wodna-board-v1') renderOrgList('board-list', key);
+        if (key === 'spolka-wodna-committee-v1') renderOrgList('committee-list', key);
         if (key === 'spolka-wodna-prices-v1') renderOrgList('prices-list', key);
       });
     })();
