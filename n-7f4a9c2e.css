@@ -19,7 +19,7 @@
 }
 
 /* Ekran logowania: węższa karta, wyśrodkowana na stronie */
-.admin-shell:has(#editor-panel[hidden]) {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) {
   width: min(100% - 2rem, 28rem);
   min-height: 100vh;
   align-content: center;
@@ -27,13 +27,13 @@
   box-sizing: border-box;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .admin-header {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-header {
   justify-content: center;
   gap: 0.75rem;
   padding-inline: 0.15rem;
 }
 
-.admin-shell:has(#editor-panel[hidden]) #login-panel {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) #login-panel {
   width: 100%;
 }
 
@@ -68,8 +68,8 @@
   text-decoration: none;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .admin-back--editor,
-.admin-shell:has(#editor-panel[hidden]) .admin-logout {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-back--editor,
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-logout {
   display: none;
 }
 
@@ -93,7 +93,7 @@
   font-size: 0.88rem;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .admin-header .btn,
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-header .btn,
 .admin-back--editor {
   flex: 0 0 auto;
   padding: 0.55rem 0.95rem;
@@ -111,7 +111,7 @@
   text-align: center;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .admin-card {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-card {
   padding: 1.75rem 1.5rem;
 }
 
@@ -270,7 +270,7 @@
 }
 
 /* Ekran logowania: napis copyright przypięty do lewego dolnego rogu strony */
-.admin-shell:has(#editor-panel[hidden]) .admin-footer {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .admin-footer {
   position: fixed;
   left: 0;
   right: 0;
@@ -285,7 +285,7 @@
   display: none;
 }
 
-.admin-shell:has(#editor-panel[hidden]) .login-loader:not([hidden]) {
+.admin-shell:has(#editor-panel[hidden]):has(#settings-panel[hidden]) .login-loader:not([hidden]) {
   position: absolute;
   inset: 0;
   display: flex;
