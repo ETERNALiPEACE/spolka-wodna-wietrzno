@@ -1022,8 +1022,7 @@
 
   const defaultCommittee = [
     { role: "Przewodniczący", names: ["do uzupełnienia"] },
-    { role: "Członek", names: ["do uzupełnienia"] },
-    { role: "Członek", names: ["do uzupełnienia"] },
+    { role: "Członek", names: ["do uzupełnienia", "do uzupełnienia"] },
   ];
 
   function renderCommitteeEditor(data) {
